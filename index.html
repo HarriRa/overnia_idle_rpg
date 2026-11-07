@@ -1979,6 +1979,21 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
  body:has(#gearOverlay:not([hidden])) .item-tooltip, body.mobile-equipment .item-tooltip {display:none!important}
 }
 </style>
+<style id="overnia-mobile-gear-comparison-v1">
+@media(max-width:700px), (pointer:coarse) and (max-width:900px){
+ #gearOverlay .gear-pick-item .gear-pick-details{flex-wrap:wrap!important;column-gap:7px!important;row-gap:3px!important}
+ #gearOverlay .gear-pick-item .gear-pick-details strong{flex:1 1 calc(100% - 105px)!important}
+ #gearOverlay .gear-pick-item .gear-pick-details button{order:1!important}
+ #gearOverlay .gear-pick-item .gear-pick-details small{display:block!important;order:2!important;flex-basis:100%!important;font-size:10px!important;color:#b7c8d2!important}
+ #gearOverlay .gear-pick-item .gear-quick-stats{order:3!important;flex:1 1 100%!important;display:flex!important;flex-wrap:wrap!important;gap:4px 8px!important;margin-top:2px!important}
+ #gearOverlay .gear-quick-stat{font-size:11px!important;line-height:1.4!important;color:#b7c8d2!important}
+ #gearOverlay .gear-quick-stat b{color:#f3db9e!important;font-weight:700!important}
+ #gearOverlay .gear-stat-up{color:#7bdca1!important;font-style:normal!important}
+ #gearOverlay .gear-stat-down{color:#f4a2a2!important;font-style:normal!important}
+ #gearOverlay .gear-pick-item{align-items:flex-start!important}
+}
+@media(min-width:901px){#gearOverlay .gear-quick-stats{display:none!important}}
+</style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
  <div class="home-wrap">
@@ -6388,6 +6403,27 @@ function renderGearSidebar(){
  <div class="equipment-stats"><b>Set collections</b>${setBonusEntries().map(set=>`<div class="set-tracker ${set.count>=2?'set-enabled':''}"><b>${esc(set.name)} ${set.count}/3</b><small>2 pieces: ${esc(describeSetBonus(set.two))} ${set.count>=2?'✓':'🔒'}</small><small>3 pieces: ${esc(describeSetBonus(set.three))} ${set.count===3?'✓':'🔒'}</small></div>`).join('')||'<span class="subdued">Equip two matching armour pieces to activate set bonuses.</span>'}</div>
  <div class="equipment-stats"><b>Active bonuses (including sets)</b>${gearDescription(mods).split(' · ').filter(x=>!x.endsWith('+0')&&!x.endsWith('+0%')).map(x=>`<span>• ${esc(x)}</span>`).join('')||'<span class="subdued">No bonuses equipped yet.</span>'}</div>`;
 }
+// Short, readable mobile comparison in the equipment picker; no floating tooltip.
+function gearPickerQuickStats(name,current){
+ const candidate=EQUIPMENT[name]||{}, equipped=EQUIPMENT[current]||{};
+ const fields=[['attack','Accuracy'],['strength','Strength'],['defence','Defence'],['block','Block'],['rangedAccuracy','Ranged acc.'],['rangedPower','Ranged dmg'],['magicAccuracy','Magic acc.'],['magicPower','Magic dmg'],['miningYield','Mining yield'],['woodcuttingYield','WC yield'],['miningSpeed','Mining speed'],['woodcuttingSpeed','WC speed']];
+ const shown=[];
+ for(const [key,title] of fields){
+  const val=Number(candidate[key]||0),prev=Number(equipped[key]||0);
+  if(!val&&!prev)continue;
+  const delta=val-prev;
+  const percent=/Yield|Speed|Pct$/.test(key);
+  const f=v=>(percent?Math.round(v*1000)/10+'%':fmt(v));
+  shown.push(`<span class="gear-quick-stat">${esc(title)} <b>${f(val)}</b>${current&&delta!==0?` <em class="${delta>0?'gear-stat-up':'gear-stat-down'}">(${delta>0?'+':''}${f(delta)})</em>`:''}</span>`);
+ }
+ for(const [key,value] of Object.entries(candidate)){
+  if(fields.some(([k])=>k===key)||['slot','requiredLevel','requiredSkill','combatType','maxCharges','doubleHit'].includes(key)||!Number(value))continue;
+  const desc=gearDescription({[key]:value});
+  if(desc!=='Equipment')shown.push(`<span class="gear-quick-stat">${esc(desc)}</span>`);
+ }
+ if(candidate.doubleHit)shown.push('<span class="gear-quick-stat">Double strike</span>');
+ return shown.length?`<div class="gear-quick-stats">${shown.join('')}</div>`:'<div class="gear-quick-stats"><span class="gear-quick-stat">No stat bonuses</span></div>';
+}
 function renderGearPicker(){
  const slot=ui.gearSlot,overlay=el('gearOverlay');
  if(!slot||overlay.hidden)return;
@@ -6405,7 +6441,7 @@ function renderGearPicker(){
  const currentHtml=current?`<div class="gear-equipped-card" data-item-preview="${esc(current)}">${itemArt(current,true)}<div class="gear-current-details"><strong>${esc(current)}</strong><small>${esc(gearDescription(EQUIPMENT[current]))}</small></div><button ${isTool?`data-toolbelt-unequip="${slot}"`:`data-loadout-clear-slot="${slot}"`}>${isTool?'Unequip':'Clear slot'}</button></div>`:'<div class="gear-picker-empty">This set has an empty ${esc(info.label.toLowerCase())} slot.</div>';
  const availableHtml=options.length?`<div class="gear-picker-grid">${options.map(([name,qty])=>{
   const req=gearRequirement(name),reqText=req.skill?`${label(req.skill)} level ${req.level}`:'No level requirement';
-  return `<div class="gear-pick-item ${req.met?'':'locked'}" data-item-preview="${esc(name)}">${itemArt(name)}<div class="gear-pick-details"><strong>${esc(name)}</strong><small>${esc(gearDescription(EQUIPMENT[name]))} · ${esc(reqText)}${req.met?'':' 🔒'}</small><button ${isTool?`data-toolbelt-equip="${esc(name)}"`:`data-loadout-slot-item="${esc(name)}"`}>${current===name?'Selected':isTool?'Equip tool':'Use in set'}</button></div></div>`;
+  return `<div class="gear-pick-item ${req.met?'':'locked'}" data-item-preview="${esc(name)}">${itemArt(name)}<div class="gear-pick-details"><strong>${esc(name)}</strong><small>${esc(reqText)}${req.met?'':' 🔒'}</small>${gearPickerQuickStats(name,current)}<button ${isTool?`data-toolbelt-equip="${esc(name)}"`:`data-loadout-slot-item="${esc(name)}"`}>${current===name?'Selected':isTool?'Equip tool':'Use in set'}</button></div></div>`;
  }).join('')}</div>`:'<div class="gear-picker-empty">No gear for this slot in your bank or currently equipped.</div>';
  el('gearDialogContent').innerHTML=`<p class="gear-preview-notice">${isTool?'Toolbelt is shared across all equipment sets. Changes equip tools immediately and remain active when switching sets.':`Editing saved set <b>${esc(preset.name)}</b>. Your character keeps wearing the same gear until you press <b>Equip set</b>.`}</p><div class="eyebrow" style="margin-top:15px">Saved in this set</div>${currentHtml}<div class="between" style="margin-top:17px"><strong>Choose equipment for this set</strong><span class="small subdued">${options.length} types</span></div>${availableHtml}`;
 }
