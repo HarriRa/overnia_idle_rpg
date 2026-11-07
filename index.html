@@ -2228,7 +2228,8 @@ for(const metal of METALS){
    ?(kind==='Chestplate'?'Plate':kind==='Platelegs'?'Greaves':kind):kind;
   const item=m+' '+kindName;
   const level=Math.min(99,basic+({Sword:0,Shield:1,Helm:2,Chestplate:4,Platelegs:3,Axe:0,Pickaxe:1,Arrowheads:0}[kind]||0));
-  forge.push(A('Forge '+item,item,level,Math.round(metal.xp*(.65+bars*.54)),{[bar]:bars},'Gear',{quantity:kind==='Arrowheads'?20:1}));
+  const xpPerBar=Math.round(metal.xp*(.65+1*.54)); // Match this metal's existing Arrowheads XP (1 bar).
+  forge.push(A('Forge '+item,item,level,xpPerBar*bars,{[bar]:bars},'Gear',{quantity:kind==='Arrowheads'?20:1}));
   if(slot){
     const tier=METALS.indexOf(metal),v=[4,9,17,30,39,46,61][tier],def=[4,14,24,38,47,58,75][tier];
     const stat={slot,requiredLevel:[1,10,20,35,50,65,80][METALS.indexOf(metal)]};
