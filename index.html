@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-content-sha256" content="275896fbd0b7b2cdd9c88fffa0a8e2739051c8a6230a9cda087bcd43b200b018"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.07.1"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -7505,74 +7505,74 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   });
 }
 </script>
-<aside id="overniaUpdateNotice" hidden aria-live="polite"><span>A new version available</span><button id="overniaUpdateRefresh" type="button" aria-label="Save and refresh to new version" title="Save and refresh">↻</button></aside><script id="overnia-update-checker">
+<aside id="overniaUpdateNotice" hidden aria-live="polite"><span>A new version available</span><button id="overniaUpdateRefresh" type="button" aria-label="Save and refresh to new version" title="Save and refresh">↻</button></aside>
+<script id="overnia-update-checker">
 (() => {
   'use strict';
-  // Compare bytes of the deployed game (with digest field normalized) to this loaded build.
-  // Unlike a manual version label, this detects *any* future change to index.html.
-  const HASH_PLACEHOLDER = '__OVERNIA_SHA256__';
-  const hashTag = /(<meta\s+name="overnia-content-sha256"\s+content=")[^"]*(")/i;
-  const currentHash = document.querySelector('meta[name="overnia-content-sha256"]')?.content;
+  // Version metadata lives in version.json; no HTML checksum or self-comparison.
+  const BUILD = document.querySelector('meta[name="overnia-build-version"]')?.content || '';
   const notice = document.getElementById('overniaUpdateNotice');
   const refresh = document.getElementById('overniaUpdateRefresh');
-  let pending = false;
+  let pendingVersion = '';
   let checking = false;
   let lastChecked = 0;
-  function hex(buffer){return Array.from(new Uint8Array(buffer),b=>b.toString(16).padStart(2,'0')).join('');}
-  async function checkForUpdate(){
-    if(pending || checking || document.hidden || !navigator.onLine || !crypto?.subtle) return;
+  function newer(remote, local) {
+    const parse = value => /^\d+(?:\.\d+)*$/.test(value) ? value.split('.').map(Number) : null;
+    const a = parse(remote), b = parse(local);
+    if (!a || !b) return false;
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+      if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) > (b[i] || 0);
+    }
+    return false;
+  }
+  async function checkForUpdate() {
+    if (checking || document.hidden || !navigator.onLine) return;
     checking = true;
     try {
-      const url = new URL('./index.html',location.href);
-      url.searchParams.set('overnia_update_check','1');
-      const response = await fetch(url.href,{cache:'no-store',credentials:'same-origin'});
-      if(!response.ok) return;
-      const html = await response.text();
-      if(!hashTag.test(html)) return; // Never prompt for unrelated/error HTML.
-      const canonical = html.replace(hashTag, '$1'+HASH_PLACEHOLDER+'$2');
-      const digest = await crypto.subtle.digest('SHA-256',new TextEncoder().encode(canonical));
-      const fetchedHash = hex(digest);
-      const advertisedHash = document.createElement('template');
-      advertisedHash.innerHTML = html.slice(0, Math.min(html.length, 5000));
-      const deployedHash = advertisedHash.content.querySelector('meta[name="overnia-content-sha256"]')?.content;
-      // A partially deployed or incorrectly stamped build must never trigger an update prompt.
-      if(deployedHash !== fetchedHash) return;
-      if(fetchedHash !== currentHash){ pending = true;notice.hidden = false; }
-    }catch(err){console.debug('Overnia update check skipped:',err)}
-    finally{checking=false;lastChecked=Date.now()}
+      const url = new URL('./version.json', location.href);
+      url.searchParams.set('overnia_version_probe', String(Date.now()));
+      const response = await fetch(url.href, {cache:'no-store', credentials:'same-origin'});
+      if (!response.ok) return;
+      const info = await response.json();
+      if (!info || typeof info.version !== 'string' || !newer(info.version, BUILD)) return;
+      pendingVersion = info.version;
+      notice.hidden = false;
+    } catch (err) { console.debug('Overnia version check skipped:', err); }
+    finally { checking = false; lastChecked = Date.now(); }
   }
-  function safeSaveAndRefresh(){
-    if(!pending || refresh.disabled) return;
-    // We must not reload during offline catch-up or while a new save is being loaded.
-    if(typeof offlineRunning !== 'undefined' && offlineRunning){
-      if(typeof toast === 'function') toast('Finishing offline progress. Try again shortly.');
+  function safeSaveAndRefresh() {
+    if (!pendingVersion || refresh.disabled) return;
+    if (typeof offlineRunning !== 'undefined' && offlineRunning) {
+      if (typeof toast === 'function') toast('Finishing offline progress. Try again shortly.');
       return;
     }
     refresh.disabled = true;
     try {
-      if(typeof state === 'undefined' || !state || !state.xp || !state.bank) throw Error('Character is not ready.');
-      if(typeof profileSaveKey !== 'function') throw Error('Save system is not ready.');
+      if (typeof state === 'undefined' || !state || !state.xp || !state.bank) throw Error('Character is not ready.');
+      if (typeof profileSaveKey !== 'function') throw Error('Save system is not ready.');
       const key = profileSaveKey();
-      const snapshot = JSON.stringify({...state,lastSaved:Date.now()});
-      localStorage.setItem(key,snapshot);
-      if(localStorage.getItem(key)!==snapshot) throw Error('Could not verify saved progress.');
-      // Do not remove local save data or alter cloud ownership; the existing cloud sync stays intact.
-      // Page reload only after successful, verified synchronous storage write.
-      location.reload();
-    }catch(err){
-      console.error('Overnia refresh cancelled to protect progress:',err);
-      if(typeof toast==='function') toast('Could not save progress. Update cancelled.');
-      refresh.disabled=false;
+      const snapshot = JSON.stringify({...state, lastSaved:Date.now()});
+      localStorage.setItem(key, snapshot);
+      if (localStorage.getItem(key) !== snapshot) throw Error('Could not verify saved progress.');
+      // Cache-bust navigation so an installed PWA gets the latest HTML.
+      const target = new URL('./index.html', location.href);
+      target.searchParams.set('overnia_build', pendingVersion);
+      location.replace(target.href);
+    } catch (err) {
+      console.error('Overnia refresh cancelled to protect progress:', err);
+      if (typeof toast === 'function') toast('Could not save progress. Update cancelled.');
+      refresh.disabled = false;
     }
   }
-  refresh.addEventListener('click',safeSaveAndRefresh);
-  // Check on launch, when returning to the app, and occasionally during long sessions.
-  setTimeout(checkForUpdate,25000);
-  setInterval(checkForUpdate,300000);
-  document.addEventListener('visibilitychange',()=>{
-    if(!document.hidden && Date.now()-lastChecked>20000) checkForUpdate();
+  refresh.addEventListener('click', safeSaveAndRefresh);
+  setTimeout(checkForUpdate, 5000);
+  setInterval(checkForUpdate, 300000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && Date.now() - lastChecked > 20000) checkForUpdate();
   });
-  window.addEventListener('online',()=>{if(Date.now()-lastChecked>20000)checkForUpdate()});
+  window.addEventListener('online', () => {
+    if (Date.now() - lastChecked > 20000) checkForUpdate();
+  });
 })();
 </script>
 </body></html>

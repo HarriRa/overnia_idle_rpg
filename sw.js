@@ -1,6 +1,6 @@
 /* Overnia PWA: network-first HTML, offline fallback; never cache update-check requests. */
-const CACHE = 'overnia-app-v3-update-20261107';
-const APP_FILES = ['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
+const CACHE = 'overnia-app-v4-version-json-20261107';
+const APP_FILES = ['./','./index.html','./manifest.webmanifest','./version.json','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP_FILES)).then(()=>self.skipWaiting()));
 });
@@ -13,7 +13,7 @@ self.addEventListener('fetch',event=>{
   const url=new URL(req.url);
   if(url.origin!==self.location.origin)return;
   // Explicit version probes must reach GitHub Pages, never a cached copy.
-  if(url.searchParams.has('overnia_update_check')){
+  if(url.pathname.endsWith('/version.json') || url.searchParams.has('overnia_update_check')){
     event.respondWith(fetch(new Request(req,{cache:'no-store'})));
     return;
   }
