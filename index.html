@@ -3942,6 +3942,8 @@ function requestDevPin(){
 const profileSaveKey=()=>currentProfile==='dev'?DEV_SAVE_KEY:SAVE_KEY;
 const inDev=()=>currentProfile==='dev';
 const EQUIP_SLOTS=['weapon','shield','head','body','legs','gloves','cape','quiver','amulet','ring','axe','pickaxe'];
+const TOOLBELT_SLOTS=['axe','pickaxe'];
+const LOADOUT_SLOTS=EQUIP_SLOTS.filter(slot=>!TOOLBELT_SLOTS.includes(slot));
 const LOADOUT_ROLES=['melee','ranged','magic','other'];
 const LOADOUT_DEFAULTS=[['Melee','melee'],['Ranged','ranged'],['Magic','magic'],['Skilling','other'],['Custom','other']];
 const defaultLoadouts=()=>LOADOUT_DEFAULTS.map(([name,role])=>({name,role,equipment:null}));
@@ -4289,7 +4291,7 @@ function normalizeLoadouts(raw){
  return LOADOUT_DEFAULTS.map(([name,role],i)=>{
   const src=Array.isArray(raw)?raw[i]:null;
   const equipment=src?.equipment&&typeof src.equipment==='object'?
-   Object.fromEntries(EQUIP_SLOTS.map(slot=>{
+   Object.fromEntries(LOADOUT_SLOTS.map(slot=>{
     const item=src.equipment[slot];return [slot,typeof item==='string'&&EQUIPMENT[item]?.slot===slot?item:null];
    })):null;
   return {name:typeof src?.name==='string'&&src.name.trim()?src.name.trim().slice(0,24):name,
@@ -4298,14 +4300,14 @@ function normalizeLoadouts(raw){
 }
 function saveEquipmentLoadout(index){
  const row=state.loadouts?.[index];if(!row)return;
- row.equipment=Object.fromEntries(EQUIP_SLOTS.map(slot=>[slot,state.equipment[slot]||null]));
+ row.equipment=Object.fromEntries(LOADOUT_SLOTS.map(slot=>[slot,state.equipment[slot]||null]));
  note(`💾 Saved ${row.name}. Shared gear stays available to all five loadouts.`);
  save();refreshDynamic();
 }
 function loadoutAvailability(index){
  const row=state.loadouts?.[index];
  if(!row?.equipment)return {ok:false,error:'Save a loadout first.'};
- const wanted=Object.fromEntries(EQUIP_SLOTS.map(slot=>[slot,row.equipment[slot]||null]));
+ const wanted=Object.fromEntries(EQUIP_SLOTS.map(slot=>[slot,TOOLBELT_SLOTS.includes(slot)?(state.equipment[slot]||null):(row.equipment[slot]||null)]));
  const inventory={...state.bank};
  for(const slot of EQUIP_SLOTS){const item=state.equipment[slot];if(item)inventory[item]=(Number(inventory[item])||0)+1}
  for(const slot of EQUIP_SLOTS){
@@ -4323,7 +4325,7 @@ function loadoutAvailability(index){
 function equipEquipmentLoadout(index,{automatic=false}={}){
  const row=state.loadouts?.[index],ready=loadoutAvailability(index);
  if(!ready.ok){if(!automatic){note('⚠️ '+ready.error);toast(ready.error)}return false}
- if(automatic&&EQUIP_SLOTS.every(slot=>state.equipment[slot]===ready.equipment[slot]))return true;
+ if(automatic&&LOADOUT_SLOTS.every(slot=>state.equipment[slot]===ready.equipment[slot]))return true;
  // All validations are finished before either the bank or the equipment changes.
  state.bank=ready.bank;
  state.equipment=ready.equipment;
@@ -4348,9 +4350,9 @@ function autoEquipForEnemy(enemy){
 }
 function isLoadoutWorn(index){
  const row=state.loadouts?.[index];
- if(!row?.equipment||!EQUIP_SLOTS.every(slot=>(row.equipment[slot]||null)===(state.equipment[slot]||null)))return false;
+ if(!row?.equipment||!LOADOUT_SLOTS.every(slot=>(row.equipment[slot]||null)===(state.equipment[slot]||null)))return false;
  if(Number.isInteger(state.equippedLoadoutIndex))return state.equippedLoadoutIndex===index;
- return state.loadouts.findIndex(p=>p?.equipment&&EQUIP_SLOTS.every(slot=>(p.equipment[slot]||null)===(state.equipment[slot]||null)))===index;
+ return state.loadouts.findIndex(p=>p?.equipment&&LOADOUT_SLOTS.every(slot=>(p.equipment[slot]||null)===(state.equipment[slot]||null)))===index;
 }
 function loadoutRoleIcon(role){return ({melee:'⚔️',ranged:'🏹',magic:'🪄',other:'🛠️'})[role]||'⚔️'}
 function equipmentLoadoutsHtml(compact=false){
@@ -4371,9 +4373,9 @@ function equipmentLoadoutsHtml(compact=false){
   const equipped=isLoadoutWorn(index);
   return `<button type="button" class="loadout-tab ${index===i?'is-selected':''} ${equipped?'is-equipped':''} ${preset.equipment?'':'is-empty'}" data-loadout-tab="${index}" aria-label="${esc('Set '+(index+1)+': '+preset.name+(equipped?', equipped':''))}" title="${esc(preset.name+' · '+preset.role+(equipped?' · Equipped':''))}" aria-pressed="${index===i}"><span class="loadout-tab-art" aria-hidden="true">${icon}</span><small>${index+1}</small></button>`;
  }).join('');
- const preview=row.equipment?EQUIP_SLOTS.filter(slot=>row.equipment[slot]).map(slot=>`<span title="${esc(row.equipment[slot])}">${itemIcon(row.equipment[slot])}</span>`).join(''):'';
+ const preview=row.equipment?LOADOUT_SLOTS.filter(slot=>row.equipment[slot]).map(slot=>`<span title="${esc(row.equipment[slot])}">${itemIcon(row.equipment[slot])}</span>`).join(''):'';
  return `<section class="loadout-panel loadout-panel-compact" aria-label="Equipment sets">
-  <div class="loadout-panel-heading"><strong>⚔️ Equipment Sets</strong><span class="small subdued">${count}/12 items</span></div>
+  <div class="loadout-panel-heading"><strong>⚔️ Equipment Sets</strong><span class="small subdued">${count}/${LOADOUT_SLOTS.length} items</span></div>
   <div class="loadout-tabs" role="group" aria-label="Choose an equipment set">${tabs}</div>
   <div class="loadout-selected">
    <div class="loadout-editor-row"><input type="text" aria-label="Name for set ${i+1}" data-loadout-name="${i}" maxlength="24" value="${esc(row.name)}" placeholder="Set name"><select aria-label="Role for set ${i+1}" data-loadout-role="${i}">${[['melee','⚔️ Melee'],['ranged','🏹 Ranged'],['magic','🪄 Magic'],['other','🛠️ Other']].map(([k,v])=>`<option value="${k}" ${row.role===k?'selected':''}>${v}</option>`).join('')}</select></div>
@@ -4830,14 +4832,14 @@ function equip(item){
  add(item,-1);
  if(old&&!add(old,1)){add(item,1);note('🏦 Bank full. Cannot swap equipment.');return}
  state.equipment[slot]=item;
- state.equippedLoadoutIndex=null;
+ if(!TOOLBELT_SLOTS.includes(slot))state.equippedLoadoutIndex=null;
  note(`🛡️ Equipped ${item} (${slot}).`);refreshDynamic();renderGearPicker();save();
 }
 function unequip(slot){
  if(!EQUIP_SLOTS.includes(slot))return;
  const item=state.equipment[slot];if(!item)return;
  if(!add(item,1)){note('🏦 Bank full. Free a stack before unequipping.');return}
- state.equipment[slot]=null;state.equippedLoadoutIndex=null;note(`Unequipped ${item}.`);refreshDynamic();renderGearPicker();save();
+ state.equipment[slot]=null;if(!TOOLBELT_SLOTS.includes(slot))state.equippedLoadoutIndex=null;note(`Unequipped ${item}.`);refreshDynamic();renderGearPicker();save();
 }
 function sellPrice(item){return Math.max(1,baseSellPrice(item))}
 function sell(item,qty){
@@ -6312,16 +6314,16 @@ const GEAR_SLOT_UI={
 function gearSlotButton(slot,equipment=state.equipment){
  const item=equipment?.[slot],info=GEAR_SLOT_UI[slot]||{icon:'📦',label:slot};
  return `<div style="position:relative;grid-area:${slot}"><button type="button" class="gear-paper-slot ${item?'occupied':''}" ${item?`data-item-preview="${esc(item)}"`: ''} style="width:100%;height:100%" data-gear-slot="${slot}" ${item?'':`title="${esc(info.label)}: Empty – click to choose"`} aria-label="${esc(info.label)} slot: ${item?esc(item):'empty'}. Choose equipment">
- <span class="gear-symbol" aria-hidden="true">${item?itemIcon(item):info.icon}</span><span class="gear-caption">${esc(info.label)}</span><span class="gear-name">${item?esc(item):'Empty'}</span></button>${item?`<button type="button" class="gear-unequip-mini" data-loadout-clear-preview="${slot}" title="Remove ${esc(item)} from saved set" aria-label="Remove ${esc(item)} from saved set">×</button>`:''}</div>`;
+ <span class="gear-symbol" aria-hidden="true">${item?itemIcon(item):info.icon}</span><span class="gear-caption">${esc(info.label)}</span><span class="gear-name">${item?esc(item):'Empty'}</span></button>${item?`<button type="button" class="gear-unequip-mini" ${TOOLBELT_SLOTS.includes(slot)?`data-toolbelt-unequip="${slot}" title="Unequip ${esc(item)}" aria-label="Unequip ${esc(item)}"`:`data-loadout-clear-preview="${slot}" title="Remove ${esc(item)} from saved set" aria-label="Remove ${esc(item)} from saved set"`}>×</button>`:''}</div>`;
 }
 function renderGearSidebar(){
  const mods=gearMods();
  const paperSlots=['head','cape','amulet','quiver','weapon','body','shield','legs','gloves','ring'];
  const selected=state.loadouts?.[ui.loadoutTab],previewEquipment=selected?.equipment||Object.fromEntries(EQUIP_SLOTS.map(slot=>[slot,null]));
- el('sidebar').innerHTML=`<div class="between"><h3 style="margin:0 0 8px">⚔️ Equipment</h3><span class="small subdued">${EQUIP_SLOTS.filter(slot=>!!previewEquipment[slot]).length}/${EQUIP_SLOTS.length} equipped</span></div>
+ el('sidebar').innerHTML=`<div class="between"><h3 style="margin:0 0 8px">⚔️ Equipment</h3><span class="small subdued">${LOADOUT_SLOTS.filter(slot=>!!previewEquipment[slot]).length}/${LOADOUT_SLOTS.length} set slots</span></div>
  ${equipmentLoadoutsHtml()}
 
- <div class="gear-preview-notice">Viewing: <b>${esc(selected?.name||'Set')}</b> · Changes here edit the saved set, not your current equipment.</div><div class="gear-doll"><div class="gear-paper-grid">${paperSlots.map(slot=>gearSlotButton(slot,previewEquipment)).join('')}</div><div class="gear-tools-title">Toolbelt</div><div class="gear-toolbelt">${['axe','pickaxe'].map(slot=>gearSlotButton(slot,previewEquipment)).join('')}</div></div>
+ <div class="gear-preview-notice">Viewing: <b>${esc(selected?.name||'Set')}</b> · Changes here edit the saved set, not your current equipment.</div><div class="gear-doll"><div class="gear-paper-grid">${paperSlots.map(slot=>gearSlotButton(slot,previewEquipment)).join('')}</div><div class="gear-tools-title">Toolbelt · Shared across all sets</div><div class="gear-toolbelt">${TOOLBELT_SLOTS.map(slot=>gearSlotButton(slot,state.equipment)).join('')}</div></div>
  <div class="gear-small-note"></div>
  <div class="equipment-max-hits"><div class="max-hit-heading">⚔️ Your max hits <small>Before enemy weakness</small></div><div class="max-hit-grid">${[['attack','🗡️ Melee'],['ranged','🏹 Ranged'],['magic','🪄 Magic']].map(([style,name])=>`<div><small>${name}</small><strong>${fmt(combatPreview(style).baseMax)}</strong></div>`).join('')}</div><p>Ranged uses selected arrows; Magic uses staff bonuses. Values are potential damage until a bow or charged staff is ready. Hover items to compare.</p></div>
  <div class="equipment-stats"><b>Set collections</b>${setBonusEntries().map(set=>`<div class="set-tracker ${set.count>=2?'set-enabled':''}"><b>${esc(set.name)} ${set.count}/3</b><small>2 pieces: ${esc(describeSetBonus(set.two))} ${set.count>=2?'✓':'🔒'}</small><small>3 pieces: ${esc(describeSetBonus(set.three))} ${set.count===3?'✓':'🔒'}</small></div>`).join('')||'<span class="subdued">Equip two matching armour pieces to activate set bonuses.</span>'}</div>
@@ -6331,24 +6333,25 @@ function renderGearPicker(){
  const slot=ui.gearSlot,overlay=el('gearOverlay');
  if(!slot||overlay.hidden)return;
  const preset=state.loadouts?.[ui.loadoutTab];if(!preset)return;
+ const isTool=TOOLBELT_SLOTS.includes(slot);
  const info=GEAR_SLOT_UI[slot]||{icon:'📦',label:slot};
- el('gearDialogTitle').textContent=info.icon+' '+info.label+' · '+preset.name;
- const current=preset.equipment?.[slot]||null;
+ el('gearDialogTitle').textContent=info.icon+' '+info.label+' · '+(isTool?'Shared Toolbelt':preset.name);
+ const current=isTool?(state.equipment[slot]||null):(preset.equipment?.[slot]||null);
  // Preview options include bank gear AND currently worn gear. Nothing is moved when editing.
  const available={...state.bank};
  for(const item of Object.values(state.equipment))if(item)available[item]=(available[item]||0)+1;
  for(const item of Object.values(preset.equipment||{}))if(item)available[item]=Math.max(1,available[item]||0);
  const options=Object.entries(available).filter(([name,qty])=>qty>0&&EQUIPMENT[name]?.slot===slot)
   .sort(([a],[b])=>Number(gearRequirement(b).met)-Number(gearRequirement(a).met)||gearRequirement(a).level-gearRequirement(b).level||a.localeCompare(b));
- const currentHtml=current?`<div class="gear-equipped-card" data-item-preview="${esc(current)}">${itemArt(current,true)}<div class="gear-current-details"><strong>${esc(current)}</strong><small>${esc(gearDescription(EQUIPMENT[current]))}</small></div><button data-loadout-clear-slot="${slot}">Clear slot</button></div>`:'<div class="gear-picker-empty">This set has an empty ${esc(info.label.toLowerCase())} slot.</div>';
+ const currentHtml=current?`<div class="gear-equipped-card" data-item-preview="${esc(current)}">${itemArt(current,true)}<div class="gear-current-details"><strong>${esc(current)}</strong><small>${esc(gearDescription(EQUIPMENT[current]))}</small></div><button ${isTool?`data-toolbelt-unequip="${slot}"`:`data-loadout-clear-slot="${slot}"`}>${isTool?'Unequip':'Clear slot'}</button></div>`:'<div class="gear-picker-empty">This set has an empty ${esc(info.label.toLowerCase())} slot.</div>';
  const availableHtml=options.length?`<div class="gear-picker-grid">${options.map(([name,qty])=>{
   const req=gearRequirement(name),reqText=req.skill?`${label(req.skill)} level ${req.level}`:'No level requirement';
-  return `<div class="gear-pick-item ${req.met?'':'locked'}" data-item-preview="${esc(name)}">${itemArt(name)}<div class="gear-pick-details"><strong>${esc(name)}</strong><small>${esc(gearDescription(EQUIPMENT[name]))} · ${esc(reqText)}${req.met?'':' 🔒'}</small><button data-loadout-slot-item="${esc(name)}">${current===name?'Selected':'Use in set'}</button></div></div>`;
+  return `<div class="gear-pick-item ${req.met?'':'locked'}" data-item-preview="${esc(name)}">${itemArt(name)}<div class="gear-pick-details"><strong>${esc(name)}</strong><small>${esc(gearDescription(EQUIPMENT[name]))} · ${esc(reqText)}${req.met?'':' 🔒'}</small><button ${isTool?`data-toolbelt-equip="${esc(name)}"`:`data-loadout-slot-item="${esc(name)}"`}>${current===name?'Selected':isTool?'Equip tool':'Use in set'}</button></div></div>`;
  }).join('')}</div>`:'<div class="gear-picker-empty">No gear for this slot in your bank or currently equipped.</div>';
- el('gearDialogContent').innerHTML=`<p class="gear-preview-notice">Editing saved set <b>${esc(preset.name)}</b>. Your character keeps wearing the same gear until you press <b>Equip set</b>.</p><div class="eyebrow" style="margin-top:15px">Saved in this set</div>${currentHtml}<div class="between" style="margin-top:17px"><strong>Choose equipment for this set</strong><span class="small subdued">${options.length} types</span></div>${availableHtml}`;
+ el('gearDialogContent').innerHTML=`<p class="gear-preview-notice">${isTool?'Toolbelt is shared across all equipment sets. Changes equip tools immediately and remain active when switching sets.':`Editing saved set <b>${esc(preset.name)}</b>. Your character keeps wearing the same gear until you press <b>Equip set</b>.`}</p><div class="eyebrow" style="margin-top:15px">Saved in this set</div>${currentHtml}<div class="between" style="margin-top:17px"><strong>Choose equipment for this set</strong><span class="small subdued">${options.length} types</span></div>${availableHtml}`;
 }
 function editLoadoutSlot(slot,item){
- const preset=state.loadouts?.[ui.loadoutTab];if(!preset||!EQUIP_SLOTS.includes(slot))return;
+ const preset=state.loadouts?.[ui.loadoutTab];if(!preset||!LOADOUT_SLOTS.includes(slot))return;
  if(item&&EQUIPMENT[item]?.slot!==slot)return;
  if(!preset.equipment)preset.equipment=Object.fromEntries(EQUIP_SLOTS.map(s=>[s,null]));
  preset.equipment[slot]=item||null;
@@ -6778,6 +6781,7 @@ function handleClick(e){
  if(b.hasAttribute('data-inspect-raid'))return inspectMonster(Number(b.dataset.inspectRaid),true);
  if(b.hasAttribute('data-loadout-view')){ui.loadoutTab=Number(b.dataset.loadoutView);openFocusSidebar('gear');return;}
  if(b.hasAttribute('data-loadout-tab')){ui.loadoutTab=Number(b.dataset.loadoutTab);renderGearSidebar();return;}
+ if(b.hasAttribute('data-toolbelt-unequip')){unequip(b.dataset.toolbeltUnequip);return;}
  if(b.hasAttribute('data-loadout-clear-preview')){editLoadoutSlot(b.dataset.loadoutClearPreview,null);return;}
  if(b.hasAttribute('data-loadout-save'))return saveEquipmentLoadout(Number(b.dataset.loadoutSave));
  if(b.hasAttribute('data-loadout-equip'))return equipEquipmentLoadout(Number(b.dataset.loadoutEquip));
@@ -6925,6 +6929,8 @@ el('gearOverlay').addEventListener('click',e=>{
  if(e.target===el('gearOverlay'))return closeGearSlot();
  const btn=e.target.closest('button');if(!btn||btn.disabled)return;
  if(btn.hasAttribute('data-gear-close'))return closeGearSlot();
+ if(btn.hasAttribute('data-toolbelt-equip'))return equip(btn.dataset.toolbeltEquip);
+ if(btn.hasAttribute('data-toolbelt-unequip'))return unequip(btn.dataset.toolbeltUnequip);
  if(btn.hasAttribute('data-loadout-slot-item'))return editLoadoutSlot(ui.gearSlot,btn.dataset.loadoutSlotItem);
  if(btn.hasAttribute('data-loadout-clear-slot'))return editLoadoutSlot(ui.gearSlot,null);
  if(btn.hasAttribute('data-equip'))return equip(btn.dataset.equip);
