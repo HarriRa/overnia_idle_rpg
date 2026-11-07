@@ -1,0 +1,79 @@
+
+name: Publish Overnia (automatic version)
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'index.html'
+      - 'sw.js'
+      - 'manifest.webmanifest'
+      - 'art/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: overnia-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate version
+        env:
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          python3 - <<'PY'
+          import datetime, json, os, re
+          from pathlib import Path
+
+          p = Path("index.html")
+          html = p.read_text(encoding="utf-8")
+          now = datetime.datetime.now(datetime.timezone.utc)
+          run = int(os.environ["GITHUB_RUN_NUMBER"])
+          attempt = int(os.environ["GITHUB_RUN_ATTEMPT"])
+          version = f"{now.year}.{now.month}.{now.day}.{run*100+attempt}"
+
+          pattern = r'(<meta\s+name="overnia-build-version"\s+content=")[^"]*(")'
+          html, count = re.subn(
+              pattern,
+              lambda m: m.group(1)+version+m.group(2),
+              html,
+              count=1
+          )
+          if count != 1:
+              raise SystemExit("Missing build version meta tag")
+
+          p.write_text(html, encoding="utf-8")
+          Path("version.json").write_text(
+              json.dumps({"version": version})+"\n",
+              encoding="utf-8"
+          )
+          print("Publishing version:", version)
+          PY
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
