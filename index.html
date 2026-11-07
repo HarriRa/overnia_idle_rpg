@@ -1561,6 +1561,11 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 /* Overnia batch 3 artwork: transparent images fit all item and recipe containers */
 .ovni-batch3-img{width:1.8em;height:1.8em;max-width:100%;max-height:100%;object-fit:contain;vertical-align:middle;pointer-events:none;user-select:none;-webkit-user-drag:none;}
 .item-art .ovni-batch3-img{width:100%;height:100%;display:block;}
+@media(max-width:650px){#gearOverlay .weapon-picker-tabs{position:sticky;top:48px;z-index:2}}
+.weapon-picker-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 10px}
+.weapon-picker-tabs button{min-width:0;padding:10px 4px;border:1px solid #58705e;border-radius:9px;background:#20362b;color:#d5d9c9;font-weight:700;font-size:13px;white-space:nowrap}
+.weapon-picker-tabs button.active{background:#466e53;color:#fff1c6;border-color:#b9b17a}
+.weapon-picker-tabs small{opacity:.7;font-size:10px}
 </style><style id="overnia-v53-quick-eat-style">
 .over-arena-quick-eat{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;padding:9px 8px;margin-top:9px;background:#252a25;border:1px solid #776b4d;border-radius:9px}
 .over-arena-quick-eat .over-quick-eat-label{color:#f2d6a3;font-size:12px;font-weight:750}
@@ -4054,7 +4059,7 @@ function openFocusSidebar(tab){
  const title=el('focusDrawerTitle');if(title)title.textContent=({bank:'🏦 Bank',gear:'⚔️ Equipment',potions:'🧪 Potions'})[tab];
  updateFocusDock();
 }
-const ui={regionDetail:null,regionLandmark:0,regionPlaceOpen:false,worldSection:'atlas',worldMapExpanded:false,worldMapPanMode:false,worldMapPanX:0,worldMapPanY:0,combatPanel:'fight',combatMonsterFilter:'all',combatTargetIndex:null,overniaRumor:0,view:'combat',skillsFilter:'All',skillsSort:'level',navSearch:'',navGroups:{adventure:true,gathering:true,production:true,goals:true},skillSearch:{},skillMode:{},skillTab:{},skillPage:{},skillSelection:{},focusExpanded:false,sidebarTab:'bank',shopCategory:'All',shopPage:0,shopQty:1,mobileShopOpen:'Food',journalPage:0,bank:{main:{search:'',tab:'all',page:0,selected:null},side:{search:'',tab:'all',page:0,selected:null}},journalCategory:'All',gearSlot:null,loadoutTab:0};
+const ui={regionDetail:null,regionLandmark:0,regionPlaceOpen:false,worldSection:'atlas',worldMapExpanded:false,worldMapPanMode:false,worldMapPanX:0,worldMapPanY:0,combatPanel:'fight',combatMonsterFilter:'all',combatTargetIndex:null,overniaRumor:0,view:'combat',skillsFilter:'All',skillsSort:'level',navSearch:'',navGroups:{adventure:true,gathering:true,production:true,goals:true},skillSearch:{},skillMode:{},skillTab:{},skillPage:{},skillSelection:{},focusExpanded:false,sidebarTab:'bank',shopCategory:'All',shopPage:0,shopQty:1,mobileShopOpen:'Food',journalPage:0,bank:{main:{search:'',tab:'all',page:0,selected:null},side:{search:'',tab:'all',page:0,selected:null}},journalCategory:'All',gearSlot:null,weaponPickerStyle:"melee",loadoutTab:0};
 let lastTick=performance.now(),lastUiPulse=0,lastSavedFrame=0;
 let offlineRunning=false,simulatedTime=null,offlineLogCount=0;
 const ACTIVITY_FEED_CONFIG={lifetimeMs:5000,fadeMs:1100,maxRowsDesktop:6,maxRowsMobile:3};
@@ -6439,11 +6444,14 @@ function renderGearPicker(){
  const options=Object.entries(available).filter(([name,qty])=>qty>0&&EQUIPMENT[name]?.slot===slot)
   .sort(([a],[b])=>Number(gearRequirement(b).met)-Number(gearRequirement(a).met)||gearRequirement(a).level-gearRequirement(b).level||a.localeCompare(b));
  const currentHtml=current?`<div class="gear-equipped-card" data-item-preview="${esc(current)}">${itemArt(current,true)}<div class="gear-current-details"><strong>${esc(current)}</strong><small>${esc(gearDescription(EQUIPMENT[current]))}</small></div><button ${isTool?`data-toolbelt-unequip="${slot}"`:`data-loadout-clear-slot="${slot}"`}>${isTool?'Unequip':'Clear slot'}</button></div>`:'<div class="gear-picker-empty">This set has an empty ${esc(info.label.toLowerCase())} slot.</div>';
- const availableHtml=options.length?`<div class="gear-picker-grid">${options.map(([name,qty])=>{
+ const weaponStyle=name=>EQUIPMENT[name]?.combatType==='ranged'?'ranged':EQUIPMENT[name]?.combatType==='magic'?'magic':'melee';
+ const visibleOptions=slot==='weapon'?options.filter(([name])=>weaponStyle(name)===ui.weaponPickerStyle):options;
+ const weaponTabs=slot==='weapon'?`<div class="weapon-picker-tabs" role="group" aria-label="Weapon category">${[['melee','⚔️ Melee'],['ranged','🏹 Ranged'],['magic','✨ Magic']].map(([key,title])=>`<button type="button" data-weapon-picker-style="${key}" class="${ui.weaponPickerStyle===key?'active':''}" aria-pressed="${ui.weaponPickerStyle===key}">${title} <small>${options.filter(([name])=>weaponStyle(name)===key).length}</small></button>`).join('')}</div>`:'';
+ const availableHtml=visibleOptions.length?`<div class="gear-picker-grid">${visibleOptions.map(([name,qty])=>{
   const req=gearRequirement(name),reqText=req.skill?`${label(req.skill)} level ${req.level}`:'No level requirement';
   return `<div class="gear-pick-item ${req.met?'':'locked'}" data-item-preview="${esc(name)}">${itemArt(name)}<div class="gear-pick-details"><strong>${esc(name)}</strong><small>${esc(reqText)}${req.met?'':' 🔒'}</small>${gearPickerQuickStats(name,current)}<button ${isTool?`data-toolbelt-equip="${esc(name)}"`:`data-loadout-slot-item="${esc(name)}"`}>${current===name?'Selected':isTool?'Equip tool':'Use in set'}</button></div></div>`;
- }).join('')}</div>`:'<div class="gear-picker-empty">No gear for this slot in your bank or currently equipped.</div>';
- el('gearDialogContent').innerHTML=`<p class="gear-preview-notice">${isTool?'Toolbelt is shared across all equipment sets. Changes equip tools immediately and remain active when switching sets.':`Editing saved set <b>${esc(preset.name)}</b>. Your character keeps wearing the same gear until you press <b>Equip set</b>.`}</p><div class="eyebrow" style="margin-top:15px">Saved in this set</div>${currentHtml}<div class="between" style="margin-top:17px"><strong>Choose equipment for this set</strong><span class="small subdued">${options.length} types</span></div>${availableHtml}`;
+ }).join('')}</div>`:'<div class="gear-picker-empty">No weapons in this category in your bank or currently equipped.</div>';
+ el('gearDialogContent').innerHTML=`<p class="gear-preview-notice">${isTool?'Toolbelt is shared across all equipment sets. Changes equip tools immediately and remain active when switching sets.':`Editing saved set <b>${esc(preset.name)}</b>. Your character keeps wearing the same gear until you press <b>Equip set</b>.`}</p><div class="eyebrow" style="margin-top:15px">Saved in this set</div>${currentHtml}<div class="between" style="margin-top:17px"><strong>Choose equipment for this set</strong><span class="small subdued">${visibleOptions.length} shown · ${options.length} total</span></div>${weaponTabs}${availableHtml}`;
 }
 function editLoadoutSlot(slot,item){
  const preset=state.loadouts?.[ui.loadoutTab];if(!preset||!LOADOUT_SLOTS.includes(slot))return;
@@ -6455,7 +6463,7 @@ function editLoadoutSlot(slot,item){
 
 function openGearSlot(slot){
  if(!EQUIP_SLOTS.includes(slot))return;hideItemTooltip();
- ui.gearSlot=slot;el('gearOverlay').hidden=false;renderGearPicker();
+ ui.gearSlot=slot;if(slot==='weapon'){const name=state.loadouts?.[ui.loadoutTab]?.equipment?.weapon;ui.weaponPickerStyle=EQUIPMENT[name]?.combatType==='ranged'?'ranged':EQUIPMENT[name]?.combatType==='magic'?'magic':'melee';}el('gearOverlay').hidden=false;renderGearPicker();
  el('gearOverlay').querySelector('[data-gear-close]').focus();
 }
 function closeGearSlot(){
@@ -7025,6 +7033,7 @@ el('gearOverlay').addEventListener('click',e=>{
  if(e.target===el('gearOverlay'))return closeGearSlot();
  const btn=e.target.closest('button');if(!btn||btn.disabled)return;
  if(btn.hasAttribute('data-gear-close'))return closeGearSlot();
+ if(btn.hasAttribute('data-weapon-picker-style')){ui.weaponPickerStyle=btn.dataset.weaponPickerStyle;return renderGearPicker();}
  if(btn.hasAttribute('data-toolbelt-equip'))return equip(btn.dataset.toolbeltEquip);
  if(btn.hasAttribute('data-toolbelt-unequip'))return unequip(btn.dataset.toolbeltUnequip);
  if(btn.hasAttribute('data-loadout-slot-item'))return editLoadoutSlot(ui.gearSlot,btn.dataset.loadoutSlotItem);
