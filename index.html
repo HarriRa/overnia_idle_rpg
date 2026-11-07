@@ -4494,6 +4494,12 @@ function completeSkill(){
  if(!canPay(action.cost)){note('Out of materials. Action stopped.');stop(true);return}
  if(action.requiresFire&&!ensureCookingFire()){note('🔥 Out of logs! Cooking paused until you get more firewood.');stop(true);return}
  let quantity=action.quantity||1;
+ // Coal yield scales with Mining level. XP remains one action's XP.
+ if(skill==='mining'&&action.output==='Coal'){
+  const miningLevel=levelFromXp(state.xp.mining||0);
+  const maxCoal=miningLevel>=99?6:miningLevel>=85?5:miningLevel>=70?4:miningLevel>=55?3:miningLevel>=40?2:1;
+  if(maxCoal>1)quantity+=Math.floor(Math.random()*maxCoal);
+ }
  if(['woodcutting','mining','fishing','agriculture'].includes(skill))quantity+=extraGatherAmount(skill);
  if(!buyOrCraft(action.cost,action.output,quantity)){note('🏦 Bank full: 1000 unique stacks. Free a slot to continue.');stop(true);return}
  if(skill==='enchanting'&&MAGIC_STAVES[action.output]){
