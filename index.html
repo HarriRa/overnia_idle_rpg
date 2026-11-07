@@ -3950,6 +3950,25 @@ function itemTier(item){
  if(/Mithril|Gold|Ruby|Sapphire|Emerald|Yew|Anglerfish|Scholar|Power/.test(item))return 'tier-high';
  return 'tier-basic';
 }
+// Crafting navigation: one clear category per recipe, shared by desktop and mobile.
+// This changes presentation only; recipe IDs, requirements and outputs stay intact.
+for(const action of SKILLS.crafting.actions){
+ const item=action.output||'';
+ const gear=EQUIPMENT[item];
+ if(gear?.slot==='weapon'||/\b(?:Staff|Wand|Bow|Sword|Blade|Crossbow|Warbow|Greatsword|Soulstaff)\b/i.test(item)){
+  action.category='Weapons';
+ }else if(gear&&['head','body','legs','gloves','shield','cape','boots'].includes(gear.slot)){
+  action.category='Armour';
+ }else if(gear&&['ring','amulet'].includes(gear.slot)||action.category==='Jewellery'){
+  action.category='Jewellery';
+ }else if(action.category==='Gems'){
+  action.category='Gems';
+ }else if(action.category==='Materials'){
+  action.category='Materials';
+ }else if(['Elite Tank','Elite Power','Rare Gear','Armour'].includes(action.category)){
+  action.category='Armour';
+ }
+}
 for(const skill of Object.values(SKILLS))for(const a of skill.actions||[])ITEM_META[a.output]={category:itemCategory(a.output)};
 for(const monster of MONSTERS){for(const item of Object.keys(monster.loot))ITEM_META[item]??={category:itemCategory(item)};if(monster.unique)ITEM_META[monster.unique.item]??={category:itemCategory(monster.unique.item)};if(monster.componentDrop){for(const item of [monster.componentDrop.item,monster.componentDrop.extraItem].filter(Boolean))ITEM_META[item]??={category:itemCategory(item)}}for(const key of ['trashTable','seedTable','gemTable'])for(const row of monster[key]||[])ITEM_META[row[0]]??={category:itemCategory(row[0])}}
 for(const item of [...Object.keys(EQUIPMENT),...Object.keys(FOOD),...Object.keys(POTIONS),...Object.keys(FIRE_FUEL),...SHOP_ITEMS.map(x=>x.name),'Coins',...TREASURE_TABLE.map(x=>x[0]),...SOUL_GEMS.map(x=>x.name),'Soul Shard'])ITEM_META[item]??={category:itemCategory(item)};
