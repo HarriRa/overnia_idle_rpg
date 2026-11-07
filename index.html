@@ -4507,7 +4507,7 @@ function startCombat(index){
  const target=el('combatTarget');if(target&&target.querySelector(`option[value="${index}"]`))target.value=String(index);
  state.active={type:'combat'};state.progress=0;note(`⚔️ Fighting ${MONSTERS[index].name}`);renderProgress();refreshDynamic();save();
 }
-function stop(silent=false){state.active=null;state.progress=0;if(!silent)note('⏹ Activity stopped.');refreshDynamic();renderProgress();save()}
+function stop(silent=false){state.forgemasterAttackCount=0;state.active=null;state.progress=0;if(!silent)note('⏹ Activity stopped.');refreshDynamic();renderProgress();save()}
 // Gathering bonuses over 100% grant guaranteed extras. Mythic gear therefore
 // stays powerful instead of being silently limited to a 95% chance for +1.
 function extraGatherAmount(skill){
@@ -4769,6 +4769,7 @@ function completeCombat(){
    rollBossPet(m);
    note(`🏆 Defeated ${m.name}! Loot: ${drops.join(', ')||'Nothing'}`);
    state.monsterHp=m.hp;
+   state.forgemasterAttackCount=0;
   }
  }else{
   countered=true;
@@ -4781,6 +4782,15 @@ function completeCombat(){
   // Percentage armour makes Defence and tank gear meaningful at high damage.
   const armourReduction=clamp(.04+effectiveDefence/900,.04,.55);
   incoming=Math.max(0,Math.floor(rawHit*(1-armourReduction))-Math.max(0,mods.block||0));
+  // Forgemaster's final phase: every fifth counterattack deals 300 additional
+  // true damage, ignoring Defence, armour and flat block, even on a missed hit.
+  if(m.name==='The Forsaken Forgemaster'&&state.monsterHp<m.hp*.25){
+   state.forgemasterAttackCount=(Number(state.forgemasterAttackCount)||0)+1;
+   if(state.forgemasterAttackCount%5===0){
+    incoming+=300;
+    note('🔥 Forge Frenzy! Forgemaster deals 300 true damage!');
+   }
+  }else if(m.name==='The Forsaken Forgemaster')state.forgemasterAttackCount=0;
   state.hp=Math.max(0,state.hp-incoming);
  }
  if(!offlineRunning)ui.combatLastHit={mode:raidFight?'raid':'combat',enemy:m.name,dealt:actualDamage,strikes:rolledStrikes.length>1?rolledStrikes:null,taken:incoming,countered,at:performance.now()};
