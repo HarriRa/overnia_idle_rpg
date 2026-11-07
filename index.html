@@ -1999,6 +1999,19 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 }
 @media(min-width:901px){#gearOverlay .gear-quick-stats{display:none!important}}
 </style>
+
+<style id="overnia-food-magic-mobile-fix">
+@media(max-width:700px){
+ body.mobile-combat-settings-open:has(#mobileCombatCard) #main{display:flex!important;flex-direction:column!important}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) [data-combat-section="fight"]{order:-2!important}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) [data-combat-section="setup"]{order:-1!important}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) .combat-food-foldout{padding:9px!important}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:8px}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood button{display:flex!important;align-items:center;justify-content:flex-start;gap:5px;min-width:0;padding:5px!important;font-size:10px!important;line-height:1.3;overflow-wrap:anywhere;text-align:left}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood .item-art,body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood img,body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood svg{width:24px!important;height:24px!important;max-width:24px!important;max-height:24px!important;min-width:0!important;font-size:17px!important;flex-shrink:0}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) .combat-quick-food .item-art{width:24px!important;height:24px!important;font-size:17px!important}
+}
+</style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
  <div class="home-wrap">
@@ -4028,7 +4041,7 @@ function newGame(){return {
  coins:250,bank:{'Soul Shard':10},potions:{},bankTabs:[],bankAssignments:{},equipment:Object.fromEntries(EQUIP_SLOTS.map(x=>[x,null])),
   loadouts:defaultLoadouts(),equippedLoadoutIndex:null,favoriteViews:[],autoSwitchWeakness:false,raidAutoRun:true,
  recipeLayoutVersion:25,
- pets:{},activePet:null,collectionLog:{},hp:10,monsterIndex:0,monsterHp:null,world:{location:'hearthwick',visited:['hearthwick'],started:{},completed:[],hires:[],mapZoom:1},raid:{wave:0,completions:0,pendingChests:0},riftRaid:{wave:0,completions:0,pendingChests:0},raidChoice:'mountain',combatStyle:'attack',combatTraining:{melee:['attack'],ranged:['ranged'],magic:['magic']},rangedAmmo:'Bronze Arrows',staffCharges:{},
+ pets:{},activePet:null,collectionLog:{},hp:10,monsterIndex:0,monsterHp:null,world:{location:'hearthwick',visited:['hearthwick'],started:{},completed:[],hires:[],mapZoom:1},raid:{wave:0,completions:0,pendingChests:0},riftRaid:{wave:0,completions:0,pendingChests:0},raidChoice:'mountain',combatStyle:'attack',combatTraining:{melee:['attack'],ranged:['ranged'],magic:['magic']},rangedAmmo:'Bronze Arrows',staffCharges:{},magicShardCasts:0,
  autoEat:{enabled:false,food:'Cooked Shrimp',threshold:30},
  active:null,progress:0,actionMs:GAME_CONFIG.actionMs,
  fireUntil:0,fireLastFuel:null,bonfireUntil:0,bonfireBoost:0,buffs:{},stats:emptyStats(),claimed:[],
@@ -4289,7 +4302,7 @@ function restore(){
   state={...base,...raw,xp:{...base.xp,...raw.xp},
    coins:Math.max(0,Number(raw.coins??raw.bank.Coins??base.coins)||0),bank:{...raw.bank},potions:{...(raw.potions||{})},raid:{...base.raid,...(raw.raid||{})},world:{...base.world,...(raw.world||{}),visited:Array.isArray(raw.world?.visited)?raw.world.visited.filter(id=>OVERNIA_PLACE_BY_ID[id]):['hearthwick'],started:{...(raw.world?.started||{})},completed:Array.isArray(raw.world?.completed)?raw.world.completed:[],hires:migratedHires.filter(h=>h&&typeof h.id==='string'),mapZoom:Math.min(3.5,Math.max(1,Number(raw.world?.mapZoom)||1))},bankTabs:Array.isArray(raw.bankTabs)?raw.bankTabs.filter(t=>t&&typeof t.id==='string'&&typeof t.name==='string').slice(0,30).map(t=>({id:t.id,name:t.name.slice(0,25)})):[],bankAssignments:{...(raw.bankAssignments||{})},equipment:{...base.equipment,...(raw.equipment||{})},
    loadouts:normalizeLoadouts(raw.loadouts),equippedLoadoutIndex:Number.isInteger(raw.equippedLoadoutIndex)&&raw.equippedLoadoutIndex>=0&&raw.equippedLoadoutIndex<5?raw.equippedLoadoutIndex:null,favoriteViews:Array.isArray(raw.favoriteViews)?[...new Set(raw.favoriteViews.filter(v=>typeof v==='string'))].slice(0,5):[],autoSwitchWeakness:raw.autoSwitchWeakness===true,raidAutoRun:raw.raidAutoRun!==false,
-   rangedAmmo:raw.rangedAmmo||'Bronze Arrows',staffCharges:{...(raw.staffCharges||{})},
+   rangedAmmo:raw.rangedAmmo||'Bronze Arrows',staffCharges:{...(raw.staffCharges||{})},magicShardCasts:raw.magicShardCasts!=null?Math.max(0,Math.floor(Number(raw.magicShardCasts)||0)):Object.values(raw.staffCharges||{}).reduce((sum,n)=>sum+Math.max(0,Math.floor(Number(n)||0)),0),
    autoEat:{...base.autoEat,...(raw.autoEat||{})},buffs:{...(raw.buffs||{})},
    stats:{...emptyStats(),...migratedStats,bySkill:{...migratedStats.bySkill},produced:{...(stats.produced||{})},kills:{...(stats.kills||{})},soulsBySource:{...(stats.soulsBySource||{})},soulsByTier:{...(stats.soulsByTier||Object.fromEntries(SOUL_GEMS.map(g=>[g.name,Math.max(0,Number(raw.bank[g.name]||0))]))) }},
    claimed:Array.isArray(raw.claimed)?raw.claimed:[],
@@ -4734,24 +4747,20 @@ function combatSupplyError(equipment=state.equipment){
  if(equippedCombatStyle(equipment)==='magic'){
   const staff=MAGIC_STAVES[equipment.weapon]?equipment.weapon:null;
   if(!staff)return 'Equip a Magic Staff to use Magic.';
-  if((state.staffCharges[staff]||0)<1)return `${staff} is out of charges. Use Soul Shards to recharge it.`;
+  if((state.magicShardCasts||0)<1&&count('Soul Shard')<1)return 'Not enough Soul Shards for Magic. Each shard fuels '+GAME_CONFIG.magicChargesPerShard+' casts.';
  }
  return null;
 }
-function chargeStaff(shardsRequested){
- const staff=magicStaffEquipped();
- if(!staff){note('🪄 Equip a Magic Staff first.');return}
- const limit=MAGIC_STAVES[staff].maxCharges;
- const current=Math.max(0,state.staffCharges[staff]||0);
- const free=limit-current;
- if(free<=0){note('🪄 This staff is already fully charged.');return}
- const amount=Math.min(Math.max(1,Math.floor(Number(shardsRequested)||1)),count('Soul Shard'),Math.ceil(free/GAME_CONFIG.magicChargesPerShard));
- if(amount<=0){note('🔹 Find Soul Shards from combat kills to recharge your staff.');return}
- if(!add('Soul Shard',-amount))return;
- const gain=Math.min(free,amount*GAME_CONFIG.magicChargesPerShard);
- state.staffCharges[staff]=current+gain;
- note(`🪄 Charged ${staff} +${gain} casts using ${amount} Soul Shard${amount>1?'s':''}.`);
- refreshDynamic();save();
+// Magic uses Soul Shards automatically. One shard fuels the existing 10 casts.
+// Old staff charges are converted once when loading older saves.
+function spendMagicCast(){
+ if((state.magicShardCasts||0)<1){
+  if(count('Soul Shard')<1)return false;
+  if(!add('Soul Shard',-1))return false;
+  state.magicShardCasts=GAME_CONFIG.magicChargesPerShard;
+ }
+ state.magicShardCasts--;
+ return true;
 }
 // Single source of truth for max-hit previews and the live combat roll.
 // 'baseMax' is the standard maximum; 'maxHit' includes an enemy's weakness.
@@ -4812,7 +4821,7 @@ function completeCombat(){
  if(style==='ranged'){
   add(state.rangedAmmo,-arrowsNeeded);state.stats.arrowsFired=(state.stats.arrowsFired||0)+arrowsNeeded;
  }else if(style==='magic'){
-  const staff=magicStaffEquipped();state.staffCharges[staff]--;state.stats.magicCasts=(state.stats.magicCasts||0)+1;
+  if(!spendMagicCast()){note('Not enough Soul Shards.');stop(true);return;}state.stats.magicCasts=(state.stats.magicCasts||0)+1;
  }
  // Single-hit weapons roll once; double-hit ranged weapons roll each strike separately.
  const rolledStrikes=strikeMaxes.map(hitMax=>Math.random()<accuracy?1+Math.floor(Math.random()*hitMax):0);
@@ -6020,17 +6029,16 @@ function renderCombatMain(){
   <section class="info-box"><h3>🏹 Ranged · Bows & Arrows</h3><p>Equip a bow and arrows. Each shot uses <b>1 arrow</b>.</p>
   <label class="form-label" for="rangedAmmo">Selected ammunition</label><select id="rangedAmmo"></select>
   <div class="combat-resource-count" id="rangedStatus"></div></section>
-  <section class="info-box"><h3>🪄 Magic · Soul-charged Staves</h3><p>Each cast uses 1 staff charge. Recharge with Soul Shards.</p>
+  <section class="info-box"><h3>🪄 Magic · Soul Shards</h3><p>Shards are consumed automatically while casting (1 shard = 10 casts). No staff charging needed.</p>
   <div id="magicStaffStatus" class="combat-resource-count"></div>
-  <div class="flexrow">${[1,5,25].map(n=>`<button data-charge="${n}" class="charge-btn">🔹 Charge +${n} shard${n>1?'s':''}</button>`).join('')}</div>
+
   </section></div>`;
  html+=`<div class="health-box"><div class="between"><h3>❤️ Hitpoints · Level <span id="hitpointsLevel">${levelFromXp(state.xp.hitpoints)}</span></h3><b id="combatHp">${state.hp}/${maxHp()} HP</b></div><div class="subdued small" id="hitpointsXpText">${xpText('hitpoints')}</div><div class="xpbar"><div class="fill" id="hitpointsXpFill" style="width:${xpFill('hitpoints')}%"></div></div><small class="subdued">Each Hitpoints level adds 10 HP.</small></div>`;
  html+=`<div class="stat-grid"><div class="stat-tile"><small>Accuracy bonus</small><strong id="boostAccuracy">+${pct(mods.attackPct)}</strong></div><div class="stat-tile"><small>Strength bonus</small><strong id="boostStrength">+${pct(mods.strengthPct)}</strong></div><div class="stat-tile"><small>Defence bonus</small><strong id="boostDefence">+${pct(mods.defencePct)}</strong></div><div class="stat-tile"><small>Treasure per kill</small><strong id="boostTreasure">${pct(treasureChance())}</strong></div></div>`;
  html+=`<div class="combat-max-row"><span>⚔️ Max hits <small>(before enemy weakness)</small></span>${[['attack','Melee'],['ranged','Ranged'],['magic','Magic']].map(([style,name])=>`<b>${name} <strong data-current-max="${style}">${fmt(combatPreview(style).baseMax)}</strong></b>`).join('')}</div>`;
  html+=`</section><section class="combat-panel-section" data-combat-section="fight" ${ui.combatPanel==='fight'?'':'hidden'}>
  <div class="combat-fight-utilities">
- <details class="combat-food-foldout"><summary>🍽️ Food & Auto Eat</summary><div class="food-controls" id="combatFood"></div>
- <div class="info-box"><label class="checkbox-row"><input type="checkbox" id="autoEatEnabled" ${state.autoEat.enabled?'checked':''}> Enable Auto Eat</label><div class="stat-grid"><label><span class="form-label">Food in your bank</span><select id="autoEatFood"></select></label><label><span class="form-label">Eat below</span><select id="autoEatThreshold">${[15,30,50].map(x=>`<option value="${x}" ${Number(state.autoEat.threshold)===x?'selected':''}>${x}% HP</option>`).join('')}</select></label></div><small class="subdued" id="autoEatFoodNote"></small></div></details><div class="combat-quick-food" id="combatQuickFood"></div></div>`;
+ <details class="combat-food-foldout" open><summary>🍽️ Food & Auto Eat</summary><div class="info-box"><label class="checkbox-row"><input type="checkbox" id="autoEatEnabled" ${state.autoEat.enabled?'checked':''}> Enable Auto Eat</label><div class="stat-grid"><label><span class="form-label">Food in your bank</span><select id="autoEatFood"></select></label><label><span class="form-label">Eat below</span><select id="autoEatThreshold">${[15,30,50].map(x=>`<option value="${x}" ${Number(state.autoEat.threshold)===x?'selected':''}>${x}% HP</option>`).join('')}</select></label></div><small class="subdued" id="autoEatFoodNote"></small></div><div class="food-controls" id="combatFood"></div></details><div class="combat-quick-food" id="combatQuickFood"></div></div>`;
  const localMonsters=MONSTERS.map((m,i)=>({m,i})).filter(({m})=>m.area===state.world.location)
   .sort((a,b)=>Number(a.m.level)-Number(b.m.level)||a.m.name.localeCompare(b.m.name,'en'));
  html+=`<div class="combat-monster-toolbar"><h3>⚔️ Local monsters · ${localMonsters.length}</h3><div class="combat-monster-filters" role="group" aria-label="Filter monsters">
@@ -6101,13 +6109,10 @@ function renderCombatResources(){
  }
  if(el('magicStaffStatus')){
   const staff=magicStaffEquipped();
-  el('magicStaffStatus').textContent=staff?`${staff} · ${fmt(state.staffCharges[staff]||0)} / ${fmt(MAGIC_STAVES[staff].maxCharges)} casts · Soul Shards: ×${fmt(count('Soul Shard'))}`:
+  el('magicStaffStatus').textContent=staff?`${staff} · Soul Shards: ×${fmt(count('Soul Shard'))} · ${fmt((state.magicShardCasts||0)+count('Soul Shard')*GAME_CONFIG.magicChargesPerShard)} casts available`:
    `Equip a staff · Soul Shards in bank: ×${fmt(count('Soul Shard'))}`;
  }
- for(const b of document.querySelectorAll('[data-charge]')){
-  const staff=magicStaffEquipped();
-  b.disabled=!staff||count('Soul Shard')<1||(state.staffCharges[staff]||0)>=MAGIC_STAVES[staff].maxCharges;
- }
+
 }
 function renderCombatLive(){
  if(ui.view!=='combat')return;
@@ -6608,7 +6613,7 @@ function renderRaidMain(){
  html+=combatTrainingHtml();
  html+=`<div class="combat-resource-grid" style="margin:14px 0">
  <section class="info-box"><h3>🏹 Ranged Ammo</h3><label class="form-label" for="rangedAmmo">Your arrows</label><select id="rangedAmmo"></select><div id="rangedStatus" class="small subdued"></div></section>
- <section class="info-box"><h3>🪄 Magic Staff</h3><div id="magicStaffStatus" class="small subdued"></div><div class="flexrow">${[1,5,25].map(n=>`<button data-charge="${n}" class="charge-btn">Charge +${n} shards</button>`).join('')}</div></section>
+ <section class="info-box"><h3>🪄 Magic Staff</h3><div id="magicStaffStatus" class="small subdued"></div></section>
  </div>`;
  html+=`<section class="info-box"><div class="between"><strong>🍽️ Food & Auto Eat</strong><span id="raidHp">${Math.ceil(state.hp)}/${maxHp()} HP</span></div>
  <div class="food-controls" id="combatFood"></div><div class="stat-grid"><label><span class="form-label">Auto Eat food</span><select id="autoEatFood"></select></label><label><span class="form-label">Eat below</span><select id="autoEatThreshold">${[15,30,50].map(n=>`<option value="${n}" ${state.autoEat.threshold===n?'selected':''}>${n}% HP</option>`).join('')}</select></label></div><label class="checkbox-row"><input type="checkbox" id="autoEatEnabled" ${state.autoEat.enabled?'checked':''}> Enable Auto Eat</label><p id="autoEatFoodNote" class="small subdued"></p></section>`;
@@ -6914,7 +6919,7 @@ function handleClick(e){
  if(b.hasAttribute('data-raid-start'))return startRaidWave();
  if(b.hasAttribute('data-open-raid-chest'))return openRaidChest(b.dataset.openRaidChest,b.dataset.chestMode||'one');
  if(b.hasAttribute('data-raid-claim-pending'))return claimPendingRaidChests();
- if(b.hasAttribute('data-charge'))return chargeStaff(Number(b.dataset.charge));
+
 
  if(b.hasAttribute('data-compact-page')){
   const kind=b.dataset.compactPage,step=Number(b.dataset.delta)||0;
