@@ -2685,7 +2685,10 @@ function collectionLog(){
 function recordBossDrop(boss,item){
  const log=collectionLog();
  if(!log[boss]||typeof log[boss]!=='object')log[boss]={};
+ const first=!(Number(log[boss][item])>0);
  log[boss][item]=(Number(log[boss][item])||0)+1;
+ if(first)showOverniaRareDrop(item,'collection');
+ return first;
 }
 function rollBossPet(m){
  const pet=BOSS_PETS[m.name];if(!pet||state.pets?.[m.name])return;
@@ -4693,11 +4696,11 @@ function rollMonsterGroup(m,kind){
  return `${qty} ${item}`;
 }
 let overniaRareDropTimeout=null;
-function showOverniaRareDrop(item){
+function showOverniaRareDrop(item,kind='rare'){
  if(offlineRunning)return;
  let box=document.getElementById('overniaRareDropNotice');
  if(!box){box=document.createElement('div');box.id='overniaRareDropNotice';box.setAttribute('role','status');box.setAttribute('aria-live','polite');document.body.appendChild(box)}
- box.textContent='🌟 You received a rare “'+item+'”!';
+ box.textContent=kind==='collection'?'📖 Collection Log unlocked: “'+item+'”!':'🌟 You received a rare “'+item+'”!';
  box.hidden=false;
  clearTimeout(overniaRareDropTimeout);
  overniaRareDropTimeout=setTimeout(()=>{box.hidden=true},5000);
@@ -4714,7 +4717,7 @@ function applyMonsterLoot(m){
  }
  // Dragon Eggs are rare independent drops, never guaranteed by normal loot.
  if(m.dragonEggChance&&Math.random()<m.dragonEggChance){
-  if(add('Dragon Egg',1)){drops.push('🥚 Dragon Egg');note('🥚 RARE DROP! Dragon Egg');showOverniaRareDrop('Dragon Egg')}
+  if(add('Dragon Egg',1)){drops.push('🥚 Dragon Egg');note('🥚 RARE DROP! Dragon Egg');if(m.dragonEggChance<=.01)showOverniaRareDrop('Dragon Egg')}
   else note('🏦 Bank full; missed Dragon Egg drop.');
  }
  // All side tables are separate rolls. Regular loot and treasure never replace them.
@@ -4735,19 +4738,19 @@ function applyMonsterLoot(m){
  for(const [item,baseChance] of m.bossGearDrops||[]){
   const chance=clamp(baseChance*(1+gearMods().luckBonus),0,.95);
   if(Math.random()<chance){
-   if(add(item,1)){drops.push(`🌟 ${item}`);recordBossDrop(m.name,item);note(`🌟 BOSS DROP! ${item}`);showOverniaRareDrop(item)}
+   if(add(item,1)){drops.push(`🌟 ${item}`);recordBossDrop(m.name,item);note(`🌟 BOSS DROP! ${item}`);if(chance<=.01)showOverniaRareDrop(item)}
    else note(`🏦 Bank full; missed boss gear ${item}.`);
   }
  }
  if(m.componentDrop){
   const c=m.componentDrop;
-  if(Math.random()<c.chance&&add(c.item,1)){drops.push(`✨ ${c.item}`);note(`✨ Arcane crafting drop: ${c.item}`);showOverniaRareDrop(c.item)}
-  if(c.extraItem&&Math.random()<c.extraChance&&add(c.extraItem,1)){drops.push(`🏹 ${c.extraItem}`);showOverniaRareDrop(c.extraItem)}
+  if(Math.random()<c.chance&&add(c.item,1)){drops.push(`✨ ${c.item}`);note(`✨ Arcane crafting drop: ${c.item}`);if(c.chance<=.01)showOverniaRareDrop(c.item)}
+  if(c.extraItem&&Math.random()<c.extraChance&&add(c.extraItem,1)){drops.push(`🏹 ${c.extraItem}`);if(c.extraChance<=.01)showOverniaRareDrop(c.extraItem)}
  }
  const treasure=rollTreasure();
  if(treasure){if(add(treasure,1)){drops.push(treasure);state.stats.treasures++}else note('🏦 Bank full; missed a gem drop.')}
  if(m.unique&&Math.random()<clamp(m.unique.chance*(1+gearMods().luckBonus),0,.95)){
-  if(add(m.unique.item,1)){drops.push(`🌟 UNIQUE: ${m.unique.item}`);note(`🌟 RARE DROP! ${m.unique.item}`);showOverniaRareDrop(m.unique.item)}
+  if(add(m.unique.item,1)){drops.push(`🌟 UNIQUE: ${m.unique.item}`);note(`🌟 RARE DROP! ${m.unique.item}`);if(clamp(m.unique.chance*(1+gearMods().luckBonus),0,.95)<=.01)showOverniaRareDrop(m.unique.item)}
   else note(`🏦 Bank full; missed unique ${m.unique.item}.`);
  }
  return drops;
