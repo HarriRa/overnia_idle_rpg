@@ -6282,9 +6282,15 @@ function showItemTooltip(item,x,y,pin=false){
  tooltipTouchPinned=pin;itemTooltipEl.hidden=false;placeItemTooltip(x,y);
 }
 function itemTooltipTarget(target){return target?.closest?.('[data-item-preview]')}
+// On touch devices, equipment already has a dedicated item picker with item names,
+// requirements and an Equip/Use button. The large floating preview obstructs it.
+function suppressEquipmentTouchTooltip(target){
+ if(!matchMedia('(hover: none), (pointer: coarse)').matches)return false;
+ return !!target?.closest?.('#gearOverlay, #focusSidebar');
+}
 document.addEventListener('pointerover',e=>{
  if(e.pointerType==='touch'||tooltipTouchPinned)return;
- const target=itemTooltipTarget(e.target);if(!target)return;
+ const target=itemTooltipTarget(e.target);if(!target||suppressEquipmentTouchTooltip(target))return;
  showItemTooltip(target.dataset.itemPreview,e.clientX,e.clientY);
 });
 document.addEventListener('pointermove',e=>{
@@ -6297,6 +6303,7 @@ document.addEventListener('pointerout',e=>{
 });
 document.addEventListener('click',e=>{
  const target=itemTooltipTarget(e.target);
+ if(suppressEquipmentTouchTooltip(e.target)){hideItemTooltip();return}
  if(!target){if(tooltipTouchPinned)hideItemTooltip();return}
  if(e.pointerType==='touch'||matchMedia('(hover: none)').matches){
   // Tap an item icon or tile to inspect it. Normal equip/bank actions still run.
@@ -6383,6 +6390,7 @@ function openGearSlot(slot){
  el('gearOverlay').querySelector('[data-gear-close]').focus();
 }
 function closeGearSlot(){
+ hideItemTooltip();
  const slot=ui.gearSlot;ui.gearSlot=null;el('gearOverlay').hidden=true;
  if(ui.sidebarTab==='gear'&&slot)el('sidebar').querySelector(`[data-gear-slot="${slot}"]`)?.focus();
 }
