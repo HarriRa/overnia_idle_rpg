@@ -1766,9 +1766,9 @@ button:not(:disabled):active{transform:translateY(1px)}
  body:has(#mobileCombatCard) #activityPanel .activity-track{height:3px!important;margin:3px 0 0!important}
  body:has(#mobileCombatCard) #activityFeed{display:none!important}
  body:has(#mobileCombatCard) #main{order:1!important;display:flex;flex-direction:column;gap:9px;min-width:0}
- body:has(#mobileCombatCard) #main>.heading,body:has(#mobileCombatCard) .combat-region-picker,body:has(#mobileCombatCard) #combatArena,body:has(#mobileCombatCard) .combat-console-nav,body:has(#mobileCombatCard) .combat-panel-section{display:none!important}
+ body:has(#mobileCombatCard) #main>.heading,body:has(#mobileCombatCard) #combatArena,body:has(#mobileCombatCard) .combat-console-nav,body:has(#mobileCombatCard) .combat-panel-section{display:none!important}
  body:has(#mobileCombatCard) .panel.right{display:none!important}
- body.mobile-combat-settings-open:has(#mobileCombatCard) .combat-region-picker,body.mobile-combat-settings-open:has(#mobileCombatCard) [data-combat-section="setup"]{display:block!important}
+ body.mobile-combat-settings-open:has(#mobileCombatCard) [data-combat-section="setup"]{display:block!important}
  /* Reveal the EXISTING Auto Eat controls inside Combat Settings on phones.
     Reuses the desktop form and its save/change handlers, avoiding duplicate IDs. */
  body.mobile-combat-settings-open:has(#mobileCombatCard) [data-combat-section="fight"]{display:block!important}
@@ -2014,6 +2014,12 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
  body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood .item-art,body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood img,body.mobile-combat-settings-open:has(#mobileCombatCard) #combatFood svg{width:24px!important;height:24px!important;max-width:24px!important;max-height:24px!important;min-width:0!important;font-size:17px!important;flex-shrink:0}
  body.mobile-combat-settings-open:has(#mobileCombatCard) .combat-quick-food .item-art{width:24px!important;height:24px!important;font-size:17px!important}
 }
+</style>
+<style id="overnia-rare-drop-notice-v1">
+#overniaRareDropNotice{position:fixed;top:calc(env(safe-area-inset-top,0px) + 76px);left:50%;transform:translateX(-50%);z-index:2147483000;max-width:min(420px,calc(100vw - 24px));width:max-content;min-width:220px;padding:13px 18px;background:linear-gradient(145deg,#40321f,#172c28);border:2px solid #e7bb68;border-radius:12px;box-shadow:0 9px 35px #000b;color:#ffe4a4;font-size:15px;font-weight:800;text-align:center;pointer-events:none;animation:overniaRareAppear .2s ease-out}
+#overniaRareDropNotice[hidden]{display:none!important}
+@keyframes overniaRareAppear{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(max-width:700px){body[data-current-view="combat"] .combat-region-picker{display:block!important;order:-2!important;margin:0!important;padding:9px!important}body[data-current-view="combat"] #mobileCombatCard{order:-3!important}body[data-current-view="combat"] .combat-region-chips{display:none!important}body[data-current-view="combat"] .combat-region-mobile{display:flex!important}body[data-current-view="combat"] .combat-region-top{font-size:12px}body[data-current-view="combat"] .combat-region-mobile select{max-width:100%;width:100%}}
 </style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
@@ -2687,6 +2693,7 @@ function rollBossPet(m){
  state.pets??={};state.pets[m.name]=pet[0];
  recordBossDrop(m.name,pet[0]);
  note(`🐾 PET UNLOCKED! ${pet[0]} — companion of ${m.name}!`);
+ showOverniaRareDrop(pet[0]);
  toast(`🐾 New pet: ${pet[0]}!`);
 }
 MONSTERS.push(...HUNT_BOSSES);
@@ -4672,7 +4679,7 @@ function rollSoulGem(source){
  state.stats.soulsCollected=(state.stats.soulsCollected||0)+1;
  state.stats.soulsByTier[gem.name]=(state.stats.soulsByTier[gem.name]||0)+1;
  state.stats.soulsBySource[source]=(state.stats.soulsBySource[source]||0)+1;
- if(gem.name==='Prismatic Soul Gem')note('🌈 MYTHIC SOUL! Found the 1/10000 Prismatic Soul Gem!');
+ if(gem.name==='Prismatic Soul Gem'){note('🌈 MYTHIC SOUL! Found the 1/10000 Prismatic Soul Gem!');showOverniaRareDrop(gem.name);}
  else if(gem.weight<=97)note(`🌟 ${gem.name} found from ${label(source)}!`);
  return gem.name;
 }
@@ -4684,6 +4691,16 @@ function rollMonsterGroup(m,kind){
  const qty=Math.max(1,Math.floor(min+Math.random()*(max-min+1)));
  if(!add(item,qty))return null;
  return `${qty} ${item}`;
+}
+let overniaRareDropTimeout=null;
+function showOverniaRareDrop(item){
+ if(offlineRunning)return;
+ let box=document.getElementById('overniaRareDropNotice');
+ if(!box){box=document.createElement('div');box.id='overniaRareDropNotice';box.setAttribute('role','status');box.setAttribute('aria-live','polite');document.body.appendChild(box)}
+ box.textContent='🌟 You received a rare “'+item+'”!';
+ box.hidden=false;
+ clearTimeout(overniaRareDropTimeout);
+ overniaRareDropTimeout=setTimeout(()=>{box.hidden=true},5000);
 }
 function applyMonsterLoot(m){
  const drops=[];
@@ -4697,7 +4714,7 @@ function applyMonsterLoot(m){
  }
  // Dragon Eggs are rare independent drops, never guaranteed by normal loot.
  if(m.dragonEggChance&&Math.random()<m.dragonEggChance){
-  if(add('Dragon Egg',1)){drops.push('🥚 Dragon Egg');note('🥚 RARE DROP! Dragon Egg')}
+  if(add('Dragon Egg',1)){drops.push('🥚 Dragon Egg');note('🥚 RARE DROP! Dragon Egg');showOverniaRareDrop('Dragon Egg')}
   else note('🏦 Bank full; missed Dragon Egg drop.');
  }
  // All side tables are separate rolls. Regular loot and treasure never replace them.
@@ -4718,19 +4735,19 @@ function applyMonsterLoot(m){
  for(const [item,baseChance] of m.bossGearDrops||[]){
   const chance=clamp(baseChance*(1+gearMods().luckBonus),0,.95);
   if(Math.random()<chance){
-   if(add(item,1)){drops.push(`🌟 ${item}`);recordBossDrop(m.name,item);note(`🌟 BOSS DROP! ${item}`)}
+   if(add(item,1)){drops.push(`🌟 ${item}`);recordBossDrop(m.name,item);note(`🌟 BOSS DROP! ${item}`);showOverniaRareDrop(item)}
    else note(`🏦 Bank full; missed boss gear ${item}.`);
   }
  }
  if(m.componentDrop){
   const c=m.componentDrop;
-  if(Math.random()<c.chance&&add(c.item,1)){drops.push(`✨ ${c.item}`);note(`✨ Arcane crafting drop: ${c.item}`)}
-  if(c.extraItem&&Math.random()<c.extraChance&&add(c.extraItem,1))drops.push(`🏹 ${c.extraItem}`);
+  if(Math.random()<c.chance&&add(c.item,1)){drops.push(`✨ ${c.item}`);note(`✨ Arcane crafting drop: ${c.item}`);showOverniaRareDrop(c.item)}
+  if(c.extraItem&&Math.random()<c.extraChance&&add(c.extraItem,1)){drops.push(`🏹 ${c.extraItem}`);showOverniaRareDrop(c.extraItem)}
  }
  const treasure=rollTreasure();
  if(treasure){if(add(treasure,1)){drops.push(treasure);state.stats.treasures++}else note('🏦 Bank full; missed a gem drop.')}
  if(m.unique&&Math.random()<clamp(m.unique.chance*(1+gearMods().luckBonus),0,.95)){
-  if(add(m.unique.item,1)){drops.push(`🌟 UNIQUE: ${m.unique.item}`);note(`🌟 RARE DROP! ${m.unique.item}`)}
+  if(add(m.unique.item,1)){drops.push(`🌟 UNIQUE: ${m.unique.item}`);note(`🌟 RARE DROP! ${m.unique.item}`);showOverniaRareDrop(m.unique.item)}
   else note(`🏦 Bank full; missed unique ${m.unique.item}.`);
  }
  return drops;
@@ -6014,12 +6031,12 @@ function renderCombatMain(){
  const mods=gearMods();
  const region=state.world.location;
  let html=`<div class="heading"><div><div class="eyebrow">Adventure & Monsters</div><h2>⚔️ Combat Level <span id="combatLevelDisplay">${combatLevel()}</span> / ${COMBAT_CONFIG.maxLevel}</h2></div></div>`;
+ html+=renderMobileCombat();
  html+=`<div class="combat-region-picker" aria-label="Travel between combat regions">
   <div class="combat-region-top"><span>📍 Hunting area <strong>${esc(OVERNIA_PLACE_BY_ID[region]?.name||'Overnia')}</strong></span><button type="button" data-nav="world" title="Open the world atlas">🗺️ Map</button></div>
   <div class="combat-region-chips" role="group" aria-label="Choose hunting area">${OVERNIA_PLACES.map(p=>`<button type="button" data-combat-region="${p.id}" class="combat-region-chip ${p.id===region?'is-current':''}" aria-pressed="${p.id===region}" title="${esc(p.name)} · ${esc(p.kind)}"><span>${p.icon}</span><b>${esc(p.short)}</b></button>`).join('')}</div>
   <label class="combat-region-mobile"><span>Choose area</span><select id="combatRegionSelect" aria-label="Choose hunting area">${OVERNIA_PLACES.map(p=>`<option value="${p.id}" ${p.id===region?'selected':''}>${p.icon} ${esc(p.name)}</option>`).join('')}</select></label>
  </div>`;
- html+=renderMobileCombat();
  html+=combatArenaHtml('combat');
  html+=`<nav class="combat-console-nav" aria-label="Combat controls">
   ${[['fight','⚔️ Hunt'],['setup','⚙️ Loadout & XP'],['info','📊 Details']].map(([tab,name])=>`<button type="button" data-combat-panel="${tab}" class="${ui.combatPanel===tab?'is-active':''}" aria-pressed="${ui.combatPanel===tab}">${name}</button>`).join('')}
