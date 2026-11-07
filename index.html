@@ -1935,8 +1935,8 @@ button:not(:disabled):active{transform:translateY(1px)}
   border:1px solid #809c73;background:#354e3c;color:#f5e6c7;border-radius:9px;font-weight:800}
  body.mobile-equipment #mobileEquipmentBack[hidden]{display:block!important}
  body.mobile-equipment .panel.right{overscroll-behavior:auto}
- .mobile-combat-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
- .mobile-combat-controls button{font-size:11px!important;padding:10px 3px!important;min-width:0}
+ .mobile-combat-controls{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
+ .mobile-combat-controls button{font-size:10px!important;padding:8px 2px!important;min-width:0;white-space:normal;line-height:1.15}
 }
 </style>
 <style id="overnia-pwa-touch-fixes">
@@ -5985,7 +5985,7 @@ function renderMobileCombat(){
  const healing=food&&state.hp<maxHp();
  return `<section class="mobile-combat-card" id="mobileCombatCard" aria-label="Selected combat target">
   <div class="mobile-combat-top"><span>⚔️ Combat · Level ${combatLevel()}</span><span>📍 ${esc(OVERNIA_PLACE_BY_ID[state.world.location]?.short||'Overnia')}</span></div>
-  <div class="mobile-combat-controls"><button type="button" data-mobile-combat-settings aria-expanded="${document.body.classList.contains('mobile-combat-settings-open')}">⚙️ Combat Settings</button><button type="button" data-mobile-combat-equipment>🛡️ Equipment</button><button type="button" data-mobile-insta-eat ${healing?'':'disabled'}>${food?`🍗 Insta Eat · ×${fmt(count(food[0]))}`:'🍗 No food'}</button></div>
+  <div class="mobile-combat-controls"><button type="button" data-mobile-combat-settings aria-expanded="${document.body.classList.contains('mobile-combat-settings-open')}">⚙️ Combat Settings</button><button type="button" data-mobile-combat-equipment>🛡️ Equipment</button><button type="button" data-mobile-insta-eat ${healing?'':'disabled'}>${food?`🍗 Eat · ×${fmt(count(food[0]))}`:'🍗 No food'}</button><button type="button" data-inspect-monster="${selected}" title="View monster drops">🎁 Drops</button></div>
   <div class="mobile-combat-switch"><button type="button" data-mobile-combat-step="-1" aria-label="Previous monster" ${pos===0?'disabled':''}>‹</button><div class="mobile-combat-title"><strong>${esc(m.name)}</strong><small>${pos+1} / ${choices.length} · Monster Lv ${m.level}</small></div><button type="button" data-mobile-combat-step="1" aria-label="Next monster" ${pos===choices.length-1?'disabled':''}>›</button></div>
   <div class="mobile-combat-hero"><span class="mobile-combat-icon" role="img" aria-label="${esc(m.name)}">${monsterIcon(m)}</span><div class="mobile-combat-hp"><div><b>☠️ Monster HP</b><b data-mobile-monster-hp>${fmt(Math.ceil(hp))} / ${fmt(m.hp)}</b></div><div class="mobile-combat-hp-track"><span class="mobile-combat-hp-fill" data-mobile-monster-fill style="width:${(hp/m.hp*100).toFixed(2)}%"></span></div></div></div>
   <div class="mobile-combat-facts"><span><small>Monster level</small><b>${m.level}</b></span><span><small>Max hit</small><b>${fmt(m.maxHit)}</b></span><span><small>Weakness</small><b>${weaknessLabel(m.weakness)}</b></span></div>
@@ -6008,7 +6008,7 @@ function refreshMobileCombat(){
  for(const skill of ['attack','strength','defence','ranged','magic','hitpoints'])set(`[data-mobile-combat-level="${skill}"]`,'Lv '+levelFromXp(state.xp[skill]||0));
  const food=Object.entries(FOOD).filter(([name])=>count(name)>0).sort((a,b)=>b[1]-a[1]);
  const preferred=food.find(([name])=>name===state.autoEat.food)||food[0];
- const eatButton=root.querySelector('[data-mobile-insta-eat]');if(eatButton){eatButton.disabled=!preferred||state.hp>=maxHp();eatButton.textContent=preferred?'🍗 Insta Eat · ×'+fmt(count(preferred[0])):'🍗 No food';}
+ const eatButton=root.querySelector('[data-mobile-insta-eat]');if(eatButton){eatButton.disabled=!preferred||state.hp>=maxHp();eatButton.textContent=preferred?'🍗 Eat · ×'+fmt(count(preferred[0])):'🍗 No food';}
 }
 function renderCombatMain(){
  const mods=gearMods();
