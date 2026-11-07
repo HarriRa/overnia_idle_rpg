@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-content-sha256" content="e696a712c679e535c3e046f8bce618a533bb2c7f9b92cfa51bfa5e70774f45be"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-content-sha256" content="275896fbd0b7b2cdd9c88fffa0a8e2739051c8a6230a9cda087bcd43b200b018"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -7474,7 +7474,13 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
       if(!hashTag.test(html)) return; // Never prompt for unrelated/error HTML.
       const canonical = html.replace(hashTag, '$1'+HASH_PLACEHOLDER+'$2');
       const digest = await crypto.subtle.digest('SHA-256',new TextEncoder().encode(canonical));
-      if(hex(digest) !== currentHash){ pending = true;notice.hidden = false; }
+      const fetchedHash = hex(digest);
+      const advertisedHash = document.createElement('template');
+      advertisedHash.innerHTML = html.slice(0, Math.min(html.length, 5000));
+      const deployedHash = advertisedHash.content.querySelector('meta[name="overnia-content-sha256"]')?.content;
+      // A partially deployed or incorrectly stamped build must never trigger an update prompt.
+      if(deployedHash !== fetchedHash) return;
+      if(fetchedHash !== currentHash){ pending = true;notice.hidden = false; }
     }catch(err){console.debug('Overnia update check skipped:',err)}
     finally{checking=false;lastChecked=Date.now()}
   }
