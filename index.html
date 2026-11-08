@@ -4051,6 +4051,18 @@ for(const action of SKILLS.crafting.actions){
  }
 }
 for(const skill of Object.values(SKILLS))for(const a of skill.actions||[])ITEM_META[a.output]={category:itemCategory(a.output)};
+// Soul Salvaging: consume only monster trash drops.
+const SOUL_SALVAGE_ITEMS=[...new Set([
+ ...MONSTERS.flatMap(m=>(m.trashTable||[]).map(r=>r[0])),
+ ...Object.values(MONSTER_DROP_RULES).flatMap(m=>(m.trashTable||[]).map(r=>r[0]))
+])].sort((a,b)=>a.localeCompare(b));
+for(const item of SOUL_SALVAGE_ITEMS){
+ SKILLS.enchanting.actions.push(A('Salvage '+item,'Soul Shard',1,100,{[item]:1},'Soul Salvaging',{soulSalvage:true,salvageItem:item}));
+}
+// Double every other Enchanting action's base XP.
+for(const action of SKILLS.enchanting.actions){
+ if(!action.soulSalvage) action.xp*=2;
+}
 for(const monster of MONSTERS){for(const item of Object.keys(monster.loot))ITEM_META[item]??={category:itemCategory(item)};if(monster.unique)ITEM_META[monster.unique.item]??={category:itemCategory(monster.unique.item)};if(monster.componentDrop){for(const item of [monster.componentDrop.item,monster.componentDrop.extraItem].filter(Boolean))ITEM_META[item]??={category:itemCategory(item)}}for(const key of ['trashTable','seedTable','gemTable'])for(const row of monster[key]||[])ITEM_META[row[0]]??={category:itemCategory(row[0])}}
 for(const item of [...Object.keys(EQUIPMENT),...Object.keys(FOOD),...Object.keys(POTIONS),...Object.keys(FIRE_FUEL),...SHOP_ITEMS.map(x=>x.name),'Coins',...TREASURE_TABLE.map(x=>x[0]),...SOUL_GEMS.map(x=>x.name),'Soul Shard'])ITEM_META[item]??={category:itemCategory(item)};
 function itemVisualClass(item){
@@ -4642,6 +4654,27 @@ function completeSkill(){
  const action=SKILLS[skill]?.actions?.[index];if(!action){stop(true);return}
  if(!canPay(action.cost)){note('Out of materials. Action stopped.');stop(true);return}
  if(action.requiresFire&&!ensureCookingFire()){note('🔥 Out of logs! Cooking paused until you get more firewood.');stop(true);return}
+ // Soul Salvaging: 80% one shard, 19% two-three shards, 1% a Soul Gem.
+ if(skill==='enchanting'&&action.soulSalvage){
+  const roll=Math.random();
+  const gem=roll>=.99?weightedPick(SOUL_GEMS):null;
+  const reward=gem?.name||'Soul Shard';
+  const quantity=gem?1:roll<.80?1:2+Math.floor(Math.random()*2);
+  if(!buyOrCraft(action.cost,reward,quantity)){
+   note('🏦 Bank full: cannot store salvaging reward.');stop(true);return;
+  }
+  const xp=gainXp('enchanting',100);
+  state.stats.bySkill.enchanting=(state.stats.bySkill.enchanting||0)+1;
+  state.stats.produced[reward]=(state.stats.produced[reward]||0)+quantity;
+  if(gem){
+   state.stats.soulsCollected=(state.stats.soulsCollected||0)+1;
+   state.stats.soulsByTier[reward]=(state.stats.soulsByTier[reward]||0)+1;
+   state.stats.soulsBySource.enchanting=(state.stats.soulsBySource.enchanting||0)+1;
+   if(reward==='Prismatic Soul Gem')showOverniaRareDrop(reward);
+  }
+  note(`✨ Salvaged ${action.salvageItem} → ${quantity} ${reward} · +${Math.round(xp)} Enchanting XP`);
+  return;
+ }
  let quantity=action.quantity||1;
  // Coal yield scales with Mining level. XP remains one action's XP.
  if(skill==='mining'&&action.output==='Coal'){
