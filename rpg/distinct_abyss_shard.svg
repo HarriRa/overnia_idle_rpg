@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="1.2" flood-opacity=".35"/></filter></defs><g filter="url(#s)"><path d="M29 5L51 22 40 54 21 48 12 25Z" fill="#623b9c" stroke="#bd87f1" stroke-width="3"/><path d="M29 5l4 29 7 20M12 25l21 9 18-12" stroke="#e1b7ff" stroke-width="2" fill="none"/></g></svg>
