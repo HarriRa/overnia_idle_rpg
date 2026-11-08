@@ -2054,6 +2054,18 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 :not(.item-art):not(.gear-symbol) > img.ovni-rpg-img,
 :not(.item-art):not(.gear-symbol) > img.ovni-batch3-img{width:32px!important;height:32px!important;max-width:32px!important;max-height:32px!important;object-fit:contain;vertical-align:middle}
 </style>
+<style id="overnia-icon-size-fix-v2">
+/* Fixed-size inventory icon frame, independent of Crafting/Smithing card dimensions. */
+.item-art{display:inline-flex!important;align-items:center;justify-content:center;vertical-align:middle;box-sizing:border-box;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;max-width:34px!important;max-height:34px!important;flex:0 0 34px!important;overflow:hidden!important;line-height:1!important;padding:1px!important}
+.item-art.big-art{width:64px!important;height:64px!important;min-width:64px!important;min-height:64px!important;max-width:64px!important;max-height:64px!important;flex-basis:64px!important}
+.item-art > img,.item-art > svg,.item-art > .ovni-universal-svg{display:block!important;box-sizing:border-box!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;min-width:0!important;min-height:0!important;object-fit:contain!important;flex:0 1 auto!important;overflow:hidden!important}
+/* Images/SVGs inserted directly in equipment slots or other menus cannot expand to fill the card. */
+.gear-paper-slot .gear-symbol{display:inline-flex!important;align-items:center;justify-content:center;width:36px!important;height:36px!important;flex:0 0 36px!important;overflow:hidden!important}
+.gear-paper-slot .gear-symbol img,.gear-paper-slot .gear-symbol svg{width:32px!important;height:32px!important;max-width:32px!important;max-height:32px!important;min-width:0!important;min-height:0!important;object-fit:contain!important;flex:none!important}
+:not(.item-art) > img.ovni-rpg-img,:not(.item-art) > img.ovni-batch3-img,:not(.item-art) > svg.ovni-universal-svg{width:32px!important;height:32px!important;max-width:32px!important;max-height:32px!important;object-fit:contain!important;vertical-align:middle}
+/* Keep bank grid compact on mobile and desktop. */
+.bank-grid.compact .item-art{width:29px!important;height:29px!important;min-width:29px!important;min-height:29px!important;max-width:29px!important;max-height:29px!important;flex-basis:29px!important}
+</style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
  <div class="home-wrap">
