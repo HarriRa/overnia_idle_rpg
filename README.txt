@@ -1,1 +1,1 @@
-Overnia item art update. Upload index.html AND assets/rpg folder to GitHub repository root. Do not delete your existing manifest, PWA icons or other files. Existing gameplay and saves unchanged.
+Overnia icon clarity update: 15 distinct SVG junk/relic icons and original art priority corrected. Upload index.html and assets/rpg. All other gameplay untouched.
