@@ -2041,6 +2041,19 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 @keyframes overniaRareAppear{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
 @media(max-width:700px){body[data-current-view="combat"] .combat-region-picker{display:block!important;order:-2!important;margin:0!important;padding:9px!important}body[data-current-view="combat"] #mobileCombatCard{order:-3!important}body[data-current-view="combat"] .combat-region-chips{display:none!important}body[data-current-view="combat"] .combat-region-mobile{display:flex!important}body[data-current-view="combat"] .combat-region-top{font-size:12px}body[data-current-view="combat"] .combat-region-mobile select{max-width:100%;width:100%}}
 </style>
+
+<style id="overnia-icon-size-fix">
+/* External inventory artwork must never inherit the size of an entire menu/card. */
+.gear-paper-slot .gear-symbol{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;max-width:100%;flex:none;overflow:hidden;line-height:1}
+.gear-paper-slot .gear-symbol img.ovni-rpg-img,
+.gear-paper-slot .gear-symbol img.ovni-batch3-img{display:block;width:32px!important;height:32px!important;max-width:32px!important;max-height:32px!important;object-fit:contain;flex:none}
+/* All standard item wrappers define the image's dimensions, including Smithing bars. */
+.item-art{flex-shrink:0;overflow:hidden}
+.item-art > img.ovni-rpg-img,.item-art > img.ovni-batch3-img{display:block;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain;min-width:0;min-height:0}
+/* Safety net for item icons rendered directly without an item-art wrapper. */
+:not(.item-art):not(.gear-symbol) > img.ovni-rpg-img,
+:not(.item-art):not(.gear-symbol) > img.ovni-batch3-img{width:32px!important;height:32px!important;max-width:32px!important;max-height:32px!important;object-fit:contain;vertical-align:middle}
+</style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
  <div class="home-wrap">
