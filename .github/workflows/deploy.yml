@@ -9,6 +9,7 @@ on:
       - 'sw.js'
       - 'manifest.webmanifest'
       - 'art/**'
+      - 'assets/**'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
