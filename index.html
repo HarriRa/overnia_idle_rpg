@@ -4056,9 +4056,8 @@ const SOUL_SALVAGE_ITEMS=[...new Set([
  ...MONSTERS.flatMap(m=>(m.trashTable||[]).map(r=>r[0])),
  ...Object.values(MONSTER_DROP_RULES).flatMap(m=>(m.trashTable||[]).map(r=>r[0]))
 ])].sort((a,b)=>a.localeCompare(b));
-for(const item of SOUL_SALVAGE_ITEMS){
- SKILLS.enchanting.actions.push(A('Salvage '+item,'Soul Shard',1,100,{[item]:1},'Soul Salvaging',{soulSalvage:true,salvageItem:item}));
-}
+// One shared activity automatically consumes any available junk item.
+SKILLS.enchanting.actions.push(A('Soul Salvaging','Soul Shard',1,100,{},'Soul Salvaging',{soulSalvage:true}));
 // Double every other Enchanting action's base XP.
 for(const action of SKILLS.enchanting.actions){
  if(!action.soulSalvage) action.xp*=2;
@@ -4280,6 +4279,9 @@ function combatLevel(){
 // Potions use a dedicated pouch, freeing bank slots and preserving existing recipes.
 const isPotion=item=>Object.hasOwn(POTIONS,item);
 const count=item=>item==='Coins'?Math.max(0,Number(state.coins)||0):Math.max(0,Number((isPotion(item)?state.potions:state.bank)[item])||0);
+const nextSoulSalvageItem=()=>SOUL_SALVAGE_ITEMS.find(item=>count(item)>0)||null;
+const canStartSkillAction=action=>action.soulSalvage?!!nextSoulSalvageItem():canPay(action.cost);
+const skillActionRequirements=action=>action.soulSalvage?(nextSoulSalvageItem()?{[nextSoulSalvageItem()]:1}:{'Any junk item':1}):action.cost;
 const bankUsed=()=>Object.entries(state.bank).filter(([item,qty])=>item!=='Coins'&&Number(qty)>0).length;
 const bankCanHold=item=>item==='Coins'||isPotion(item)||count(item)>0||bankUsed()<GAME_CONFIG.bankSlots;
 function add(item,n=1){
@@ -4627,7 +4629,7 @@ function ensureCookingFire(){
 function startAction(skill,index){
  const action=SKILLS[skill]?.actions?.[index];if(!action)return;
  if(levelFromXp(state.xp[skill]||0)<action.level){note('Skill level too low.');return}
- if(!canPay(action.cost)){note('Not enough ingredients. Check the recipe.');return}
+ if(!canStartSkillAction(action)){note(action.soulSalvage?'No junk items in bank.':'Not enough ingredients. Check the recipe.');return}
  if(action.requiresFire&&!ensureCookingFire()){note('🔥 Cooking needs logs in your bank to light the fire.');return}
  clearActivityFeed();state.active={type:'skill',skill,index};state.progress=0;note(`▶ ${action.name}`);renderProgress();refreshDynamic();save();
 }
@@ -4652,7 +4654,7 @@ function extraGatherAmount(skill){
 function completeSkill(){
  const {skill,index}=state.active||{};
  const action=SKILLS[skill]?.actions?.[index];if(!action){stop(true);return}
- if(!canPay(action.cost)){note('Out of materials. Action stopped.');stop(true);return}
+ if(!canStartSkillAction(action)){note(action.soulSalvage?'All junk items salvaged.':'Out of materials. Action stopped.');stop(true);return}
  if(action.requiresFire&&!ensureCookingFire()){note('🔥 Out of logs! Cooking paused until you get more firewood.');stop(true);return}
  // Soul Salvaging: 80% one shard, 19% two-three shards, 1% a Soul Gem.
  if(skill==='enchanting'&&action.soulSalvage){
@@ -4660,7 +4662,8 @@ function completeSkill(){
   const gem=roll>=.99?weightedPick(SOUL_GEMS):null;
   const reward=gem?.name||'Soul Shard';
   const quantity=gem?1:roll<.80?1:2+Math.floor(Math.random()*2);
-  if(!buyOrCraft(action.cost,reward,quantity)){
+  const junk=nextSoulSalvageItem();
+  if(!junk||!buyOrCraft({[junk]:1},reward,quantity)){
    note('🏦 Bank full: cannot store salvaging reward.');stop(true);return;
   }
   const xp=gainXp('enchanting',100);
@@ -4672,7 +4675,7 @@ function completeSkill(){
    state.stats.soulsBySource.enchanting=(state.stats.soulsBySource.enchanting||0)+1;
    if(reward==='Prismatic Soul Gem')showOverniaRareDrop(reward);
   }
-  note(`✨ Salvaged ${action.salvageItem} → ${quantity} ${reward} · +${Math.round(xp)} Enchanting XP`);
+  note(`✨ Salvaged ${junk} → ${quantity} ${reward} · +${Math.round(xp)} Enchanting XP`);
   return;
  }
  let quantity=action.quantity||1;
@@ -5604,12 +5607,12 @@ function selectedSkillAction(skill,candidates){
  return chosen;
 }
 function recipeCard(action,index,skill){
- const level=levelFromXp(state.xp[skill]||0),locked=level<action.level,missing=!canPay(action.cost),fireNeeded=action.requiresFire&&!cookingHeatAvailable()&&!nextAutoFuel();
+ const level=levelFromXp(state.xp[skill]||0),locked=level<action.level,missing=!canStartSkillAction(action),fireNeeded=action.requiresFire&&!cookingHeatAvailable()&&!nextAutoFuel();
  const already=state.active?.type==='skill'&&state.active.skill===skill&&state.active.index===index;
  const selected=ui.skillSelection[skill]===index;
  // Show all ingredient counts directly in the list. This stays visible on mobile,
  // and is updated live by renderSkillLive() when inventory changes.
- const requirements=Object.entries(action.cost||{}).map(([item,n])=>`<span class="ingredient ${count(item)<n?'missing':'has-material'}" title="${esc(item)} · ${fmt(count(item))} owned / ${fmt(n)} needed">${itemIcon(item)} <span>${esc(item)}</span> <b>${fmt(count(item))}/${fmt(n)}</b></span>`).join('');
+ const requirements=Object.entries(skillActionRequirements(action)||{}).map(([item,n])=>`<span class="ingredient ${count(item)<n?'missing':'has-material'}" title="${esc(item)} · ${fmt(count(item))} owned / ${fmt(n)} needed">${itemIcon(item)} <span>${esc(item)}</span> <b>${fmt(count(item))}/${fmt(n)}</b></span>`).join('');
  const bonusItems=Object.keys(action.bonus||{}).filter(item=>item!==action.output);
  const stockItems=[action.output,...bonusItems];
  const stock=stockItems.map((item,i)=>`<span class="recipe-owned-count ${i?'is-bonus':''}" title="${esc(item)} in ${isPotion(item)?'pouch':'bank'}">${i?`${esc(item)}: `:isPotion(item)?'🧪':'🏦'} <strong data-stock-count="${esc(item)}">${fmt(count(item))}</strong></span>`).join('');
@@ -6242,7 +6245,7 @@ function renderSkillLive(){
  for(const card of el('main').querySelectorAll('[data-recipe]')){
   const i=Number(card.dataset.recipe),action=SKILLS[ui.view].actions[i],button=card.querySelector('[data-action]');
   if(!action||!button)continue;
-  const locked=levelFromXp(state.xp[ui.view]||0)<action.level,missing=!canPay(action.cost),fireNeeded=action.requiresFire&&!cookingHeatAvailable()&&!nextAutoFuel();
+  const locked=levelFromXp(state.xp[ui.view]||0)<action.level,missing=!canStartSkillAction(action),fireNeeded=action.requiresFire&&!cookingHeatAvailable()&&!nextAutoFuel();
   const already=state.active?.type==='skill'&&state.active.skill===ui.view&&state.active.index===i;
   button.disabled=locked||missing||fireNeeded;
   button.textContent=locked?'Locked':fireNeeded?'Need fire':missing?'Materials':already?'✓ Active':'Start';
@@ -6253,7 +6256,7 @@ function renderSkillLive(){
    stockNode.textContent=fmt(count(stockNode.dataset.stockCount));
   }
   const req=card.querySelector('[data-ingredients]');
-  if(req)req.innerHTML=Object.entries(action.cost||{}).map(([item,n])=>`<span class="ingredient ${count(item)<n?'missing':'has-material'}" title="${esc(item)} · ${fmt(count(item))} owned / ${fmt(n)} needed">${itemIcon(item)} <span>${esc(item)}</span> <b>${fmt(count(item))}/${fmt(n)}</b></span>`).join('');
+  if(req)req.innerHTML=Object.entries(skillActionRequirements(action)||{}).map(([item,n])=>`<span class="ingredient ${count(item)<n?'missing':'has-material'}" title="${esc(item)} · ${fmt(count(item))} owned / ${fmt(n)} needed">${itemIcon(item)} <span>${esc(item)}</span> <b>${fmt(count(item))}/${fmt(n)}</b></span>`).join('');
  }
  if(ui.view==='cooking')updateFireUi();
  refreshSkillFocus(ui.view);
