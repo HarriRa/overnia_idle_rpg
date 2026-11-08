@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.08.1"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.08.2"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -1620,6 +1620,29 @@ button:not(:disabled):active{transform:translateY(1px)}
  button[data-world-open],button[data-world-travel]{touch-action:manipulation}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Cooking fire fuel picker: compact readable tiles and visible preferred fuel. */
+.fire-log-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));align-items:stretch}
+.fire-log-grid .fire-fuel-option{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:105px;padding:10px 7px;text-align:center;overflow:hidden}
+.fire-fuel-option .fire-fuel-art{display:grid;place-items:center;width:48px;height:48px;flex:none}
+.fire-fuel-option .fire-fuel-art .item-art{width:44px;height:44px;font-size:30px}
+.fire-fuel-option .fire-fuel-name{font-size:12px;font-weight:800;line-height:1.2;overflow-wrap:anywhere}
+.fire-fuel-option .fire-fuel-time{font-size:10px;color:#d4c5a9;line-height:1.2}
+.fire-fuel-option .fire-fuel-selected{position:absolute;top:5px;right:5px;font-size:9px;font-weight:800;color:#c9ffe0;background:#24543d;border:1px solid #79c99c;border-radius:6px;padding:3px 5px}
+.fire-fuel-selected[hidden]{display:none!important}
+.fire-log-grid .fire-fuel-option.is-preferred{border:2px solid #83e2a5!important;background:linear-gradient(180deg,#2b5841,#23382e)!important;box-shadow:inset 0 0 0 1px #8bdfa522}
+.fire-log-grid .fire-fuel-option:disabled{opacity:.5}
+.fire-fuel-summary{flex:1 1 100%;font-size:12px;color:#d4ebd5;padding:8px 10px;border:1px solid #53785d;background:#22372a;border-radius:8px}
+@media(max-width:650px){
+ .fire-layout{display:block}
+ .fire-layout .fire-tile{margin-bottom:8px;padding:9px}
+ .fire-log-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .fire-log-grid .fire-fuel-option{min-height:98px;padding:8px 5px;gap:4px}
+ .fire-fuel-option .fire-fuel-art{width:39px;height:39px}
+ .fire-fuel-option .fire-fuel-art .item-art{width:38px;height:38px;font-size:26px}
+ .fire-fuel-option .fire-fuel-name{font-size:11px}
+ .fire-fuel-option .fire-fuel-time{font-size:10px}
+}
 </style>
 
 <style>
@@ -5670,7 +5693,7 @@ function renderFirePanel(){
  return `<section class="info-box" style="border-color:#8a663f"><h3 style="margin:0">🔥 Cooking Fire</h3>
  <p>The Cooking Fire automatically relights while you have logs.</p>
  <div class="fire-layout"><div class="fire-tile ${fireBurning()?'':'out'}" id="fireTile"><h3 id="fireStatus">${fireBurning()?'🔥 Burning':'💨 Unlit'}</h3><b id="fireTimer">${timeFmt(fireRemaining())}</b><div class="small" id="fireFuelInfo">${fireBurning()?'Cooking available':nextAutoFuel()?'Auto-relight ready':'Add logs to light the fire'}</div></div>
- <div class="fire-log-grid">${Object.entries(FIRE_FUEL).map(([item,seconds])=>`<button data-burn="${esc(item)}" ${count(item)<1?'disabled':''}>${itemIcon(item)} ${esc(item)} <span data-fuel-own="${esc(item)}">×${fmt(count(item))}</span><small>+${timeFmt(seconds)} burn time</small></button>`).join('')}</div></div></section>`;
+ <div class="fire-log-grid">${Object.entries(FIRE_FUEL).map(([item,seconds])=>`<button type="button" class="fire-fuel-option ${state.fireLastFuel===item?'is-preferred':''}" data-burn="${esc(item)}" aria-pressed="${state.fireLastFuel===item?'true':'false'}" ${count(item)<1?'disabled':''}><span class="fire-fuel-art">${itemArt(item)}</span><span class="fire-fuel-name">${esc(item)} <span data-fuel-own="${esc(item)}">×${fmt(count(item))}</span></span><span class="fire-fuel-time">+${timeFmt(seconds)} burn time</span><span class="fire-fuel-selected" ${state.fireLastFuel===item?'':'hidden'}>✓ Preferred</span></button>`).join('')}</div><div class="fire-fuel-summary" id="fireFuelSelection">${state.fireLastFuel?`Preferred fuel: ${esc(state.fireLastFuel)} · automatically used when available`:'No preferred fuel yet · tap logs to add fire time and set your preference'}</div></div></section>`;
 }
 function updateFireUi(){
  const tile=el('fireTile');if(tile){
@@ -5682,7 +5705,10 @@ function updateFireUi(){
  for(const btn of document.querySelectorAll('[data-burn]')){
   const item=btn.dataset.burn;btn.disabled=count(item)<1||fireRemaining()+FIRE_FUEL[item]>GAME_CONFIG.maxFireSeconds;
   const own=btn.querySelector('[data-fuel-own]');if(own)own.textContent='×'+fmt(count(item));
+  const preferred=state.fireLastFuel===item;btn.classList.toggle('is-preferred',preferred);btn.setAttribute('aria-pressed',String(preferred));
+  const marker=btn.querySelector('.fire-fuel-selected');if(marker)marker.hidden=!preferred;
  }
+ const fuelSummary=el('fireFuelSelection');if(fuelSummary)fuelSummary.textContent=state.fireLastFuel?`Preferred fuel: ${state.fireLastFuel} · automatically used when available`:'No preferred fuel yet · tap logs to add fire time and set your preference';
 }
 function renderSkillMain(skill){
  const def=SKILLS[skill],categories=[...new Set(def.actions.map(a=>a.category))];
