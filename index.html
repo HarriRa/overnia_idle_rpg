@@ -1567,27 +1567,7 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 .weapon-picker-tabs button.active{background:#466e53;color:#fff1c6;border-color:#b9b17a}
 .weapon-picker-tabs small{opacity:.7;font-size:10px}
 
-/* Bonfire: compact responsive cards, no overflowing action rows on narrow phones. */
-.bonfire-log-grid{width:100%;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));margin-top:10px}
-.bonfire-log-tile{min-width:0;overflow-wrap:anywhere;padding:10px}
-.bonfire-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:9px}
-.bonfire-actions button{min-width:0;width:100%;white-space:normal;overflow-wrap:anywhere;font-size:11px;padding:8px 4px;line-height:1.3}
-@media(max-width:650px){
- .skill-fire-drawer{min-width:0;width:100%;max-width:100%}
- .skill-fire-drawer>.info-box{min-width:0;padding:10px}
- .bonfire-log-grid{grid-template-columns:minmax(0,1fr);gap:7px}
- .bonfire-log-tile{padding:9px}
- .bonfire-actions{grid-template-columns:repeat(3,minmax(0,1fr))}
- .bonfire-actions button{font-size:11px;min-height:40px}
-}
-</style><style id="overnia-v53-quick-eat-style">
-.over-arena-quick-eat{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;padding:9px 8px;margin-top:9px;background:#252a25;border:1px solid #776b4d;border-radius:9px}
-.over-arena-quick-eat .over-quick-eat-label{color:#f2d6a3;font-size:12px;font-weight:750}
-.over-arena-quick-eat button{padding:9px 16px;background:#346447;border-color:#83b88b;color:#fff4d5;font-weight:800}
-.over-arena-quick-eat small{color:#d5c4a4}
-@media(max-width:650px){.over-arena-quick-eat{gap:5px}.over-arena-quick-eat button{flex:1;padding:10px 6px}}
-</style>
-<style id="overnia-v56-polish">
+
 /* v5.6 – unified accents, navigational hierarchy and quiet motion */
 :root{--polish-gold:#e9c582;--polish-mint:#9bcfb4;--polish-line:#526d62;--polish-panel:#172923}
 html{scroll-behavior:smooth}
@@ -4212,8 +4192,7 @@ const levelFromXp=xp=>{
  return low;
 };
 const label=s=>SKILLS[s]?.name||s.replace(/^./,c=>c.toUpperCase());
-const bonfireBoost=()=>state.bonfireUntil>Date.now()?Math.min(.20,Math.max(0,Number(state.bonfireBoost)||0)):0;
-const maxHp=()=>Math.floor(levelFromXp(state.xp.hitpoints||0)*10*(1+bonfireBoost()));
+const maxHp=()=>Math.floor(levelFromXp(state.xp.hitpoints||0)*10);
 const clamp=(x,lo,hi)=>Math.max(lo,Math.min(hi,x));
 function combatLevel(){
  // Defence and HP always count. The best of melee (Attack + Strength),
@@ -4552,43 +4531,9 @@ function lightFire(item){
  note(`🔥 Added ${item}: +${timeFmt(FIRE_FUEL[item])} fire time.`);
  refreshDynamic();save();
 }
-// Cooking bonfire: separate from cooking fuel; no XP and no Cooking level requirement.
-const BONFIRE_BONUSES={'Logs':.02,'Oak Logs':.04,'Willow Logs':.06,'Maple Logs':.08,'Yew Logs':.11,'Magic Logs':.14,'Redwood Logs':.17,'Elder Logs':.20};
-const BONFIRE_MAX_MS=24*60*60*1000;
-function fuelBonfire(item,requested){
- if(!Object.hasOwn(BONFIRE_BONUSES,item))return;
- const now=Date.now(),remaining=Math.max(0,(Number(state.bonfireUntil)||0)-now);
- const slots=Math.floor((BONFIRE_MAX_MS-remaining)/60000);
- const qty=Math.min(Math.max(0,Math.floor(requested)),Math.max(0,count(item)),slots);
- if(qty<1){toast(slots<1?'Bonfire already has 24 hours of fuel.':'Not enough logs.');return}
- const previousMax=maxHp(),oldHp=state.hp;
- if(!add(item,-qty))return;
- state.bonfireUntil=now+remaining+qty*60000;
- state.bonfireBoost=Math.max(remaining>0?bonfireBoost():0,BONFIRE_BONUSES[item]);
- state.hp=Math.min(maxHp(),oldHp+Math.max(0,maxHp()-previousMax));
- note(`🔥 Bonfire: ${qty} ${item} added · +${Math.round(bonfireBoost()*100)}% max HP · no XP.`);
- updateBonfireUi();refreshDynamic();save();
-}
-function renderBonfirePanel(){
- const remaining=Math.max(0,Math.ceil(((Number(state.bonfireUntil)||0)-Date.now())/60000));
- return `<section class="info-box" style="border-color:#b98648"><h3 style="margin:0">🔥 Bonfire · Max HP Boost</h3>
- <p>Feed your bonfire with logs to boost maximum HP. Each log adds 1 minute (up to 1,440 logs / 24 hours). Stronger logs grant stronger HP bonuses. No XP. The highest active log tier sets the bonus; adding weaker logs only extends its duration. While active, this bonfire also provides heat for Cooking, so no separate Cooking Fire fuel is consumed.</p>
- <p><b id="bonfireStatus">${remaining?`${Math.round(bonfireBoost()*100)}% max HP · ${remaining} min remaining`:'Inactive'}</b></p>
- <div class="fire-log-grid bonfire-log-grid">${Object.entries(BONFIRE_BONUSES).map(([item,boost])=>`<div class="fire-tile bonfire-log-tile"><b>${itemIcon(item)} ${esc(item)}</b><div class="small">+${Math.round(boost*100)}% max HP · Owned: <span data-bonfire-owned="${esc(item)}">${fmt(count(item))}</span></div><div class="flexrow bonfire-actions"><button data-bonfire="${esc(item)}" data-bonfire-qty="1" ${count(item)<1||remaining>=1440?'disabled':''}>+1 min</button><button data-bonfire="${esc(item)}" data-bonfire-qty="60" ${count(item)<1||remaining>=1440?'disabled':''}>+60 min</button><button data-bonfire="${esc(item)}" data-bonfire-qty="1440" ${count(item)<1||remaining>=1440?'disabled':''}>Fill 24h</button></div></div>`).join('')}</div>
- <p class="small subdued">Buttons use as many logs as you own, up to the remaining 24-hour limit. Cooking uses this bonfire first; its separate fire and automatic relighting are used only when the bonfire is inactive.</p></section>`;
-}
-function updateBonfireUi(){
- const status=el('bonfireStatus');
- const remaining=Math.max(0,Math.ceil((Number(state.bonfireUntil)-Date.now())/60000));
- if(status)status.textContent=remaining?`${Math.round(bonfireBoost()*100)}% max HP · ${remaining} min remaining · Cooking available`:'Inactive · Cooking Fire required';
- for(const node of document.querySelectorAll('[data-bonfire-owned]'))node.textContent=fmt(count(node.dataset.bonfireOwned));
- for(const btn of document.querySelectorAll('[data-bonfire]'))btn.disabled=count(btn.dataset.bonfire)<1||remaining>=1440;
-}
 const fireRemaining=()=>Math.max(0,(state.fireUntil-gameNow())/1000);
 const fireBurning=()=>fireRemaining()>0;
-// An active HP bonfire also supplies cooking heat, without consuming separate Cooking Fire fuel.
-const bonfireBurning=()=>Number(state.bonfireUntil)>gameNow();
-const cookingHeatAvailable=()=>fireBurning()||bonfireBurning();
+const cookingHeatAvailable=()=>fireBurning();
 // Relight only when a Cooking action needs heat. This uses simulated gameNow()
 // during offline catch-up, so fuel durations and bank consumption work identically.
 function nextAutoFuel(){
@@ -5723,17 +5668,16 @@ function refreshSkillFocus(skill){
 }
 function renderFirePanel(){
  return `<section class="info-box" style="border-color:#8a663f"><h3 style="margin:0">🔥 Cooking Fire</h3>
- <p>Use your active Bonfire to cook without spending additional firewood. Otherwise, the Cooking Fire automatically relights while you have logs.</p>
- <div class="fire-layout"><div class="fire-tile ${fireBurning()?'':'out'}" id="fireTile"><h3 id="fireStatus">${fireBurning()?'🔥 Burning':'💨 Unlit'}</h3><b id="fireTimer">${timeFmt(fireRemaining())}</b><div class="small" id="fireFuelInfo">${bonfireBurning()?'Bonfire provides Cooking heat':fireBurning()?'Cooking available':nextAutoFuel()?'Auto-relight ready':'Add logs to light the fire'}</div></div>
+ <p>The Cooking Fire automatically relights while you have logs.</p>
+ <div class="fire-layout"><div class="fire-tile ${fireBurning()?'':'out'}" id="fireTile"><h3 id="fireStatus">${fireBurning()?'🔥 Burning':'💨 Unlit'}</h3><b id="fireTimer">${timeFmt(fireRemaining())}</b><div class="small" id="fireFuelInfo">${fireBurning()?'Cooking available':nextAutoFuel()?'Auto-relight ready':'Add logs to light the fire'}</div></div>
  <div class="fire-log-grid">${Object.entries(FIRE_FUEL).map(([item,seconds])=>`<button data-burn="${esc(item)}" ${count(item)<1?'disabled':''}>${itemIcon(item)} ${esc(item)} <span data-fuel-own="${esc(item)}">×${fmt(count(item))}</span><small>+${timeFmt(seconds)} burn time</small></button>`).join('')}</div></div></section>`;
 }
 function updateFireUi(){
- updateBonfireUi();
  const tile=el('fireTile');if(tile){
   tile.classList.toggle('out',!fireBurning());
   el('fireStatus').textContent=fireBurning()?'🔥 Burning':'💨 Unlit';
   el('fireTimer').textContent=timeFmt(fireRemaining());
-  el('fireFuelInfo').textContent=bonfireBurning()?'Bonfire provides Cooking heat · no Cooking Fire fuel used':fireBurning()?'Cooking available · auto-relight ready':nextAutoFuel()?`Auto-relight ready: ${nextAutoFuel()} ×${fmt(count(nextAutoFuel()))}`:'Out of logs · gather or buy firewood';
+  el('fireFuelInfo').textContent=fireBurning()?'Cooking available · auto-relight ready':nextAutoFuel()?`Auto-relight ready: ${nextAutoFuel()} ×${fmt(count(nextAutoFuel()))}`:'Out of logs · gather or buy firewood';
  }
  for(const btn of document.querySelectorAll('[data-burn]')){
   const item=btn.dataset.burn;btn.disabled=count(item)<1||fireRemaining()+FIRE_FUEL[item]>GAME_CONFIG.maxFireSeconds;
@@ -5751,7 +5695,7 @@ function renderSkillMain(skill){
  const skillTitle='Grandmaster '+labelSkillForQuest(skill);
  if(boosts.titles.includes(skillTitle))html+=`<div class="mastery-titles">🏅 ${esc(skillTitle)} — 10,000,000 lifetime actions completed</div>`;
  if(speed||yieldBoost)html+=`<div class="perk-status">🏅 Mastery perks: ${speed?`${(speed*100).toFixed(0)}% faster actions`:''}${speed&&yieldBoost?' · ':''}${yieldBoost?`+${(yieldBoost*100).toFixed(0)}% bonus resources`:''}</div>`;
- if(skill==='cooking')html+=`<details class="skill-fire-drawer"><summary>🔥 Cooking Fire <span class="subdued small">· Fuel &amp; fire controls</span></summary>${renderFirePanel()}</details><details class="skill-fire-drawer"><summary>🔥 Bonfire · HP Boost &amp; Cooking</summary>${renderBonfirePanel()}</details>`;
+ if(skill==='cooking')html+=`<details class="skill-fire-drawer"><summary>🔥 Cooking Fire <span class="subdued small">· Fuel &amp; fire controls</span></summary>${renderFirePanel()}</details>`;
  if(skill==='enchanting'){
   const soulTotal=SOUL_GEMS.reduce((sum,x)=>sum+x.weight,0);
   html+=`<details class="info-box skill-guide"><summary>💠 Soulbound Soul Gems and drop rates</summary><p>Gathering: ${pct(GAME_CONFIG.soulGemGatherChance)} per action · Combat: ${pct(GAME_CONFIG.soulGemCombatChance)} per kill. Soul Gems cannot be traded.</p><div class="stat-grid">${SOUL_GEMS.map(x=>`<div class="stat-tile"><small>${x.color} ${esc(x.tier)}</small><strong>${fmt(count(x.name))} owned</strong><div class="extra-small subdued">${esc(x.name)} · ${x.weight} / ${soulTotal}</div></div>`).join('')}</div><p>🌈 Prismatic: <b>1 in 10,000 Soul Gems</b>.</p></details>`;
@@ -6986,7 +6930,6 @@ function handleClick(e){
  if(b.hasAttribute('data-shop-cat')){ui.shopCategory=b.dataset.shopCat;ui.shopPage=0;renderMain();refreshDynamic();return}
  if(b.hasAttribute('data-shop-qty')){ui.shopQty=Number(b.dataset.shopQty);renderShopMain();return}
  if(b.hasAttribute('data-buy'))return buy(b.dataset.buy,ui.shopQty);
- if(b.hasAttribute('data-bonfire'))return fuelBonfire(b.dataset.bonfire,Number(b.dataset.bonfireQty));
  if(b.hasAttribute('data-burn'))return lightFire(b.dataset.burn);
  if(b.hasAttribute('data-gear-slot'))return openGearSlot(b.dataset.gearSlot);
  if(b.hasAttribute('data-equip'))return equip(b.dataset.equip);
