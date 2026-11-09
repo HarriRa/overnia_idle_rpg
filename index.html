@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.08.5"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.09.1"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -3990,10 +3990,10 @@ const SPECIAL_SELL_PRICES={
  'Chewed Rope':2,'Broken Tooth':3,'Dirty Feather':1,'Bone Dust':4,'Ancient Scrap':20,
  'Old Medallion':25,'Mossy Bark':9,'Empty Vial':3,'Witch Ash':15,'Troll Bone':16,
  'Golem Core':75,'Void Residue':55,'Crystal Dust':85,'Charred Scale':45,
- 'Goblin Ember':180,'Witch Sigil':850,'Golem Heart':3800,'Dragon Arcane Core':12000,'Void Arcane Core':28000,'Troll Bowstring':1400,'Dragon Bowstring':10000,
+ 'Goblin Ember':350,'Witch Sigil':1800,'Golem Heart':6500,'Dragon Arcane Core':12000,'Void Arcane Core':28000,'Troll Bowstring':1400,'Dragon Bowstring':10000,
  'Dwarven Soul Pickaxe':32000,
- 'Rat Tail':2,'Goblin Ear':12,'Bones':16,'Ancient Token':120,
- 'Troll Fang':180,'Abyss Shard':580,'Dragon Scale':1100,
+ 'Rat Tail':2,'Goblin Ear':12,'Bones':16,'Ancient Token':300,
+ 'Troll Fang':450,'Abyss Shard':1300,'Dragon Scale':2400,
  'Ancient Crystal':490,'Cowhide':35,'Thick Hide':220,
  'Fortune Ring':40000,'Ancient Scholar Charm':20000,
  'Abyssal Blade':85000,'Dragonheart Amulet':150000,
@@ -4009,7 +4009,24 @@ const SPECIAL_SELL_PRICES={
  'Stormwing Hood':190000,'Stormwing Mantle':275000,'Stormwing Chaps':230000,
  'Astral Crown':210000,'Astral Vestments':300000,'Astral Legwraps':250000
 };
+// Economy pass: profitable jewellery crafting and enchanting, without gem-flipping.
+const ENCHANTED_SELL_FLOORS={
+ 'Awakened Bronze Pickaxe':650,'Whispering Oak Axe':750,'Tidewalker Ring':1100,
+ 'Harvest Charm':1600,'Soulkeeper Ring':2200,'Gilded Prospect Pickaxe':2900,
+ 'Woodland Spirit Axe':2900,'Sea Whisper Amulet':3000,'Fletcher Ward':3100,
+ 'Battlebound Amulet':6500,'Artisan Soul Ring':8500,'Living Grove Axe':12000,
+ 'Deep Earth Pickaxe':12000,'Alchemist Soul Charm':14500,
+ 'Sunforged Battle Ring':35000,'Soulweaver Cape':65000,'Eternal Soul Crown':250000
+};
+const JEWELLERY_SELL_FLOORS={
+ 'Strength Amulet':1150,'Defence Amulet':1150,'Accuracy Amulet':1150,
+ 'Power Amulet':2200,'Wisdom Amulet':4200,'Guardian Amulet':8500,
+ 'Lucky Ring':1100,'Scholar\'s Ring':1500,'Warrior Ring':1900,
+ 'Protector Ring':1900,'Precision Ring':1900,'Gatherer Ring':2100,'Mastery Ring':4200
+};
 function baseSellPrice(item){
+ if(Object.prototype.hasOwnProperty.call(ENCHANTED_SELL_FLOORS,item))return ENCHANTED_SELL_FLOORS[item];
+ if(Object.prototype.hasOwnProperty.call(JEWELLERY_SELL_FLOORS,item))return JEWELLERY_SELL_FLOORS[item];
  const shop=SHOP_ITEMS.find(x=>x.name===item);if(shop)return Math.max(1,Math.floor(shop.price*GAME_CONFIG.shopSellMultiplier));
  if(SPECIAL_SELL_PRICES[item])return SPECIAL_SELL_PRICES[item];
  for(const skill of Object.values(SKILLS)){
