@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.09.2"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.09.3"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -4048,6 +4048,12 @@ function itemTier(item){
  if(/Oxedo|Diamond|Dragonstone|Magic|Redwood|Gallium|Mastery|Manta Ray|Royal/.test(item))return 'tier-rare';
  if(/Mithril|Gold|Ruby|Sapphire|Emerald|Yew|Anglerfish|Scholar|Power/.test(item))return 'tier-high';
  return 'tier-basic';
+}
+// 2026.11.09.3: Crafting XP rebalance. Gem cutting is the primary training path.
+// Keep recipe order, level requirements, inputs and outputs unchanged.
+for(const action of SKILLS.crafting.actions){
+ const multiplier=action.category==='Gems'?2:1.25;
+ action.xp=Math.round(action.xp*multiplier);
 }
 // Crafting navigation: one clear category per recipe, shared by desktop and mobile.
 // This changes presentation only; recipe IDs, requirements and outputs stay intact.
