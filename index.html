@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.09.6"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.09.7"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -6484,6 +6484,9 @@ function itemTooltipTarget(target){return target?.closest?.('[data-item-preview]
 // On touch devices, equipment already has a dedicated item picker with item names,
 // requirements and an Equip/Use button. The large floating preview obstructs it.
 function suppressEquipmentTouchTooltip(target){
+ // Shop purchases must never open a floating item preview over the Buy controls.
+ if(target?.closest?.('[data-buy]'))return true;
+ if(target?.closest?.('.shop-card, .mobile-shop-item') && matchMedia('(max-width:900px), (pointer:coarse)').matches)return true;
  if(overniaSellMode && target?.closest?.('[data-bank-select], .sell-mode-toolbar, .bank-grid'))return true;
  if(!matchMedia('(max-width:900px), (pointer:coarse)').matches)return false;
  const gearOverlay=document.getElementById('gearOverlay');
