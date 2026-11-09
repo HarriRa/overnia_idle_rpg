@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.09.1"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.09.2"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -1646,6 +1646,7 @@ button:not(:disabled):active{transform:translateY(1px)}
 /* CC0 RPG inventory artwork: crisp transparent icons in existing UI slots. */
 .ovni-rpg-img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
 .item-art:has(.ovni-rpg-img){overflow:hidden;padding:1px}
+.sell-mode-toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:9px 0}.sell-mode-toolbar button{padding:5px 8px;font-size:11px}.sell-tile-value{font-size:10px;color:#f5cf82;font-weight:800}.bank-tile.sell-tile{border-color:#a47b3e}.bank-tile.sell-tile:hover{background:#4b3924}
 </style>
 
 <style>
@@ -6372,9 +6373,11 @@ function renderBankTabs(scope){
   `<span>📁 ${esc(custom.name)} · custom tab</span><button data-bank-rename="${scope}">✏️ Rename</button><button data-bank-delete="${scope}">🗑️ Delete</button>`:
   `<span>Auto-sorted folders · drag items onto tabs, or select Move to tab below.</span>`;
 }
+let overniaSellMode=false;
+let overniaSellQty=1;
 function renderBankShell(scope){
  const filters=ui.bank[scope];return `<div class="between"><h3 style="margin:0">🏦 ${scope==='side'?'Bank':'Your Bank'}</h3><span class="bank-count">🪙 ${fmt(count('Coins'))} GP · Account</span><span class="bank-count" id="${scope}BankCapacity">${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks</span><button type="button" class="bank-create-top" data-bank-new title="Create bank folder">＋ Tab</button></div>
- <div class="bank-folders" id="${scope}BankFolders" aria-label="Bank folders"></div><div class="bank-tab-manager" id="${scope}BankManager"></div>
+ <div class="sell-mode-toolbar"><button type="button" data-toggle-sell-mode class="${overniaSellMode?'selected':''}">${overniaSellMode?'✓ Selling items':'🪙 Sell Items'}</button>${overniaSellMode?`<span class="small">Quantity</span>${[1,10,100,1000,'all'].map(q=>`<button type="button" data-sell-mode-qty="${q}" class="${overniaSellQty===q?'selected':''}">${q==='all'?'All':fmt(q)}</button>`).join('')}`:''}</div><div class="bank-folders" id="${scope}BankFolders" aria-label="Bank folders"></div><div class="bank-tab-manager" id="${scope}BankManager"></div>
  <div class="bank-tools" style="margin-top:8px"><input type="search" id="${scope}BankSearch" data-bank-search="${scope}" placeholder="Search this tab..." value="${esc(filters.search)}"></div>
  <div class="small subdued" id="${scope}BankCount" style="margin-top:8px"></div><div id="${scope}BankGrid" class="bank-grid ${scope==='side'?'compact':''}"></div><div class="pager" id="${scope}BankPager"></div><div id="${scope}BankDetail"></div>`;
 }
@@ -6384,7 +6387,7 @@ function renderBankGrid(scope){
  const grid=el(scope+'BankGrid');if(!grid)return;
  renderBankTabs(scope);
  const slice=items.slice(settings.page*per,(settings.page+1)*per);
- grid.innerHTML=slice.length?slice.map(([item,amount])=>`<button type="button" draggable="true" class="bank-tile ${settings.selected===item?'active':''}" data-bank-select="${scope}" data-item="${esc(item)}" data-item-preview="${esc(item)}" aria-label="${esc(item)}, ${fmt(amount)} owned. Select to inspect; drag onto a tab to move">${itemArt(item)}<span class="item-name">${esc(item)}</span><span class="stack">×${fmt(amount)}</span></button>`).join(''):'<p class="subdued small">Nothing here yet. Items appear automatically, or move items here from another tab.</p>';
+ grid.innerHTML=slice.length?slice.map(([item,amount])=>`<button type="button" draggable="${!overniaSellMode}" class="bank-tile ${overniaSellMode?'sell-tile':''} ${settings.selected===item?'active':''}" data-bank-select="${scope}" data-item="${esc(item)}" data-item-preview="${esc(item)}" aria-label="${esc(item)}, ${fmt(amount)} owned. Select to inspect; drag onto a tab to move">${itemArt(item)}<span class="item-name">${esc(item)}</span><span class="stack">×${fmt(amount)}</span>${overniaSellMode?`<span class="sell-tile-value">${isTradeable(item)?`${fmt(sellPrice(item)*Math.min(amount,overniaSellQty==='all'?amount:overniaSellQty))} GP`:'🔒 Not sellable'}</span>`:''}</button>`).join(''):'<p class="subdued small">Nothing here yet. Items appear automatically, or move items here from another tab.</p>';
  const pager=el(scope+'BankPager');if(pager)pager.innerHTML=`<button data-bank-page="${scope}" data-delta="-1" ${settings.page<=0?'disabled':''}>←</button><span>Page ${settings.page+1} / ${maxPage+1}</span><button data-bank-page="${scope}" data-delta="1" ${settings.page>=maxPage?'disabled':''}>→</button>`;
  const counter=el(scope+'BankCount');if(counter)counter.textContent=`${items.length} unique stacks in this view · ${fmt(Object.entries(state.bank).reduce((a,[item,qty])=>a+(item==='Coins'?0:Number(qty)||0),0))} total bank items`;
  const capacity=el(scope+'BankCapacity');if(capacity)capacity.textContent=`${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks`;
@@ -7062,10 +7065,13 @@ function handleClick(e){
  if(b.hasAttribute('data-claim'))return claimQuest(b.dataset.claim);
  if(b.hasAttribute('data-journal-category')){ui.journalCategory=b.dataset.journalCategory;ui.journalPage=0;renderJournalMain();return;}
  if(b.hasAttribute('data-bank-tab'))return bankSelectTab(b.dataset.bankTab,b.dataset.tabId);
+ if(b.hasAttribute('data-toggle-sell-mode')){overniaSellMode=!overniaSellMode;renderSidebar();if(ui.view==='bank')renderBankMain();return;}
+ if(b.hasAttribute('data-sell-mode-qty')){overniaSellQty=b.dataset.sellModeQty==='all'?'all':Number(b.dataset.sellModeQty);renderSidebar();if(ui.view==='bank')renderBankMain();return;}
  if(b.hasAttribute('data-bank-new'))return bankCreateTab();
  if(b.hasAttribute('data-bank-rename'))return bankRenameTab(b.dataset.bankRename);
  if(b.hasAttribute('data-bank-delete'))return bankDeleteTab(b.dataset.bankDelete);
  if(b.hasAttribute('data-bank-select')){
+  if(overniaSellMode){if(!isTradeable(b.dataset.item)){note('🔒 This item cannot be sold.');return;}sell(b.dataset.item,overniaSellQty);return;}
   const scope=b.dataset.bankSelect;ui.bank[scope].selected=b.dataset.item;
   renderBankGrid(scope);return;
  }
