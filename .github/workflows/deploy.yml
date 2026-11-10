@@ -70,11 +70,29 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare website
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp version.json _site/
+
+          for file in sw.js manifest.webmanifest icon-192.png apple-touch-icon.png; do
+            if [ -f "$file" ]; then
+              cp "$file" _site/
+            fi
+          done
+
+          for dir in art assets; do
+            if [ -d "$dir" ]; then
+              cp -r "$dir" _site/
+            fi
+          done
+
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-
+          path: _site
+          
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
