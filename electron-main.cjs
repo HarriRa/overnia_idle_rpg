@@ -1,9 +1,10 @@
-const {app, BrowserWindow, shell, dialog} = require('electron');
+const {app, BrowserWindow, shell, dialog, ipcMain} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
 
 app.setName('Overnia Idle RPG');
+ipcMain.handle('overnia:get-app-info', () => ({version: app.getVersion()}));
 let mainWindow;
 let updateDownloaded = false;
 let updatePromptOpen = false;
@@ -22,6 +23,7 @@ function createWindow() {
     width: 1440, height: 900, minWidth: 800, minHeight: 600,
     backgroundColor: '#171820',
     webPreferences: {
+      preload: path.join(__dirname, 'electron-preload.cjs'),
       nodeIntegration: false, contextIsolation: true,
       sandbox: true, webSecurity: true,
       partition: 'persist:overnia-main'

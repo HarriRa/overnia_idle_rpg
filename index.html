@@ -2093,7 +2093,13 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
   <p id="homeStatus" role="status" aria-live="polite"></p>
  </div>
 </section><button type="button" id="homeLaunch" class="home-launch" aria-label="Open main menu">⌂ Home</button>
-<div id="onlineOverlay" class="online-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onlineTitle"><div class="online-dialog"><div class="online-heading"><h2 id="onlineTitle">🌐 Overnia Online</h2><button type="button" id="onlineClose" aria-label="Close">✕</button></div><p class="online-intro">Play freely as a guest, or sign in to sync your Main character. Guest saves remain on this device.</p><div id="onlineSetup"><label>Supabase Project URL<input id="onlineUrl" type="url" placeholder="https://your-project.supabase.co" autocomplete="off"></label><label>Supabase publishable / anon key<input id="onlineKey" type="text" placeholder="sb_publishable_... or anon key" autocomplete="off"></label><button id="onlineConnect" type="button">Connect project</button><p class="online-help">Only use the public publishable/anon key. NEVER paste a service_role or secret key here.</p></div><div id="onlineAuth" hidden><label>Email<input id="onlineEmail" type="email" autocomplete="email" placeholder="you@example.com"></label><label>Password<input id="onlinePassword" type="password" autocomplete="current-password" minlength="6" placeholder="Your password"></label><div class="online-actions"><button type="button" id="onlineSignUp">Create account</button><button type="button" id="onlineSignIn">Sign in</button></div></div><div id="onlineLogged" hidden><p id="onlineIdentity"></p><p id="onlineSyncState" class="online-help">Checking cloud save…</p><p class="online-help">Main auto-sync runs while signed in. Dev is always local. If local and cloud saves differ, choose which one to keep. The server does not yet validate XP or loot.</p><div class="online-actions"><button type="button" id="onlineDownload">⬇️ Restore cloud manually</button></div><details class="online-account-options"><summary>Account settings</summary><div class="online-account-inner"><p class="online-help">Sign out only when you want to switch accounts or stop cloud syncing.</p><button type="button" id="onlineSignOut">Sign out of account</button></div></details></div><p id="onlineStatus" class="online-status" role="status"></p><div id="onlineConflict" class="online-conflict" hidden></div></div></div>
+<div id="onlineOverlay" class="online-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onlineTitle"><div class="online-dialog"><div class="online-heading"><h2 id="onlineTitle">🌐 Overnia Online</h2><button type="button" id="onlineClose" aria-label="Close">✕</button></div><p class="online-intro">Play freely as a guest, or sign in to sync your Main character. Guest saves remain on this device.</p><div id="onlineSetup"><label>Supabase Project URL<input id="onlineUrl" type="url" placeholder="https://your-project.supabase.co" autocomplete="off"></label><label>Supabase publishable / anon key<input id="onlineKey" type="text" placeholder="sb_publishable_... or anon key" autocomplete="off"></label><button id="onlineConnect" type="button">Connect project</button><p class="online-help">Only use the public publishable/anon key. NEVER paste a service_role or secret key here.</p></div><div id="onlineAuth" hidden><label>Email<input id="onlineEmail" type="email" autocomplete="email" placeholder="you@example.com"></label><label>Password<input id="onlinePassword" type="password" autocomplete="current-password" minlength="6" placeholder="Your password"></label><div class="online-actions"><button type="button" id="onlineSignUp">Create account</button><button type="button" id="onlineSignIn">Sign in</button></div></div><div id="onlineLogged" hidden><p id="onlineIdentity"></p><p id="onlineSyncState" class="online-help">Checking cloud save…</p><p class="online-help">Main auto-sync runs while signed in. Dev is always local. If local and cloud saves differ, choose which one to keep. The server does not yet validate XP or loot.</p><div class="online-actions"><button type="button" id="onlineDownload">⬇️ Restore cloud manually</button></div><details class="online-account-options"><summary>Account settings</summary><div class="online-account-inner"><div class="overnia-app-info" style="border:1px solid #806749;border-radius:9px;padding:11px;margin:8px 0 13px;background:#25231f">
+<strong style="color:#f4dbac">Application Information</strong>
+<div style="display:flex;justify-content:space-between;gap:10px;margin-top:9px"><span>Platform</span><strong id="overniaPlatform">Web Browser</strong></div>
+<div style="display:flex;justify-content:space-between;gap:10px;margin-top:7px"><span>App Version</span><strong id="overniaAppVersion">Web version</strong></div>
+<div style="display:flex;justify-content:space-between;gap:10px;margin-top:7px"><span>Game Build</span><strong id="overniaGameBuild">—</strong></div>
+</div>
+<p class="online-help">Sign out only when you want to switch accounts or stop cloud syncing.</p><button type="button" id="onlineSignOut">Sign out of account</button></div></details></div><p id="onlineStatus" class="online-status" role="status"></p><div id="onlineConflict" class="online-conflict" hidden></div></div></div>
 <header><button type="button" id="onlineOpen" class="online-launch">🌐 Account</button><div><h1>🌄 Overnia Idle RPG <span class="version">v5.6 · Polish & Stability</span></h1><div class="stats" id="summary"></div></div><div class="top-controls"><div class="profile-switch" role="group" aria-label="Character profile"><button type="button" id="mainProfileBtn" class="active" aria-pressed="true">🛡️ Main</button><button type="button" id="devProfileBtn" aria-pressed="false">🧪 Dev</button></div><button id="focusModeBtn" type="button" aria-pressed="false" title="Switch between fixed workspace and classic scrolling layout">🎯 Focus Mode</button><button id="devToolsBtn" type="button" hidden>🛠 Dev Tools</button><button id="saveBtn">💾 Save</button><button id="cloudSaveBtn" type="button" hidden title="Save Main to cloud">☁️ Cloudsave</button><button id="exportBtn">⬇ Export</button><button id="importBtn">⬆ Import</button><button id="resetBtn">↺ Reset</button><input type="file" id="fileInput" accept=".json,application/json" hidden></div><span id="petStatus" class="pet-status" aria-live="polite" style="display:block;width:max-content;max-width:95%;margin:6px 14px">🐾 No pet summoned</span></header>
 <nav id="mobileHomeNav" aria-label="Game menu"></nav>
 <div class="layout">
@@ -7830,6 +7836,30 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   window.addEventListener('online', () => {
     if (Date.now() - lastChecked > 20000) checkForUpdate();
   });
+})();
+</script>
+<script id="overnia-application-information">
+(() => {
+  const render = () => {
+    const build = document.querySelector('meta[name="overnia-build-version"]')?.content || 'Unknown';
+    const buildEl = document.getElementById('overniaGameBuild');
+    const platformEl = document.getElementById('overniaPlatform');
+    const appEl = document.getElementById('overniaAppVersion');
+    if (buildEl) buildEl.textContent = build;
+    const desktop = window.overniaDesktop;
+    if (desktop && typeof desktop.getAppInfo === 'function') {
+      Promise.resolve(desktop.getAppInfo()).then(info => {
+        if (!info || typeof info.version !== 'string') return;
+        if (platformEl) platformEl.textContent = 'Windows Desktop';
+        if (appEl) appEl.textContent = info.version;
+      }).catch(() => {});
+    } else {
+      if (platformEl) platformEl.textContent = window.matchMedia('(display-mode: standalone)').matches ? 'Installed Web App' : 'Web Browser';
+      if (appEl) appEl.textContent = 'Web version';
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render, {once:true});
+  else render();
 })();
 </script>
 </body></html>
