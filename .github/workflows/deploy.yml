@@ -19,8 +19,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: overnia-pages
-  cancel-in-progress: false
+  group: overnia-pages-v2
+  cancel-in-progress: true
 
 jobs:
   publish:
