@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.08.5"><title>Overnia Idle RPG – A Living World</title>
+<meta name="overnia-build-version" content="2026.11.10.1"><title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -1646,6 +1646,13 @@ button:not(:disabled):active{transform:translateY(1px)}
 /* CC0 RPG inventory artwork: crisp transparent icons in existing UI slots. */
 .ovni-rpg-img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
 .item-art:has(.ovni-rpg-img){overflow:hidden;padding:1px}
+.sell-mode-toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:9px 0}.sell-mode-toolbar button{padding:5px 8px;font-size:11px}.sell-tile-value{font-size:10px;color:#f5cf82;font-weight:800}.bank-tile.sell-tile{border-color:#a47b3e}.bank-tile.sell-tile:hover{background:#4b3924}
+
+/* Keep destructive account actions away from the normal cloud-save flow. */
+.online-account-options{margin-top:28px;border-top:1px solid #49605a;padding-top:12px;color:#bdcfc9;font-size:12px}
+.online-account-options summary{cursor:pointer;padding:10px 4px;min-height:42px}
+.online-account-inner{padding:5px 3px 12px}
+.online-account-inner #onlineSignOut{background:#533331;border-color:#a76b67;color:#ffe5dc}
 </style>
 
 <style>
@@ -2085,7 +2092,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
   <p id="homeStatus" role="status" aria-live="polite"></p>
  </div>
 </section><button type="button" id="homeLaunch" class="home-launch" aria-label="Open main menu">⌂ Home</button>
-<div id="onlineOverlay" class="online-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onlineTitle"><div class="online-dialog"><div class="online-heading"><h2 id="onlineTitle">🌐 Overnia Online</h2><button type="button" id="onlineClose" aria-label="Close">✕</button></div><p class="online-intro">Play freely as a guest, or sign in to sync your Main character. Guest saves remain on this device.</p><div id="onlineSetup"><label>Supabase Project URL<input id="onlineUrl" type="url" placeholder="https://your-project.supabase.co" autocomplete="off"></label><label>Supabase publishable / anon key<input id="onlineKey" type="text" placeholder="sb_publishable_... or anon key" autocomplete="off"></label><button id="onlineConnect" type="button">Connect project</button><p class="online-help">Only use the public publishable/anon key. NEVER paste a service_role or secret key here.</p></div><div id="onlineAuth" hidden><label>Email<input id="onlineEmail" type="email" autocomplete="email" placeholder="you@example.com"></label><label>Password<input id="onlinePassword" type="password" autocomplete="current-password" minlength="6" placeholder="Your password"></label><div class="online-actions"><button type="button" id="onlineSignUp">Create account</button><button type="button" id="onlineSignIn">Sign in</button></div></div><div id="onlineLogged" hidden><p id="onlineIdentity"></p><p id="onlineSyncState" class="online-help">Checking cloud save…</p><p class="online-help">Main auto-sync runs while signed in. Dev is always local. If local and cloud saves differ, choose which one to keep. The server does not yet validate XP or loot.</p><div class="online-actions"><button type="button" id="onlineDownload">⬇️ Restore cloud manually</button><button type="button" id="onlineSignOut">Sign out</button></div></div><p id="onlineStatus" class="online-status" role="status"></p><div id="onlineConflict" class="online-conflict" hidden></div></div></div>
+<div id="onlineOverlay" class="online-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onlineTitle"><div class="online-dialog"><div class="online-heading"><h2 id="onlineTitle">🌐 Overnia Online</h2><button type="button" id="onlineClose" aria-label="Close">✕</button></div><p class="online-intro">Play freely as a guest, or sign in to sync your Main character. Guest saves remain on this device.</p><div id="onlineSetup"><label>Supabase Project URL<input id="onlineUrl" type="url" placeholder="https://your-project.supabase.co" autocomplete="off"></label><label>Supabase publishable / anon key<input id="onlineKey" type="text" placeholder="sb_publishable_... or anon key" autocomplete="off"></label><button id="onlineConnect" type="button">Connect project</button><p class="online-help">Only use the public publishable/anon key. NEVER paste a service_role or secret key here.</p></div><div id="onlineAuth" hidden><label>Email<input id="onlineEmail" type="email" autocomplete="email" placeholder="you@example.com"></label><label>Password<input id="onlinePassword" type="password" autocomplete="current-password" minlength="6" placeholder="Your password"></label><div class="online-actions"><button type="button" id="onlineSignUp">Create account</button><button type="button" id="onlineSignIn">Sign in</button></div></div><div id="onlineLogged" hidden><p id="onlineIdentity"></p><p id="onlineSyncState" class="online-help">Checking cloud save…</p><p class="online-help">Main auto-sync runs while signed in. Dev is always local. If local and cloud saves differ, choose which one to keep. The server does not yet validate XP or loot.</p><div class="online-actions"><button type="button" id="onlineDownload">⬇️ Restore cloud manually</button></div><details class="online-account-options"><summary>Account settings</summary><div class="online-account-inner"><p class="online-help">Sign out only when you want to switch accounts or stop cloud syncing.</p><button type="button" id="onlineSignOut">Sign out of account</button></div></details></div><p id="onlineStatus" class="online-status" role="status"></p><div id="onlineConflict" class="online-conflict" hidden></div></div></div>
 <header><button type="button" id="onlineOpen" class="online-launch">🌐 Account</button><div><h1>🌄 Overnia Idle RPG <span class="version">v5.6 · Polish & Stability</span></h1><div class="stats" id="summary"></div></div><div class="top-controls"><div class="profile-switch" role="group" aria-label="Character profile"><button type="button" id="mainProfileBtn" class="active" aria-pressed="true">🛡️ Main</button><button type="button" id="devProfileBtn" aria-pressed="false">🧪 Dev</button></div><button id="focusModeBtn" type="button" aria-pressed="false" title="Switch between fixed workspace and classic scrolling layout">🎯 Focus Mode</button><button id="devToolsBtn" type="button" hidden>🛠 Dev Tools</button><button id="saveBtn">💾 Save</button><button id="cloudSaveBtn" type="button" hidden title="Save Main to cloud">☁️ Cloudsave</button><button id="exportBtn">⬇ Export</button><button id="importBtn">⬆ Import</button><button id="resetBtn">↺ Reset</button><input type="file" id="fileInput" accept=".json,application/json" hidden></div><span id="petStatus" class="pet-status" aria-live="polite" style="display:block;width:max-content;max-width:95%;margin:6px 14px">🐾 No pet summoned</span></header>
 <nav id="mobileHomeNav" aria-label="Game menu"></nav>
 <div class="layout">
@@ -3221,8 +3228,11 @@ const SHOP_ITEMS=[
  {name:'Iron Sword',price:620,category:'Gear'},{name:'Iron Axe',price:500,category:'Gear'},
  {name:'Iron Pickaxe',price:500,category:'Gear'},{name:'Steel Sword',price:1300,category:'Gear'},
  {name:'Steel Axe',price:1050,category:'Gear'},{name:'Steel Pickaxe',price:1050,category:'Gear'},
- {name:'Uncut Opal',price:120,category:'Gems'},{name:'Uncut Jade',price:175,category:'Gems'},
- {name:'Uncut Sapphire',price:420,category:'Gems'},
+ {name:'Uncut Opal',price:60,category:'Gems'},{name:'Uncut Jade',price:88,category:'Gems'},
+ {name:'Uncut Sapphire',price:210,category:'Gems'},
+ {name:'Uncut Emerald',price:310,category:'Gems'},
+ {name:'Uncut Ruby',price:410,category:'Gems'},
+ {name:'Uncut Diamond',price:510,category:'Gems'},
  {name:'Gold Bar',price:400,category:'Materials'},
  {name:'Silver Ring Blank',price:280,category:'Materials'},
  {name:'Gold Ring Blank',price:630,category:'Materials'},
@@ -3990,10 +4000,11 @@ const SPECIAL_SELL_PRICES={
  'Chewed Rope':2,'Broken Tooth':3,'Dirty Feather':1,'Bone Dust':4,'Ancient Scrap':20,
  'Old Medallion':25,'Mossy Bark':9,'Empty Vial':3,'Witch Ash':15,'Troll Bone':16,
  'Golem Core':75,'Void Residue':55,'Crystal Dust':85,'Charred Scale':45,
- 'Goblin Ember':180,'Witch Sigil':850,'Golem Heart':3800,'Dragon Arcane Core':12000,'Void Arcane Core':28000,'Troll Bowstring':1400,'Dragon Bowstring':10000,
+ 'Goblin Ember':350,'Witch Sigil':1800,'Golem Heart':6500,'Dragon Arcane Core':12000,'Void Arcane Core':28000,'Troll Bowstring':1400,'Dragon Bowstring':10000,
  'Dwarven Soul Pickaxe':32000,
- 'Rat Tail':2,'Goblin Ear':12,'Bones':16,'Ancient Token':120,
- 'Troll Fang':180,'Abyss Shard':580,'Dragon Scale':1100,
+ "Forgemaster's Axe":500000,"Forgemaster's Pickaxe":500000,
+ 'Rat Tail':2,'Goblin Ear':12,'Bones':16,'Ancient Token':300,
+ 'Troll Fang':450,'Abyss Shard':1300,'Dragon Scale':2400,
  'Ancient Crystal':490,'Cowhide':35,'Thick Hide':220,
  'Fortune Ring':40000,'Ancient Scholar Charm':20000,
  'Abyssal Blade':85000,'Dragonheart Amulet':150000,
@@ -4009,7 +4020,24 @@ const SPECIAL_SELL_PRICES={
  'Stormwing Hood':190000,'Stormwing Mantle':275000,'Stormwing Chaps':230000,
  'Astral Crown':210000,'Astral Vestments':300000,'Astral Legwraps':250000
 };
+// Economy pass: profitable jewellery crafting and enchanting, without gem-flipping.
+const ENCHANTED_SELL_FLOORS={
+ 'Awakened Bronze Pickaxe':650,'Whispering Oak Axe':750,'Tidewalker Ring':1100,
+ 'Harvest Charm':1600,'Soulkeeper Ring':2200,'Gilded Prospect Pickaxe':2900,
+ 'Woodland Spirit Axe':2900,'Sea Whisper Amulet':3000,'Fletcher Ward':3100,
+ 'Battlebound Amulet':6500,'Artisan Soul Ring':8500,'Living Grove Axe':12000,
+ 'Deep Earth Pickaxe':12000,'Alchemist Soul Charm':14500,
+ 'Sunforged Battle Ring':35000,'Soulweaver Cape':65000,'Eternal Soul Crown':250000
+};
+const JEWELLERY_SELL_FLOORS={
+ 'Strength Amulet':1150,'Defence Amulet':1150,'Accuracy Amulet':1150,
+ 'Power Amulet':2200,'Wisdom Amulet':4200,'Guardian Amulet':8500,
+ 'Lucky Ring':1100,'Scholar\'s Ring':1500,'Warrior Ring':1900,
+ 'Protector Ring':1900,'Precision Ring':1900,'Gatherer Ring':2100,'Mastery Ring':4200
+};
 function baseSellPrice(item){
+ if(Object.prototype.hasOwnProperty.call(ENCHANTED_SELL_FLOORS,item))return ENCHANTED_SELL_FLOORS[item];
+ if(Object.prototype.hasOwnProperty.call(JEWELLERY_SELL_FLOORS,item))return JEWELLERY_SELL_FLOORS[item];
  const shop=SHOP_ITEMS.find(x=>x.name===item);if(shop)return Math.max(1,Math.floor(shop.price*GAME_CONFIG.shopSellMultiplier));
  if(SPECIAL_SELL_PRICES[item])return SPECIAL_SELL_PRICES[item];
  for(const skill of Object.values(SKILLS)){
@@ -4030,6 +4058,12 @@ function itemTier(item){
  if(/Oxedo|Diamond|Dragonstone|Magic|Redwood|Gallium|Mastery|Manta Ray|Royal/.test(item))return 'tier-rare';
  if(/Mithril|Gold|Ruby|Sapphire|Emerald|Yew|Anglerfish|Scholar|Power/.test(item))return 'tier-high';
  return 'tier-basic';
+}
+// 2026.11.09.6: Gem cutting receives another 50% XP on top of the previous buff.
+// Keep recipe order, level requirements, inputs and outputs unchanged.
+for(const action of SKILLS.crafting.actions){
+ const multiplier=action.category==='Gems'?3:1.25;
+ action.xp=Math.round(action.xp*multiplier);
 }
 // Crafting navigation: one clear category per recipe, shared by desktop and mobile.
 // This changes presentation only; recipe IDs, requirements and outputs stay intact.
@@ -5031,7 +5065,7 @@ function sell(item,qty){
  add(item,-qty);
  add('Coins',sellPrice(item)*qty);
  const coins=sellPrice(item)*qty;state.stats.coinsEarned+=coins;
- note(`🪙 Sold ${qty} ${item} for ${fmt(coins)} Coins.`);refreshDynamic();save();
+ note(`🪙 Sold ${qty} ${item} for ${fmt(coins)} Coins.`);hideItemTooltip();refreshDynamic();save();
 }
 function buy(item,qty){
  const offer=SHOP_ITEMS.find(x=>x.name===item);if(!offer||!isTradeable(item))return;
@@ -6355,9 +6389,11 @@ function renderBankTabs(scope){
   `<span>📁 ${esc(custom.name)} · custom tab</span><button data-bank-rename="${scope}">✏️ Rename</button><button data-bank-delete="${scope}">🗑️ Delete</button>`:
   `<span>Auto-sorted folders · drag items onto tabs, or select Move to tab below.</span>`;
 }
+let overniaSellMode=false;
+let overniaSellQty=1;
 function renderBankShell(scope){
- const filters=ui.bank[scope];return `<div class="between"><h3 style="margin:0">🏦 ${scope==='side'?'Bank':'Your Bank'}</h3><span class="bank-count">🪙 ${fmt(count('Coins'))} GP · Account</span><span class="bank-count" id="${scope}BankCapacity">${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks</span><button type="button" class="bank-create-top" data-bank-new title="Create bank folder">＋ Tab</button></div>
- <div class="bank-folders" id="${scope}BankFolders" aria-label="Bank folders"></div><div class="bank-tab-manager" id="${scope}BankManager"></div>
+ const filters=ui.bank[scope];return `<div class="between"><h3 style="margin:0">🏦 ${scope==='side'?'Bank':'Your Bank'}</h3><span class="bank-count" id="${scope}BankCoins">🪙 ${fmt(count('Coins'))} GP · Account</span><span class="bank-count" id="${scope}BankCapacity">${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks</span><button type="button" class="bank-create-top" data-bank-new title="Create bank folder">＋ Tab</button></div>
+ <div class="sell-mode-toolbar"><button type="button" data-toggle-sell-mode class="${overniaSellMode?'selected':''}">${overniaSellMode?'✓ Selling items':'🪙 Sell Items'}</button>${overniaSellMode?`<span class="small">Quantity</span>${[1,10,100,1000,'all'].map(q=>`<button type="button" data-sell-mode-qty="${q}" class="${overniaSellQty===q?'selected':''}">${q==='all'?'All':fmt(q)}</button>`).join('')}`:''}</div><div class="bank-folders" id="${scope}BankFolders" aria-label="Bank folders"></div><div class="bank-tab-manager" id="${scope}BankManager"></div>
  <div class="bank-tools" style="margin-top:8px"><input type="search" id="${scope}BankSearch" data-bank-search="${scope}" placeholder="Search this tab..." value="${esc(filters.search)}"></div>
  <div class="small subdued" id="${scope}BankCount" style="margin-top:8px"></div><div id="${scope}BankGrid" class="bank-grid ${scope==='side'?'compact':''}"></div><div class="pager" id="${scope}BankPager"></div><div id="${scope}BankDetail"></div>`;
 }
@@ -6367,9 +6403,10 @@ function renderBankGrid(scope){
  const grid=el(scope+'BankGrid');if(!grid)return;
  renderBankTabs(scope);
  const slice=items.slice(settings.page*per,(settings.page+1)*per);
- grid.innerHTML=slice.length?slice.map(([item,amount])=>`<button type="button" draggable="true" class="bank-tile ${settings.selected===item?'active':''}" data-bank-select="${scope}" data-item="${esc(item)}" data-item-preview="${esc(item)}" aria-label="${esc(item)}, ${fmt(amount)} owned. Select to inspect; drag onto a tab to move">${itemArt(item)}<span class="item-name">${esc(item)}</span><span class="stack">×${fmt(amount)}</span></button>`).join(''):'<p class="subdued small">Nothing here yet. Items appear automatically, or move items here from another tab.</p>';
+ grid.innerHTML=slice.length?slice.map(([item,amount])=>`<button type="button" draggable="${!overniaSellMode}" class="bank-tile ${overniaSellMode?'sell-tile':''} ${settings.selected===item?'active':''}" data-bank-select="${scope}" data-item="${esc(item)}" data-item-preview="${esc(item)}" aria-label="${esc(item)}, ${fmt(amount)} owned. Select to inspect; drag onto a tab to move">${itemArt(item)}<span class="item-name">${esc(item)}</span><span class="stack">×${fmt(amount)}</span>${overniaSellMode?`<span class="sell-tile-value">${isTradeable(item)?`${fmt(sellPrice(item)*Math.min(amount,overniaSellQty==='all'?amount:overniaSellQty))} GP`:'🔒 Not sellable'}</span>`:''}</button>`).join(''):'<p class="subdued small">Nothing here yet. Items appear automatically, or move items here from another tab.</p>';
  const pager=el(scope+'BankPager');if(pager)pager.innerHTML=`<button data-bank-page="${scope}" data-delta="-1" ${settings.page<=0?'disabled':''}>←</button><span>Page ${settings.page+1} / ${maxPage+1}</span><button data-bank-page="${scope}" data-delta="1" ${settings.page>=maxPage?'disabled':''}>→</button>`;
  const counter=el(scope+'BankCount');if(counter)counter.textContent=`${items.length} unique stacks in this view · ${fmt(Object.entries(state.bank).reduce((a,[item,qty])=>a+(item==='Coins'?0:Number(qty)||0),0))} total bank items`;
+ const bankCoins=el(scope+'BankCoins');if(bankCoins)bankCoins.textContent=`🪙 ${fmt(count('Coins'))} GP · Account`;
  const capacity=el(scope+'BankCapacity');if(capacity)capacity.textContent=`${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks`;
  renderBankDetail(scope);
 }
@@ -6448,6 +6485,10 @@ function itemTooltipTarget(target){return target?.closest?.('[data-item-preview]
 // On touch devices, equipment already has a dedicated item picker with item names,
 // requirements and an Equip/Use button. The large floating preview obstructs it.
 function suppressEquipmentTouchTooltip(target){
+ // Shop purchases must never open a floating item preview over the Buy controls.
+ if(target?.closest?.('[data-buy]'))return true;
+ if(target?.closest?.('.shop-card, .mobile-shop-item') && matchMedia('(max-width:900px), (pointer:coarse)').matches)return true;
+ if(overniaSellMode && target?.closest?.('[data-bank-select], .sell-mode-toolbar, .bank-grid'))return true;
  if(!matchMedia('(max-width:900px), (pointer:coarse)').matches)return false;
  const gearOverlay=document.getElementById('gearOverlay');
  // The floating tooltip is appended to document.body, NOT inside #gearOverlay.
@@ -6474,6 +6515,7 @@ document.addEventListener('click',e=>{
  const target=itemTooltipTarget(e.target);
  if(suppressEquipmentTouchTooltip(e.target)){hideItemTooltip();return}
  if(!target){if(tooltipTouchPinned)hideItemTooltip();return}
+ if(overniaSellMode && target.closest('[data-bank-select]')){hideItemTooltip();return;}
  if(e.pointerType==='touch'||matchMedia('(hover: none)').matches){
   // Tap an item icon or tile to inspect it. Normal equip/bank actions still run.
   showItemTooltip(target.dataset.itemPreview,e.clientX||innerWidth/2,e.clientY||innerHeight/2,true);
@@ -6786,7 +6828,7 @@ function refreshSummary(){
  el('summary').innerHTML=`<span class="stat">⭐ Total Lv <b>${fmt(totalSkillLevel())}</b></span><span class="stat">✨ XP <b>${fmt(totalSkillXp())}</b></span><span class="stat">⚔️ Combat <b>${combatLevel()}/${COMBAT_CONFIG.maxLevel}</b></span><span class="stat">❤️ <b>${Math.ceil(state.hp)}/${maxHp()}</b> HP</span><span class="stat">🪙 <b>${fmt(count('Coins'))}</b></span><span class="stat">🏦 <b>${fmt(bankUsed())}/${GAME_CONFIG.bankSlots}</b> stacks</span><span class="stat">${state.active?'⚡ Working':'💤 Idle'}</span>`;
 }
 function refreshDynamic(){
- refreshSummary();refreshNavLevels();
+ refreshSummary();refreshNavLevels();const shopCoins=el('shopCoins');if(shopCoins)shopCoins.textContent=`🪙 ${fmt(count('Coins'))}`;
  const quick=el('main')?.querySelector('.loadout-shortcuts');if(quick){const tpl=document.createElement('div');tpl.innerHTML=equipmentLoadoutsHtml(true);quick.replaceWith(tpl.firstElementChild)}
  if(ui.view==='skills')refreshSkillsOverview();
  else if(ui.view==='world')refreshWorldLive();
@@ -7045,10 +7087,13 @@ function handleClick(e){
  if(b.hasAttribute('data-claim'))return claimQuest(b.dataset.claim);
  if(b.hasAttribute('data-journal-category')){ui.journalCategory=b.dataset.journalCategory;ui.journalPage=0;renderJournalMain();return;}
  if(b.hasAttribute('data-bank-tab'))return bankSelectTab(b.dataset.bankTab,b.dataset.tabId);
+ if(b.hasAttribute('data-toggle-sell-mode')){overniaSellMode=!overniaSellMode;renderSidebar();if(ui.view==='bank')renderBankMain();return;}
+ if(b.hasAttribute('data-sell-mode-qty')){overniaSellQty=b.dataset.sellModeQty==='all'?'all':Number(b.dataset.sellModeQty);renderSidebar();if(ui.view==='bank')renderBankMain();return;}
  if(b.hasAttribute('data-bank-new'))return bankCreateTab();
  if(b.hasAttribute('data-bank-rename'))return bankRenameTab(b.dataset.bankRename);
  if(b.hasAttribute('data-bank-delete'))return bankDeleteTab(b.dataset.bankDelete);
  if(b.hasAttribute('data-bank-select')){
+  if(overniaSellMode){hideItemTooltip();if(!isTradeable(b.dataset.item)){note('🔒 This item cannot be sold.');return;}const owned=count(b.dataset.item);const amount=overniaSellQty==='all'?owned:Math.min(owned,overniaSellQty);if(amount>=owned && owned>1 && !confirm(`Sell ALL ${fmt(owned)} ${b.dataset.item} for ${fmt(sellPrice(b.dataset.item)*owned)} GP?`))return;sell(b.dataset.item,overniaSellQty);return;}
   const scope=b.dataset.bankSelect;ui.bank[scope].selected=b.dataset.item;
   renderBankGrid(scope);return;
  }
@@ -7639,7 +7684,7 @@ function setupOnlineUI(){
   const {error}=await onlineClient.auth.signInWithPassword({email:el('onlineEmail').value.trim(),password:el('onlinePassword').value});if(error)throw error;
   onlineStatus('✓ Signed in.');
  });
- el('onlineSignOut').onclick=()=>onlineAction(async()=>{const {error}=await onlineClient.auth.signOut();if(error)throw error;cloudReadyUser=null;cloudGeneration++;cloudSyncLabel('Guest mode · local saves only');onlineStatus('Signed out. Local saves remain available.')});
+ el('onlineSignOut').onclick=()=>{if(!window.confirm('Sign out of Overnia Online? Cloud syncing will stop until you sign in again. Your local saves will remain.'))return;onlineAction(async()=>{const {error}=await onlineClient.auth.signOut();if(error)throw error;cloudReadyUser=null;cloudGeneration++;cloudSyncLabel('Guest mode · local saves only');onlineStatus('Signed out. Local saves remain available.')})};
  el('cloudSaveBtn').onclick=()=>onlineAction(cloudSaveNow);
  el('onlineDownload').onclick=()=>onlineAction(onlineDownload);
  try{el('onlineUrl').value=OVERNIA_SUPABASE_URL;el('onlineKey').value=OVERNIA_SUPABASE_PUBLIC_KEY;onlineAction(()=>onlineConnect(OVERNIA_SUPABASE_URL,OVERNIA_SUPABASE_PUBLIC_KEY))}catch(e){console.warn(e)}
