@@ -2085,15 +2085,20 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 body:not(.overnia-start-chosen) #onlineOverlay{display:none!important}
 #homeAccountPanel{width:100%;max-height:50vh;overflow:auto}
 #homeAccountPanel .home-secondary{margin-top:12px}
+
+#overniaHome .home-primary-actions button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+#overniaHome .home-save-detail{display:block;font-size:11px;font-weight:500;color:#d6ddcf;line-height:1.35;white-space:normal}
+#overniaHome .home-primary-actions button:nth-child(2) .home-save-detail{color:#c4d8ec}
+#overniaHome .home-primary-actions button:nth-child(3) .home-save-detail{color:#b8bfc6}
 </style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
  <div class="home-wrap">
   <div class="home-brand"><img class="home-mark" src="./icon-192.png" alt="Overnia crest"><h2 id="homeTitle">OVERNIA</h2><p>Idle RPG · A Living World</p></div>
   <div class="home-primary-actions" aria-label="Choose your save">
-   <button type="button" data-home-action="use-cloud">☁️ Use Cloud Save</button>
-   <button type="button" data-home-action="use-local">💾 Use Local Save</button>
-   <button type="button" data-home-action="later">Decide Later</button>
+   <button type="button" data-home-action="use-cloud">☁️ Use Cloud Save<small id="homeCloudInfo" class="home-save-detail">Checking cloud save…</small></button>
+   <button type="button" data-home-action="use-local">💾 Use Local Save<small id="homeLocalInfo" class="home-save-detail">Checking local save…</small></button>
+   <button type="button" data-home-action="later">Decide Later<small class="home-save-detail">Choose after entering the game</small></button>
   </div>
   <button type="button" id="homeAccountToggle" data-home-action="account-settings" aria-expanded="false">⚙️ Account Settings</button>
   <div id="homeAccountPanel" class="home-card" hidden>
@@ -7744,6 +7749,39 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
 (() => {
  const $=id=>document.getElementById(id);
  const home=$('overniaHome');
+ const saveTotal=record=>{
+  if(!record?.xp)return null;
+  return allSkillKeys().reduce((sum,skill)=>sum+levelFromXp(record.xp[skill]||0),0);
+ };
+ const saveDate=timestamp=>{
+  const d=new Date(timestamp);
+  return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'Unknown date';
+ };
+ function refreshLocalInfo(){
+  const local=cloudLocal();
+  const total=saveTotal(local);
+  $('homeLocalInfo').textContent=total===null?'No local save found':`Total level ${total} · Saved ${saveDate(local.lastSaved)}`;
+ }
+ let cloudInfoRequest=0;
+ async function refreshCloudInfo(){
+  const request=++cloudInfoRequest;
+  const info=$('homeCloudInfo');
+  if(!onlineUser||!onlineClient){info.textContent='Sign in to view cloud level';return}
+  info.textContent='Checking cloud save…';
+  try{
+   const remote=await cloudFetch();
+   if(request!==cloudInfoRequest)return;
+   const total=saveTotal(remote?.save_data);
+   info.textContent=total===null?'No cloud save found':`Total level ${total} · Saved ${saveDate(remote.updated_at||remote.save_data.lastSaved)}`;
+  }catch(err){if(request===cloudInfoRequest)info.textContent='Cloud unavailable · Try again later'}
+ }
+ // Authentication can finish after the home screen appears. Refresh only on a change.
+ let lastAccountId=null;
+ setInterval(()=>{
+  if(home.hidden)return;
+  const id=onlineUser?.id||null;
+  if(id!==lastAccountId){lastAccountId=id;refreshCloudInfo()}
+ },1200);
  function setStatus(message){$('homeStatus').textContent=message||'';}
  function currentActivity(){
   const a=state?.active;
@@ -7758,6 +7796,7 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
   $('onlineOverlay').hidden=true;
   try{save()}catch(e){console.warn('Home save:',e)}
   $('homeCharacter').textContent=inDev()?'🧪 Dev Character':'🛡️ Main Character';
+  refreshLocalInfo();refreshCloudInfo();
   $('homeStats').textContent='Total level '+totalSkillLevel()+' · Combat level '+combatLevel()+' · '+fmt(count('Coins'))+' GP';
   $('homeActivity').textContent=currentActivity();
   $('homeFocusMode').checked=!!focusModeEnabled;
