@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.10.2">
+<meta name="overnia-build-version" content="2026.11.11.1">
 <title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
@@ -2074,22 +2074,42 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 /* Keep bank grid compact on mobile and desktop. */
 .bank-grid.compact .item-art{width:29px!important;height:29px!important;min-width:29px!important;min-height:29px!important;max-width:29px!important;max-height:29px!important;flex-basis:29px!important}
 </style>
+<style id="overnia-minimal-start-css">
+#overniaHome .home-wrap{max-width:410px;margin:auto;gap:14px}
+#overniaHome .home-primary-actions{display:grid;gap:11px;width:100%}
+#overniaHome .home-primary-actions button{width:100%;min-height:58px;font-size:16px;border-radius:12px;background:linear-gradient(180deg,#365542,#243d32);border:1px solid #729b78;color:#f5efdc}
+#overniaHome .home-primary-actions button:nth-child(2){background:linear-gradient(180deg,#34465e,#26374d);border-color:#6c87a3}
+#overniaHome .home-primary-actions button:nth-child(3){background:#2a3036;border-color:#59616a;font-size:14px}
+#homeAccountToggle{align-self:center!important;min-height:35px!important;padding:6px 13px!important;background:transparent!important;border:1px solid #627368!important;color:#c6d4c5!important;font-size:12px!important}
+#homeAccountPanel[hidden]{display:none!important}
+#homeAccountPanel{width:100%;max-height:50vh;overflow:auto}
+#homeAccountPanel .home-secondary{margin-top:12px}
+</style>
 </head>
 <body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
  <div class="home-wrap">
   <div class="home-brand"><img class="home-mark" src="./icon-192.png" alt="Overnia crest"><h2 id="homeTitle">OVERNIA</h2><p>Idle RPG · A Living World</p></div>
-  <div class="home-card"><div class="home-character"><div><strong id="homeCharacter">Your Adventure</strong><small id="homeStats">Loading character…</small></div><span aria-hidden="true" style="font-size:30px">⚔️</span></div><p class="home-active" id="homeActivity">Loading current activity…</p></div>
-  <button id="homeContinue" type="button">▶ Continue Playing</button>
-  <div class="home-card"><p class="home-section-label">💾 Save & Account</p><div class="home-actions">
-   <button type="button" data-home-action="save">💾 Save Now<small>Save on this device</small></button>
-   <button type="button" data-home-action="cloud">☁️ Cloud Save<small>Save your Main character</small></button>
-   <button type="button" data-home-action="export">⬇️ Export Save<small>Download backup</small></button>
-   <button type="button" data-home-action="import">⬆️ Import Save<small>Restore from file</small></button>
-   <button type="button" data-home-action="account">🌐 Account<small>Sign in / cloud sync</small></button>
-   <button type="button" data-home-action="settings">⚙️ Settings<small>App preferences</small></button>
-  </div></div>
-  <div id="homeSettings" class="home-card home-settings" hidden><p class="home-section-label">⚙️ App Settings</p><label><input type="checkbox" id="homeFocusMode"> Focus mode (compact workspace)</label><p>To install Overnia: open it in Safari or Chrome and choose Add to Home Screen. Your local save may be separate between the browser and installed app, so use your online account or export a backup before switching.</p><button type="button" data-home-action="settings-close">Close Settings</button></div>
-  <div class="home-secondary"><button type="button" data-home-action="skills">📊 Skills</button><button type="button" data-home-action="combat">⚔️ Combat</button><button type="button" data-home-action="world">🗺️ World</button><button type="button" data-home-action="menu">☰ All menus</button></div>
+  <div class="home-primary-actions" aria-label="Choose your save">
+   <button type="button" data-home-action="use-cloud">☁️ Use Cloud Save</button>
+   <button type="button" data-home-action="use-local">💾 Use Local Save</button>
+   <button type="button" data-home-action="later">Decide Later</button>
+  </div>
+  <button type="button" id="homeAccountToggle" data-home-action="account-settings" aria-expanded="false">⚙️ Account Settings</button>
+  <div id="homeAccountPanel" class="home-card" hidden>
+   <p class="home-section-label">Account &amp; Saves</p>
+   <div class="home-character"><div><strong id="homeCharacter">Your Adventure</strong><small id="homeStats">Loading character…</small></div></div>
+   <p class="home-active" id="homeActivity"></p>
+   <div class="home-actions">
+    <button type="button" data-home-action="save">💾 Save Now</button>
+    <button type="button" data-home-action="cloud">☁️ Cloud Save</button>
+    <button type="button" data-home-action="export">⬇️ Export Save</button>
+    <button type="button" data-home-action="import">⬆️ Import Save</button>
+    <button type="button" data-home-action="account">🌐 Account / Sign In</button>
+    <button type="button" data-home-action="settings">⚙️ App Settings</button>
+   </div>
+   <div id="homeSettings" class="home-settings" hidden><p class="home-section-label">App Settings</p><label><input type="checkbox" id="homeFocusMode"> Focus mode (compact workspace)</label><p>Local saves may differ between the browser and installed app. Export a backup before switching.</p><button type="button" data-home-action="settings-close">Close App Settings</button></div>
+   <div class="home-secondary"><button type="button" data-home-action="skills">📊 Skills</button><button type="button" data-home-action="combat">⚔️ Combat</button><button type="button" data-home-action="world">🗺️ World</button><button type="button" data-home-action="menu">☰ All menus</button></div>
+  </div>
   <p id="homeStatus" role="status" aria-live="polite"></p>
  </div>
 </section><button type="button" id="homeLaunch" class="home-launch" aria-label="Open main menu">⌂ Home</button>
@@ -7735,6 +7755,8 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
   $('homeActivity').textContent=currentActivity();
   $('homeFocusMode').checked=!!focusModeEnabled;
   $('homeSettings').hidden=true;
+  $('homeAccountPanel').hidden=true;
+  $('homeAccountToggle').setAttribute('aria-expanded','false');
   setStatus('');home.hidden=false;document.body.classList.add('home-screen-open');
  }
  function closeHome(){home.hidden=true;document.body.classList.remove('home-screen-open')}
@@ -7748,6 +7770,33 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
   const b=e.target.closest('[data-home-action]');if(!b)return;
   const act=b.dataset.homeAction;
   switch(act){
+   case 'account-settings':{
+    const panel=$('homeAccountPanel');panel.hidden=!panel.hidden;
+    $('homeAccountToggle').setAttribute('aria-expanded',String(!panel.hidden));break;
+   }
+   case 'use-local':
+    // Explicitly pause cloud sync: never replace the chosen local progress automatically.
+    if(typeof cloudReadyUser!=='undefined')cloudReadyUser=null;
+    resume();break;
+   case 'later':
+    if(typeof cloudReadyUser!=='undefined')cloudReadyUser=null;
+    resume();break;
+   case 'use-cloud':
+    if(typeof onlineUser==='undefined'||!onlineUser||!onlineClient){
+     $('onlineOpen').click();setStatus('Sign in to select your cloud save.');break;
+    }
+    setStatus('Checking your cloud character…');
+    (async()=>{
+     try{
+      const remote=await cloudFetch();
+      if(!remote?.save_data?.xp||!remote?.save_data?.bank){setStatus('No cloud character found. Choose Local Save or sign in to another account.');return}
+      const local=cloudLocal();
+      if(local?.xp&&local?.bank&&JSON.stringify(local)!==JSON.stringify(remote.save_data)){
+       if(!confirm('Use Cloud Save? Your local Main character will be replaced. Export a local backup first if you want to keep it.'))return;
+      }
+      await cloudApplyRemote(remote);resume();
+     }catch(err){setStatus('Could not load cloud save: '+(err?.message||String(err)))}
+    })();break;
    case 'save':$('saveBtn').click();setStatus('✓ Local character saved.');break;
    case 'cloud':if($('cloudSaveBtn').hidden){$('onlineOpen').click();setStatus('Sign in to use cloud saves.');}else{$('cloudSaveBtn').click();setStatus('Saving to cloud…');}break;
    case 'export':$('exportBtn').click();setStatus('Backup download requested.');break;
