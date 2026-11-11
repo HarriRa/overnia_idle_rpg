@@ -2082,6 +2082,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 #overniaHome .home-primary-actions button:nth-child(3){background:#2a3036;border-color:#59616a;font-size:14px}
 #homeAccountToggle{align-self:center!important;min-height:35px!important;padding:6px 13px!important;background:transparent!important;border:1px solid #627368!important;color:#c6d4c5!important;font-size:12px!important}
 #homeAccountPanel[hidden]{display:none!important}
+body:not(.overnia-start-chosen) #onlineOverlay{display:none!important}
 #homeAccountPanel{width:100%;max-height:50vh;overflow:auto}
 #homeAccountPanel .home-secondary{margin-top:12px}
 </style>
@@ -7562,7 +7563,11 @@ function cloudOfferChoice(message,options,saveLabels=null){
   if(age){const caption=document.createElement('small');caption.className='cloud-save-age';caption.textContent=age;wrapper.append(caption)}
   area.append(wrapper);
  }
- area.hidden=false;el('onlineOverlay').hidden=false;
+ area.hidden=false;
+ // Keep the account conflict available inside Account Settings, not as an automatic startup popup.
+ if(document.getElementById('overniaHome')?.hidden && !document.getElementById('onlineOverlay').hidden){
+  el('onlineOverlay').hidden=false;
+ }
 }
 async function cloudFetch(){
  const {data,error}=await onlineClient.from('character_saves').select('save_data,updated_at').eq('user_id',onlineUser.id).maybeSingle();
@@ -7749,6 +7754,8 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
   return 'Continue your adventure';
  }
  function showHome(){
+  document.body.classList.remove('overnia-start-chosen');
+  $('onlineOverlay').hidden=true;
   try{save()}catch(e){console.warn('Home save:',e)}
   $('homeCharacter').textContent=inDev()?'🧪 Dev Character':'🛡️ Main Character';
   $('homeStats').textContent='Total level '+totalSkillLevel()+' · Combat level '+combatLevel()+' · '+fmt(count('Coins'))+' GP';
@@ -7759,11 +7766,11 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
   $('homeAccountToggle').setAttribute('aria-expanded','false');
   setStatus('');home.hidden=false;document.body.classList.add('home-screen-open');
  }
- function closeHome(){home.hidden=true;document.body.classList.remove('home-screen-open')}
+ function closeHome(){home.hidden=true;document.body.classList.remove('home-screen-open');document.body.classList.add('overnia-start-chosen')}
  function gameView(view){closeHome();document.body.classList.remove('mobile-menu-home','mobile-equipment');navigate(view)}
  function resume(){const a=state?.active;gameView(a?.type==='skill'?a.skill:a?.type==='combat'?'combat':a?.type==='raid'?'raid':'skills')}
  $('homeLaunch').addEventListener('click',showHome);
- $('homeContinue').addEventListener('click',resume);
+ // Removed legacy Continue button: the three save choices handle entry.
  document.addEventListener('click',e=>{if(e.target.closest('[data-home-open]')){e.preventDefault();showHome()}});
  $('homeFocusMode').addEventListener('change',e=>{if(!!focusModeEnabled!==e.target.checked)toggleFocusMode();setStatus('Settings updated.')});
  home.addEventListener('click',e=>{
@@ -7783,7 +7790,7 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
     resume();break;
    case 'use-cloud':
     if(typeof onlineUser==='undefined'||!onlineUser||!onlineClient){
-     $('onlineOpen').click();setStatus('Sign in to select your cloud save.');break;
+     document.body.classList.add('overnia-start-chosen');$('onlineOpen').click();setStatus('Sign in to select your cloud save.');break;
     }
     setStatus('Checking your cloud character…');
     (async()=>{
@@ -7798,10 +7805,10 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
      }catch(err){setStatus('Could not load cloud save: '+(err?.message||String(err)))}
     })();break;
    case 'save':$('saveBtn').click();setStatus('✓ Local character saved.');break;
-   case 'cloud':if($('cloudSaveBtn').hidden){$('onlineOpen').click();setStatus('Sign in to use cloud saves.');}else{$('cloudSaveBtn').click();setStatus('Saving to cloud…');}break;
+   case 'cloud':if($('cloudSaveBtn').hidden){document.body.classList.add('overnia-start-chosen');$('onlineOpen').click();setStatus('Sign in to use cloud saves.');}else{$('cloudSaveBtn').click();setStatus('Saving to cloud…');}break;
    case 'export':$('exportBtn').click();setStatus('Backup download requested.');break;
    case 'import':$('importBtn').click();setStatus('Choose a saved .json backup to import.');break;
-   case 'account':$('onlineOpen').click();break;
+   case 'account':document.body.classList.add('overnia-start-chosen');$('onlineOpen').click();break;
    case 'settings':$('homeSettings').hidden=false;$('homeSettings').scrollIntoView({block:'nearest',behavior:'smooth'});break;
    case 'settings-close':$('homeSettings').hidden=true;break;
    case 'menu':closeHome();document.body.classList.remove('mobile-equipment');document.body.classList.add('mobile-menu-home');renderMobileHomeNav();if(innerWidth>650)navigate('skills');window.scrollTo(0,0);break;
