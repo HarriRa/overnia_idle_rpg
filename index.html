@@ -7844,7 +7844,32 @@ window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier
      }catch(err){setStatus('Could not load cloud save: '+(err?.message||String(err)))}
     })();break;
    case 'save':$('saveBtn').click();setStatus('✓ Local character saved.');break;
-   case 'cloud':if($('cloudSaveBtn').hidden){document.body.classList.add('overnia-start-chosen');$('onlineOpen').click();setStatus('Sign in to use cloud saves.');}else{$('cloudSaveBtn').click();setStatus('Saving to cloud…');}break;
+   case 'cloud':{
+    if(!onlineUser||!onlineClient){document.body.classList.add('overnia-start-chosen');$('onlineOpen').click();setStatus('Sign in to use cloud saves.');break;}
+    setStatus('Checking cloud save…');
+    (async()=>{
+     try{
+      // Manual upload is an explicit decision to keep the local character.
+      // Fetch the latest remote revision and require confirmation before replacing it.
+      if(!inDev())save();
+      const local=cloudLocal();
+      if(!local?.xp||!local?.bank)throw Error('No valid local Main save found.');
+      const remote=await cloudFetch();
+      if(remote?.save_data && JSON.stringify(remote.save_data)!==JSON.stringify(local)){
+       const ok=confirm('Upload your LOCAL Main save to cloud? This replaces the cloud copy (last saved '+new Date(remote.updated_at).toLocaleString()+'). Export a backup first if you want to preserve that cloud version.');
+       if(!ok){setStatus('Cloud upload cancelled. Nothing was overwritten.');return;}
+      }
+      setStatus('Saving to cloud…');
+      const ok=await cloudWrite(local,remote?.updated_at||null);
+      if(!ok){setStatus('Cloud changed during upload. Nothing was overwritten. Try again.');return;}
+      cloudMarkOwner(onlineUser.id);cloudReadyUser=onlineUser.id;cloudLastSync=Date.now();
+      cloudSyncLabel('✓ Cloudsave completed · auto-sync active');
+      onlineStatus('✓ Cloudsave completed');
+      setStatus('✓ Cloudsave completed');toast('Cloudsave completed');
+      if(typeof refreshHomeSaveSummaries==='function')refreshHomeSaveSummaries();
+     }catch(err){setStatus('Cloud save failed: '+(err?.message||String(err)));onlineStatus('Cloud save failed: '+(err?.message||String(err)));}
+    })();break;
+   }
    case 'export':$('exportBtn').click();setStatus('Backup download requested.');break;
    case 'import':$('importBtn').click();setStatus('Choose a saved .json backup to import.');break;
    case 'account':document.body.classList.add('overnia-start-chosen');$('onlineOpen').click();break;
