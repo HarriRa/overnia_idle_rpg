@@ -9,9 +9,10 @@ let mainWindow;
 let updateDownloaded = false;
 let updatePromptOpen = false;
 let checking = false;
+let downloading = false;
 
 function checkForUpdates() {
-  if (checking || updateDownloaded || !app.isPackaged) return;
+  if (checking || downloading || updateDownloaded || !app.isPackaged) return;
   checking = true;
   autoUpdater.checkForUpdates().catch(err => {
     console.warn('Overnia update check failed (offline is OK):', err.message);
@@ -48,8 +49,14 @@ app.whenReady().then(() => {
   if (!app.isPackaged) return;
   autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = false;
-  autoUpdater.on('error', err => console.warn('Overnia updater:', err.message));
+  autoUpdater.on('error', err => {
+    downloading = false;
+    console.warn('Overnia updater:', err.message);
+  });
+  autoUpdater.on('update-available', () => { downloading = true; });
+  autoUpdater.on('update-not-available', () => { downloading = false; });
   autoUpdater.on('update-downloaded', async () => {
+    downloading = false;
     updateDownloaded = true;
     if (updatePromptOpen) return;
     updatePromptOpen = true;
@@ -65,6 +72,6 @@ app.whenReady().then(() => {
   });
   // No update check is required to launch or play the game offline.
   setTimeout(checkForUpdates, 12000);
-  setInterval(checkForUpdates, 60 * 60 * 1000);
+  setInterval(checkForUpdates, 15 * 60 * 1000);
 });
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
