@@ -7,6 +7,7 @@ on:
     paths:
       - 'index.html'
       - 'sw.js'
+      - 'version.json'
       - 'manifest.webmanifest'
       - 'art/**'
       - 'assets/**'
@@ -76,7 +77,7 @@ jobs:
           cp index.html _site/
           cp version.json _site/
 
-          for file in sw.js manifest.webmanifest icon-192.png apple-touch-icon.png; do
+          for file in sw.js manifest.webmanifest icon-192.png icon-512.png apple-touch-icon.png; do
             if [ -f "$file" ]; then
               cp "$file" _site/
             fi

@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.10.2">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827">
+<meta name="overnia-build-version" content="2026.11.17.1">
 <title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
@@ -46,7 +46,7 @@ h1{margin:0 0 5px;font-size:21px;letter-spacing:.2px}.version{font-size:11px;col
 .activity-reward .reward-amount{font-size:11px;color:#9debc4;font-weight:850;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
 .activity-reward.reward-xp .reward-amount{color:#9ed4ff}
 .activity-reward-more{justify-content:center;min-height:27px;font-size:11px;color:#bdcdda;background:rgba(15,34,47,.80);border-style:dashed}
-@media(max-width:650px){
+@media all{
  #activityPanel{top:3px;padding:5px 7px}
  .activity-head{gap:6px}
  .activity-kicker{font-size:10px}
@@ -119,7 +119,7 @@ input[type=search],input[type=number],input[type=text],select{width:100%;backgro
 .gear-pick-item .gear-pick-details button{font-size:11px;padding:5px 9px;width:100%}
 .gear-pick-item.locked{opacity:.65}
 .gear-picker-empty{background:#152b3c;border:1px dashed #55758c;border-radius:10px;padding:20px;color:#b9cbda;font-size:13px;margin:12px 0}
-@media(max-width:650px){.gear-dialog{padding:12px}.gear-picker-grid{grid-template-columns:1fr}.gear-doll{max-width:350px;margin:auto}}
+@media all{.gear-dialog{padding:12px}.gear-picker-grid{grid-template-columns:1fr}.gear-doll{max-width:350px;margin:auto}}
 
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px}.shop-card{display:flex;gap:10px;align-items:start;padding:12px;background:#182f44;border:1px solid #38556e;border-radius:11px}.shop-card-content{flex:1;min-width:0}.shop-card h3{font-size:14px;margin:0 0 4px}.shop-card p{font-size:11px;color:#adc4d5;margin:5px 0 9px;line-height:1.4}.shop-card button{padding:6px 10px;font-size:12px}.sell-panel{margin-top:13px}.shop-owned{color:#a9c8db;font-size:11px}
 .fire-layout{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.fire-tile{padding:11px;flex:1 1 190px;background:#3a3027;border:1px solid #8a6839;border-radius:10px}.fire-tile.out{background:#1a293b;border-color:#3c566e}.fire-tile h3{margin:0 0 4px}.fire-log-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:6px;flex:2 1 340px}.fire-log-grid button{padding:8px;text-align:left}.fire-log-grid button small{display:block;color:#afc7d6;font-size:11px;margin-top:3px}
@@ -129,7 +129,7 @@ input[type=search],input[type=number],input[type=text],select{width:100%;backgro
 .afk-overlay[hidden]{display:none}.afk-dialog{width:min(560px,100%);max-height:calc(100vh - 30px);overflow:auto;border:1px solid #4c918e;border-radius:19px;background:linear-gradient(160deg,#1e344c,#102238);padding:22px;box-shadow:0 20px 80px #000c}.afk-dialog h2{margin:0;font-size:25px}.afk-hero{text-align:center;background:#132b40;border:1px solid #33566e;border-radius:13px;padding:17px;margin:16px 0}.afk-time{font-size:27px;color:#a0efca;font-weight:850;font-variant-numeric:tabular-nums;margin:8px 0}.afk-section{margin:14px 0}.afk-section h3{font-size:14px;margin:0 0 8px;color:#cce9f3}.afk-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:6px}.afk-item{display:flex;gap:8px;align-items:center;padding:9px;border:1px solid #355570;border-radius:9px;background:#142c42;min-width:0}.afk-item .detail{flex:1;min-width:0;font-size:12px;overflow-wrap:anywhere}.afk-item b{white-space:nowrap;color:#a2f0b9;font-size:12px}.afk-item.used b{color:#ffb9ab}.afk-continue{width:100%;padding:13px;font-weight:800;background:#207d73;margin-top:10px}.afk-progress{height:11px;background:#0d1c2c;border-radius:8px;overflow:hidden;margin:11px 0}.afk-progress div{height:100%;background:#67d5b3;width:0;transition:width .15s}
 @media(max-width:1150px){.layout{grid-template-columns:160px minmax(0,1fr) 280px;gap:8px;padding:8px}.panel{padding:11px}.nav button{font-size:12px;padding:7px 6px}.bank-grid.compact{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:920px){.layout{grid-template-columns:155px minmax(0,1fr)}.right{position:relative;max-height:none;grid-column:2}.main{min-height:300px}}
-@media(max-width:650px){header{padding:12px}.layout{grid-template-columns:1fr;gap:8px;padding:8px}.left{position:relative;top:auto;max-height:none;padding:9px}.left .nav,.left .nav-divider{display:none}.mobile-nav{display:block}.right{grid-column:1}.main{padding:10px;min-height:240px}.heading h2{font-size:21px}.combat-choices{grid-template-columns:1fr}.combat-choice{flex-direction:row;flex-wrap:wrap;align-items:center}.combat-choice .xpbar{flex:1 1 100%}#activityPanel{top:4px;padding:10px}.skill-cards{grid-template-columns:1fr}.bank-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}.bank-grid.compact{grid-template-columns:repeat(5,minmax(0,1fr))}.right .panel{padding:10px}}
+@media all{header{padding:12px}.layout{grid-template-columns:1fr;gap:8px;padding:8px}.left{position:relative;top:auto;max-height:none;padding:9px}.left .nav,.left .nav-divider{display:none}.mobile-nav{display:block}.right{grid-column:1}.main{padding:10px;min-height:240px}.heading h2{font-size:21px}.combat-choices{grid-template-columns:1fr}.combat-choice{flex-direction:row;flex-wrap:wrap;align-items:center}.combat-choice .xpbar{flex:1 1 100%}#activityPanel{top:4px;padding:10px}.skill-cards{grid-template-columns:1fr}.bank-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}.bank-grid.compact{grid-template-columns:repeat(5,minmax(0,1fr))}.right .panel{padding:10px}}
 @media(min-width:921px){.right .bank-tools{grid-template-columns:1fr}.right .bank-tools select{grid-column:auto}}@media(prefers-reduced-motion:reduce){.fill,button{transition:none}}
 
 /* v4.7 boss collection */
@@ -203,7 +203,7 @@ button:hover:not(:disabled){background:linear-gradient(180deg,#4c7692,#2d5b75);b
 @keyframes barflow{0%{background-position:0 0}100%{background-position:200% 0}}
 @keyframes twinkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.15)}}
 .monster .gold,.quest-tier-label,.item-art.tier-epic{animation:twinkle 2.6s ease-in-out infinite}
-@media(max-width:650px){.tabs button,#bankTab,#gearTab{padding:8px 10px}.nav button{padding:8px 7px;font-size:12px}}
+@media all{.tabs button,#bankTab,#gearTab{padding:8px 10px}.nav button{padding:8px 7px;font-size:12px}}
 
 
 /* v3.13: subdued vanilla look without the broad diagonal highlight. */
@@ -247,7 +247,7 @@ body{background:linear-gradient(155deg,#221d19 0%,#1b1b1d 52%,#171820 100%)}
 .potion-card button{font-size:11px;padding:5px 7px}
 .potion-card .potion-owned{display:block;color:#a7e9b9;font-size:12px;font-weight:800;margin:3px 0}
 .potion-empty{padding:15px;border:1px dashed #806448;border-radius:10px;color:#c9b493}
-@media(max-width:650px){.bank-folder{padding:8px 9px}.potion-pouch-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.tabs button,#bankTab,#gearTab,#potionTab{padding:8px 9px;font-size:11px}}
+@media all{.bank-folder{padding:8px 9px}.potion-pouch-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.tabs button,#bankTab,#gearTab,#potionTab{padding:8px 9px;font-size:11px}}
 
 
 /* v3.15: metals use a single glyph with a distinct colored background */
@@ -281,7 +281,7 @@ body{background:linear-gradient(155deg,#221d19 0%,#1b1b1d 52%,#171820 100%)}
 .raid-chest-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px}
 .raid-chest-row button{font-size:11px;padding:6px 9px}
 .monster-weakness{color:#f3c988;font-weight:750}
-@media(max-width:650px){.raid-panel{padding:10px}.raid-heading{flex-wrap:wrap}.raid-score{white-space:normal}}
+@media all{.raid-panel{padding:10px}.raid-heading{flex-wrap:wrap}.raid-score{white-space:normal}}
 
 /* v3.16 — unified skill ledger, built to stay readable on desktop and mobile */
 .skills-overview{--skills-amber:#e0b46c;--skills-mint:#79d2a9;--skills-sky:#8ac5f3}
@@ -324,7 +324,7 @@ body{background:linear-gradient(155deg,#221d19 0%,#1b1b1d 52%,#171820 100%)}
 .skills-ledger-row button:hover:not(:disabled){background:#627665;border-color:#a1c79d}
 .skills-ledger-note{font-size:11px;color:#bca786;line-height:1.5;margin-top:14px}
 @media(max-width:1150px){.skills-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.skills-ledger-row{grid-template-columns:minmax(105px,1fr) minmax(0,1.7fr) auto;gap:8px;padding:10px}}
-@media(max-width:650px){.skills-ledger-row{grid-template-columns:minmax(0,1fr) auto;row-gap:8px;padding:10px}.skills-ledger-stats{grid-row:2;grid-column:1/-1}.skills-ledger-row button{grid-column:2;grid-row:1}.skills-summary-tile{padding:11px 9px}.skills-summary-tile strong{font-size:18px}.skills-toolbar select{max-width:155px}}
+@media all{.skills-ledger-row{grid-template-columns:minmax(0,1fr) auto;row-gap:8px;padding:10px}.skills-ledger-stats{grid-row:2;grid-column:1/-1}.skills-ledger-row button{grid-column:2;grid-row:1}.skills-summary-tile{padding:11px 9px}.skills-summary-tile strong{font-size:18px}.skills-toolbar select{max-width:155px}}
 
 
 /* v3.17 — UX overhaul based on clear skill navigation, focused action cards and quick access */
@@ -382,7 +382,7 @@ body{background:linear-gradient(155deg,#221d19 0%,#1b1b1d 52%,#171820 100%)}
 .stat{font-variant-numeric:tabular-nums}
 @media(max-width:1150px){.quick-nav{gap:4px}.quick-nav button{padding:6px 8px}.skill-toolbar{align-items:stretch}.skill-search-box{flex-basis:100%}}
 @media(max-width:920px){.quick-nav{flex-wrap:nowrap;overflow:auto;scrollbar-width:none;padding-bottom:9px}.quick-nav button{white-space:nowrap;flex:none}.left{max-height:none}}
-@media(max-width:650px){.quick-nav{margin-bottom:9px;gap:4px}.quick-nav button{font-size:11px;padding:7px 9px}.skill-filter-modes{width:100%}.skill-filter-modes button{flex:1}.skill-toolbar{padding:8px}.journal-toolbar .journal-filter{flex-basis:100%}.claim-ready-button{width:100%}.recipe-card{padding:10px}.skill-count-line{font-size:10px}}
+@media all{.quick-nav{margin-bottom:9px;gap:4px}.quick-nav button{font-size:11px;padding:7px 9px}.skill-filter-modes{width:100%}.skill-filter-modes button{flex:1}.skill-toolbar{padding:8px}.journal-toolbar .journal-filter{flex-basis:100%}.claim-ready-button{width:100%}.recipe-card{padding:10px}.skill-count-line{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.recipe-card{transition:none}}
 
 
@@ -400,7 +400,7 @@ body{background:linear-gradient(155deg,#221d19 0%,#1b1b1d 52%,#171820 100%)}
 .journal-extra-stats{font-size:11px;color:#c6b99c;padding:5px 1px 9px}
 .journal-extra-stats summary{cursor:pointer;font-weight:700;color:#bdcca6}
 .journal-extra-stats span{display:inline-block;padding:7px 10px;margin-top:5px;margin-right:5px;border:1px solid #6c593f;border-radius:8px}
-@media(max-width:650px){.journal-summary-mini{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.journal-summary-mini>div{padding:8px 6px}.journal-summary-mini small{font-size:9px}.journal-summary-mini strong{font-size:14px}}
+@media all{.journal-summary-mini{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.journal-summary-mini>div{padding:8px 6px}.journal-summary-mini small{font-size:9px}.journal-summary-mini strong{font-size:14px}}
 
 /* v3.18 reduce distracting UI motion */
 .recipe-title .item-art,.bank-tile .item-art,.gear-paper-slot .gear-symbol,.monster-name,.monster .gold,.quest-tier-label,.item-art.tier-epic{animation:none!important}
@@ -451,7 +451,7 @@ body{background:linear-gradient(155deg,#221d19 0%,#1b1b1d 52%,#171820 100%)}
 .set-tracker small{font-size:10px;line-height:1.4;color:#baa88e}
 .set-tracker.set-enabled{border-color:#668e68;background:#233329}
 .set-tracker.set-enabled small{color:#cae7c5}
-@media(max-width:650px){.monster-inspect-dialog{padding:11px}.monster-inspect-metrics{gap:4px}.monster-inspect-metrics div{padding:6px}.monster-inspect-metrics strong{font-size:12px}.monster-loot-list{grid-template-columns:1fr}}
+@media all{.monster-inspect-dialog{padding:11px}.monster-inspect-metrics{gap:4px}.monster-inspect-metrics div{padding:6px}.monster-inspect-metrics strong{font-size:12px}.monster-loot-list{grid-template-columns:1fr}}
 
 
 /* v3.21 — original miniature armour illustrations; no animated inventory elements */
@@ -616,14 +616,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 @media(max-width:1360px){.layout{grid-template-columns:175px minmax(0,1fr) 270px;gap:8px;padding:8px}.panel{padding:10px}.skill-workspace{grid-template-columns:minmax(0,1fr) 255px;gap:8px}.skill-focus{padding:10px}.stage-details{padding:19px}}
 @media(max-width:1150px){.skill-workspace{grid-template-columns:1fr}.skill-inspector{position:static;grid-row:1}.skill-focus{display:grid;grid-template-columns:1.2fr 1fr;column-gap:14px}.focus-head,.focus-item,.focus-specs,.focus-start{grid-column:1}.focus-section-title,.focus-output,.focus-materials,.focus-fire{grid-column:2}.focus-section-title{margin-top:4px}.focus-start{margin-bottom:1px}.skill-cards{grid-template-columns:repeat(auto-fit,minmax(235px,1fr))}}
 @media(max-width:920px){.layout{grid-template-columns:155px minmax(0,1fr)}.left{top:8px}.right{max-height:none}.skill-workspace{grid-template-columns:1fr}.skill-focus{grid-template-columns:1fr}.focus-head,.focus-item,.focus-specs,.focus-start,.focus-section-title,.focus-output,.focus-materials,.focus-fire{grid-column:1}.skill-cards{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}}
-@media(max-width:650px){header{padding:10px;gap:6px}h1{font-size:18px}.stats{gap:4px}.stat{font-size:10px;padding:4px 6px}.top-controls{width:100%;justify-content:space-between}.top-controls button{font-size:10px;padding:6px}.layout{grid-template-columns:1fr;gap:7px;padding:7px}.left{max-height:none;position:relative}.right{grid-column:1}.main{min-height:240px}.skill-stage{min-height:135px;margin-bottom:10px}.stage-details{padding:16px}.stage-title h2{font-size:21px}.stage-icon{width:38px;height:38px;font-size:22px}.stage-level{font-size:10px}.skill-stage-decoration{font-size:78px;right:8px}.skill-stage p{font-size:11px}.skill-workspace{gap:9px}.skill-browser{padding:9px}.skill-cards{grid-template-columns:1fr}.skill-focus{padding:13px}.focus-specs span{padding:8px 3px}.focus-item .item-art{width:54px;height:54px}.right>.tabs{gap:3px}.right>.tabs button{font-size:10px;padding:7px 4px!important}.activity-head{gap:6px}}
+@media all{header{padding:10px;gap:6px}h1{font-size:18px}.stats{gap:4px}.stat{font-size:10px;padding:4px 6px}.top-controls{width:100%;justify-content:space-between}.top-controls button{font-size:10px;padding:6px}.layout{grid-template-columns:1fr;gap:7px;padding:7px}.left{max-height:none;position:relative}.right{grid-column:1}.main{min-height:240px}.skill-stage{min-height:135px;margin-bottom:10px}.stage-details{padding:16px}.stage-title h2{font-size:21px}.stage-icon{width:38px;height:38px;font-size:22px}.stage-level{font-size:10px}.skill-stage-decoration{font-size:78px;right:8px}.skill-stage p{font-size:11px}.skill-workspace{gap:9px}.skill-browser{padding:9px}.skill-cards{grid-template-columns:1fr}.skill-focus{padding:13px}.focus-specs span{padding:8px 3px}.focus-item .item-art{width:54px;height:54px}.right>.tabs{gap:3px}.right>.tabs button{font-size:10px;padding:7px 4px!important}.activity-head{gap:6px}}
 @media(prefers-reduced-motion:reduce){.activity-reward{transition:none!important}}
 
 
 .focus-expand-toggle{display:none}
 .focus-expandable{display:block}
 @media(min-width:651px) and (max-width:1150px){.focus-expandable{grid-column:2;grid-row:1 / span 5}.focus-expand-toggle{display:none}.focus-start{align-self:end}}
-@media(max-width:650px){
+@media all{
  .focus-expand-toggle{display:block;background:#263e2e!important;color:#dddeb8!important;border:1px solid #536b53!important;padding:8px 10px!important;width:100%;text-align:left;margin-top:9px}
  .focus-expandable{display:none;padding:4px 0 0}
  .focus-expandable.expanded{display:block}
@@ -662,7 +662,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .skill-browser .recipe-card .recipe-quick-start{grid-column:2;grid-row:1 / span 2;align-self:center;min-width:69px;white-space:nowrap;padding:6px 8px!important;font-size:10px;border-radius:5px;background:#365f49;border:1px solid #7eaf8b;color:#f6f2d9}
 .skill-browser .recipe-card .recipe-quick-start:hover:not(:disabled){background:#4b7f5c}
 .skill-browser .recipe-card .recipe-quick-start:disabled{background:#2a352e;border-color:#4f5e50;color:#9ca99c;opacity:1}
-@media(max-width:650px){
+@media all{
  .skill-browser .recipe-card{padding:6px!important;gap:3px 5px;min-height:62px}
  .skill-browser .recipe-card .recipe-illustration .item-art{width:27px;height:27px;font-size:18px}
  .skill-browser .recipe-card .recipe-select{gap:6px}
@@ -672,7 +672,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 }
 
 
-@media(max-width:650px){
+@media all{
  /* The selected activity stays accessible without pushing all recipes below the fold. */
  .skill-inspector .skill-focus{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 9px;align-items:center;padding:9px}
  .skill-inspector .focus-head,.skill-inspector .focus-specs{display:none}
@@ -686,7 +686,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 }
 
 
-@media(max-width:650px){
+@media all{
  .skill-stage{min-height:0;margin-bottom:7px}
  .stage-details{padding:10px 12px}
  .stage-title h2{font-size:19px}
@@ -702,7 +702,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
  .skill-browser .skill-toolbar{padding:5px;margin:3px 0 5px;gap:4px}
  .skill-browser .skill-list-heading{margin:6px 2px 5px}
 }
-@media(min-width:375px) and (max-width:650px){
+@media(min-width:375px){
  .skill-browser .skill-toolbar{grid-template-columns:minmax(0,1fr) auto;align-items:center}
  .skill-browser .skill-filter-modes{width:auto;flex-wrap:nowrap;gap:3px}
  .skill-browser .skill-filter-modes button{padding:5px 5px;font-size:10px}
@@ -734,7 +734,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .dev-group button:hover:not(:disabled){background:#486c4e}
 .dev-group button.danger{background:#633737;border-color:#b97878}
 #devStatus{margin-top:10px;min-height:22px;color:#f6d68f;font-size:12px}
-@media(max-width:650px){.profile-switch button{padding:5px 7px!important}.dev-grid{grid-template-columns:1fr}.dev-dialog{padding:12px}.dev-dialog h2{font-size:19px}}
+@media all{.profile-switch button{padding:5px 7px!important}.dev-grid{grid-template-columns:1fr}.dev-dialog{padding:12px}.dev-dialog h2{font-size:19px}}
 
 
 /* v3.27: combat stats and contextual item inspection */
@@ -766,7 +766,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .combat-max-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:9px 11px;margin:10px 0;background:#2c2921;border:1px solid #716043;border-radius:8px}
 .combat-max-row>span{margin-right:auto;font-weight:800;color:#f8d99a}.combat-max-row>span small{font-size:10px;color:#c2b8a5;font-weight:400}
 .combat-max-row b{font-size:11px;white-space:nowrap;color:#cfdbc9}.combat-max-row strong{font-size:17px;color:#ffdb96;margin-left:3px}
-@media(max-width:650px){.item-tooltip{width:min(310px,calc(100vw - 20px));max-height:65dvh}.combat-max-row{gap:8px}.combat-max-row>span{width:100%}}
+@media all{.item-tooltip{width:min(310px,calc(100vw - 20px));max-height:65dvh}.combat-max-row{gap:8px}.combat-max-row>span{width:100%}}
 
 
 /* v3.28 weapon-controlled combat: training options affect XP only */
@@ -786,7 +786,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .combat-xp-details summary{cursor:pointer;font-weight:700}
 .combat-xp-details .combat-choices{margin-top:12px}
 .combat-xp-details .combat-choice{padding:8px;border:1px solid #47606c;border-radius:8px;background:#162c35}
-@media(max-width:650px){.combat-train-options{grid-template-columns:1fr}.combat-training{padding:11px}}
+@media all{.combat-train-options{grid-template-columns:1fr}.combat-training{padding:11px}}
 
 /* v3.29: quick swap presets + optional weakness switching */
 .loadout-panel{padding:10px;border:1px solid #5b655b;border-radius:12px;margin-bottom:12px;background:linear-gradient(160deg,#193127,#172334)}
@@ -807,7 +807,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .loadout-quick{font-size:11px;padding:5px 7px;border-radius:7px}
 .raid-auto-config{background:#182d2b;border:1px solid #4b7162;border-radius:9px;padding:9px;margin:10px 0}
 .raid-auto-config small{display:block;color:#b2c9bf;margin-top:4px}
-@media(max-width:650px){.loadout-quick{padding:5px 6px}.loadout-card-options input{width:90px}}
+@media all{.loadout-quick{padding:5px 6px}.loadout-card-options input{width:90px}}
 
 /* Loadout browser: green = worn, grey = stored, gold outline = being edited. */
 .loadout-tab,.loadout-quick-icon{background:#333a37!important;border-color:#606b67!important;color:#d3d9d4!important;filter:saturate(.65)}
@@ -851,7 +851,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .combat-auto-switch{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 10px;padding:8px 10px;margin:7px 0 11px;border-color:#436a56;background:#182e27}
 .combat-auto-switch .checkbox-row{font-size:12px;font-weight:650}
 .combat-auto-switch small{font-size:11px;color:#afc8bb;line-height:1.3}
-@media(max-width:650px){.loadout-panel-compact{padding:8px}.loadout-tabs{gap:4px}.loadout-tab{height:43px}.loadout-tab-art{font-size:19px}.loadout-shortcuts{margin:6px 0}.loadout-quick-icon{width:38px;height:39px}}
+@media all{.loadout-panel-compact{padding:8px}.loadout-tabs{gap:4px}.loadout-tab{height:43px}.loadout-tab-art{font-size:19px}.loadout-shortcuts{margin:6px 0}.loadout-quick-icon{width:38px;height:39px}}
 
 /* ───── v3.31 · Overnia travel, denser bank and one-glance shop ───── */
 .bank-grid{grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:5px;margin-top:7px}
@@ -898,7 +898,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .world-hire-panel{padding:2px 0 12px}.world-hire-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}.world-worker{padding:12px;display:flex;flex-direction:column;gap:7px;background:#232f28;border:1px solid #5b745b;border-radius:8px}.world-worker b{color:#f0debd}.world-worker small,.world-worker .between{font-size:10px;color:#bdcebd}.world-worker button{font-size:11px;padding:6px 9px;margin-top:auto}.world-hired{border:1px solid #7da87c;background:#263d2a;padding:12px;border-radius:8px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .world-chronicle{margin:15px 0;padding:13px;border:1px solid #806d54;background:#302a24;border-radius:9px}.world-chronicle summary{cursor:pointer;color:#f2dba7;font-weight:750}.world-chronicle p{font-size:12px;line-height:1.6;color:#d8ccbc}
 @media(max-width:1000px){.world-map{height:290px}.world-location-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){.bank-grid{grid-template-columns:repeat(auto-fill,minmax(61px,1fr))}.bank-grid.compact{grid-template-columns:repeat(auto-fill,minmax(53px,1fr))}.bank-tile,.bank-grid.compact .bank-tile{min-height:66px}.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.shop-card{gap:5px;padding:6px}.shop-card h3{font-size:10px;min-height:25px}.shop-card>.item-art{width:27px;height:27px}.shop-checkout{flex-wrap:wrap}.shop-card button{margin-left:auto}.world-map{height:260px}.world-pin{min-width:48px;padding:4px!important;max-width:75px}.world-pin span{font-size:17px}.world-pin small{font-size:9px}.world-location-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.world-quests{grid-template-columns:1fr}}
+@media all{.bank-grid{grid-template-columns:repeat(auto-fill,minmax(61px,1fr))}.bank-grid.compact{grid-template-columns:repeat(auto-fill,minmax(53px,1fr))}.bank-tile,.bank-grid.compact .bank-tile{min-height:66px}.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.shop-card{gap:5px;padding:6px}.shop-card h3{font-size:10px;min-height:25px}.shop-card>.item-art{width:27px;height:27px}.shop-checkout{flex-wrap:wrap}.shop-card button{margin-left:auto}.world-map{height:260px}.world-pin{min-width:48px;padding:4px!important;max-width:75px}.world-pin span{font-size:17px}.world-pin small{font-size:9px}.world-location-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.world-quests{grid-template-columns:1fr}}
 
 
 .world-rumor{padding:10px 12px;margin-top:11px;background:#1c2c25;border-left:3px solid #af9461;color:#d5dac7;font-size:12px;line-height:1.45;border-radius:4px}
@@ -924,7 +924,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .world-hired-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .world-hired-actions span{font-size:11px;color:#d5e5cb}
 @media(max-width:1000px){.world-map-shell{height:330px}}
-@media(max-width:650px){.world-map-shell{height:280px}.world-map-toolbar{align-items:flex-start}.world-map-toolbar small{width:100%}.world-pin{min-width:51px;max-width:78px}.world-pin span{font-size:18px}.world-pin small{font-size:9px}.world-hired-list{grid-template-columns:1fr}}
+@media all{.world-map-shell{height:280px}.world-map-toolbar{align-items:flex-start}.world-map-toolbar small{width:100%}.world-pin{min-width:51px;max-width:78px}.world-pin span{font-size:18px}.world-pin small{font-size:9px}.world-hired-list{grid-template-columns:1fr}}
 
 
 /* v3.33 — Overnia is a region stretching across many kilometres, not a village-sized board. */
@@ -950,7 +950,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .atlas-local{transition:opacity .1s}.world-map-shell.atlas-detail .atlas-local{opacity:.9}
 .world-location{padding:7px!important}.world-location b{font-size:12px}.world-location small{font-size:9px}
 @media(max-width:1000px){.world-map-shell{height:420px}.world-map-shell.is-expanded{height:min(75vh,780px)}}
-@media(max-width:650px){.world-map-shell{height:325px}.world-map-shell.is-expanded{height:min(78vh,660px)}.world-pin{min-width:39px;max-width:65px;padding:2px!important}.world-pin .world-pin-icon{font-size:12px}.world-pin .world-pin-name{font-size:8px;max-width:64px}.world-map-meta{font-size:10px;letter-spacing:.06em}.world-map-meta span+span{font-size:9px}.world-map-caption{font-size:9px;left:8px}.world-map-scale{left:9px;bottom:32px}.world-map-zoom button{font-size:10px;padding:6px}}
+@media all{.world-map-shell{height:325px}.world-map-shell.is-expanded{height:min(78vh,660px)}.world-pin{min-width:39px;max-width:65px;padding:2px!important}.world-pin .world-pin-icon{font-size:12px}.world-pin .world-pin-name{font-size:8px;max-width:64px}.world-map-meta{font-size:10px;letter-spacing:.06em}.world-map-meta span+span{font-size:9px}.world-map-caption{font-size:9px;left:8px}.world-map-scale{left:9px;bottom:32px}.world-map-zoom button{font-size:10px;padding:6px}}
 
 
 /* v3.34 · recruitment chapters and detailed region histories */
@@ -977,7 +977,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .world-helper-output strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .world-helper-output .item-art{width:22px;height:22px;font-size:15px;flex-shrink:0}
 .world-worker button{white-space:normal;text-align:center;line-height:1.25}
-@media(max-width:650px){.world-lore-columns{grid-template-columns:1fr;gap:10px}.world-recruit-quests{padding:8px}.world-recruit-quests>summary{font-size:12px}}
+@media all{.world-lore-columns{grid-template-columns:1fr;gap:10px}.world-recruit-quests{padding:8px}.world-recruit-quests>summary{font-size:12px}}
 
 /* Foldable personal quests keep the lore rich without an endless vertical list. */
 .world-recruit-card{padding:0!important;min-height:0!important;overflow:hidden}
@@ -1033,7 +1033,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .over-arena-versus{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);background:#272621;border:1px solid #b69a6c;border-radius:50%;height:29px;width:29px;display:grid;place-items:center;font-size:9px;font-weight:900;color:#f3d39c;pointer-events:none;box-shadow:0 3px 9px #0008}
 .over-arena-footer{margin-top:9px;font-size:10px;color:#b1ad9f;line-height:1.4}
 .over-arena-footer span:last-child{color:#d9c59c;font-variant-numeric:tabular-nums}
-@media(max-width:650px){.over-arena{padding:8px;margin:8px 0 12px}.over-arena-grid{gap:7px}.over-fighter{padding:8px;gap:7px}.over-fighter-head{gap:5px;flex-wrap:wrap}.over-fighter-avatar{width:27px;height:27px;font-size:18px;border-radius:6px}.over-fighter-identity small{font-size:8px}.over-fighter-identity strong{font-size:11px}.over-combat-style{font-size:8px;padding:2px 4px}.over-health-numbers{font-size:9px;flex-wrap:wrap;gap:1px}.over-health-numbers strong{font-size:12px}.over-fighter-metrics{font-size:9px;gap:3px}.over-action-meta{font-size:9px}.over-arena-versus{height:23px;width:23px;font-size:8px}.over-arena-round{font-size:9px}.over-arena-footer{font-size:9px}}
+@media all{.over-arena{padding:8px;margin:8px 0 12px}.over-arena-grid{gap:7px}.over-fighter{padding:8px;gap:7px}.over-fighter-head{gap:5px;flex-wrap:wrap}.over-fighter-avatar{width:27px;height:27px;font-size:18px;border-radius:6px}.over-fighter-identity small{font-size:8px}.over-fighter-identity strong{font-size:11px}.over-combat-style{font-size:8px;padding:2px 4px}.over-health-numbers{font-size:9px;flex-wrap:wrap;gap:1px}.over-health-numbers strong{font-size:12px}.over-fighter-metrics{font-size:9px;gap:3px}.over-action-meta{font-size:9px}.over-arena-versus{height:23px;width:23px;font-size:8px}.over-arena-round{font-size:9px}.over-arena-footer{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.over-hp-fill,.over-action-track span{transition:none}}
 
 /* v3.42 — ordinary page scrolling must win over gestures on the atlas. */
@@ -1070,14 +1070,14 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .combat-food-foldout{margin:4px 0;padding:8px 10px;border-radius:8px;background:#192b39;border:1px solid #395466}
 .combat-food-foldout summary{font-size:12px;font-weight:700;cursor:pointer}
 .combat-food-foldout .info-box{margin:9px 0 0}
-@media(max-width:700px){.combat-console-nav button{font-size:11px}.monster-compact .monster-quick-row{flex-wrap:wrap;gap:4px 7px}.monster-compact .monster-quick-title{flex:1 1 100%}.monster-compact .monster-quick-stats{flex:1 1 auto}.monster-compact .monster-actions{margin-left:auto}.monster-compact .monster-quick-kills{display:none}.combat-monster-filters button{padding:5px 8px}}
+@media all{.combat-console-nav button{font-size:11px}.monster-compact .monster-quick-row{flex-wrap:wrap;gap:4px 7px}.monster-compact .monster-quick-title{flex:1 1 100%}.monster-compact .monster-quick-stats{flex:1 1 auto}.monster-compact .monster-actions{margin-left:auto}.monster-compact .monster-quick-kills{display:none}.combat-monster-filters button{padding:5px 8px}}
 
 
 .over-arena-target{display:flex;align-items:center;gap:6px;margin:0 0 10px;position:relative;min-width:0}
 .over-arena-target label{color:#d8c49c;font-size:11px;font-weight:750;white-space:nowrap}
 .over-arena-target select{min-width:0;flex:1;height:30px;padding:4px 7px;font-size:11px;background:#1b2928;border-color:#587364;color:#e6e9d6}
 .over-arena-target button{font-size:11px;padding:5px 9px;white-space:nowrap}
-@media(max-width:650px){.over-arena-target{gap:4px;margin:0 0 8px}.over-arena-target label{font-size:10px}.over-arena-target select{font-size:10px}.over-arena-target button{font-size:10px;padding:5px 7px}}
+@media all{.over-arena-target{gap:4px;margin:0 0 8px}.over-arena-target label{font-size:10px}.over-arena-target select{font-size:10px}.over-arena-target button{font-size:10px;padding:5px 7px}}
 
 
 .world-console-nav{display:flex;gap:5px;padding:4px;margin:8px 0 10px;background:#1d302a;border:1px solid #566c59;border-radius:10px}
@@ -1085,7 +1085,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .world-console-nav button.is-active{color:#f0e8ce;background:#3e5c45;border-color:#7eaa83}
 .world-panel-section[hidden]{display:none!important}
 .world-panel-section{min-width:0}
-@media(max-width:650px){.world-console-nav button{font-size:11px;padding:7px 4px}}
+@media all{.world-console-nav button{font-size:11px;padding:7px 4px}}
 
 
 /* v3.43: quick, compact travel from the Combat screen. */
@@ -1100,7 +1100,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .combat-region-chip:focus-visible{outline:2px solid #f4da9d;outline-offset:2px}
 .combat-region-mobile{display:none}
 @media(max-width:980px){.combat-region-chips{display:none}.combat-region-mobile{display:flex;align-items:center;gap:9px}.combat-region-mobile span{white-space:nowrap;font-size:11px;color:#bccfc3}.combat-region-mobile select{flex:1;min-width:0;max-width:100%;height:32px;padding:4px 9px;font-size:12px;border:1px solid #648474;border-radius:7px;background:#182a26;color:#f5eaca}}
-@media(max-width:650px){.combat-region-picker{padding:7px 9px;margin-bottom:8px}.combat-region-top{margin-bottom:5px}.combat-region-mobile select{font-size:11px}}
+@media all{.combat-region-picker{padding:7px 9px;margin-bottom:8px}.combat-region-top{margin-bottom:5px}.combat-region-mobile select{font-size:11px}}
 
 /* v3.44 - Compact workspaces. Only one short page of actions is visible at once. */
 .skill-cards .recipe-card[hidden]{display:none!important}
@@ -1125,7 +1125,7 @@ body[data-profile="dev"] h1:after{content:' · DEV';display:inline-block;font-si
 .pager-actions button{min-width:36px;padding:5px 10px;font-size:16px;line-height:1.2}
 .pager-position{min-width:40px;text-align:center;color:#f1ddaa;font-size:11px;font-weight:700;white-space:nowrap}
 @media(max-width:1150px){.skill-inspector{grid-row:1}.skill-workspace{gap:6px}.skill-focus .focus-specs{margin:4px 0 8px}}
-@media(max-width:650px){.skill-stage{margin-bottom:6px}.stage-details{padding:8px 10px}.stage-icon{display:none}.stage-title h2{font-size:18px}.skill-browser{padding:7px}.skill-browser .skill-toolbar{padding:5px}.skill-browser .recipe-card{min-height:51px;padding:5px!important}.skill-inspector .skill-focus{padding:7px}.skill-inspector .focus-expand-toggle{padding:3px 7px!important}.skill-workspace{gap:5px}.compact-pager{margin-top:6px;padding:6px 8px}}
+@media all{.skill-stage{margin-bottom:6px}.stage-details{padding:8px 10px}.stage-icon{display:none}.stage-title h2{font-size:18px}.skill-browser{padding:7px}.skill-browser .skill-toolbar{padding:5px}.skill-browser .recipe-card{min-height:51px;padding:5px!important}.skill-inspector .skill-focus{padding:7px}.skill-inspector .focus-expand-toggle{padding:3px 7px!important}.skill-workspace{gap:5px}.compact-pager{margin-top:6px;padding:6px 8px}}
 
 
 .skill-fire-drawer{border:1px solid #6b654b;background:#2b2c23;border-radius:8px;margin:0 0 7px;overflow:hidden}
@@ -1199,7 +1199,7 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
  body.focus-mode .skill-stage{min-height:105px}
  body.focus-mode .activity-log-details{margin-bottom:12px}
 }
-@media(max-width:650px){
+@media all{
  body.focus-mode>header{padding:6px 8px 5px;gap:3px}
  body.focus-mode h1{font-size:15px}
  body.focus-mode .version{font-size:9px}
@@ -1226,15 +1226,15 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 .world-pin{filter:drop-shadow(0 3px 4px #000a)}
 .world-map-meta{top:15px;left:50%;transform:translateX(-50%);align-items:center;background:#101c20c9;padding:4px 12px;border:1px solid #bca16b;border-radius:8px;white-space:nowrap}
 .world-map-caption{background:#0a1c23d6;border-radius:6px;padding:4px 7px;bottom:8px}
-@media(max-width:650px){.world-map-meta{font-size:10px}.world-map-caption{font-size:8px}}
+@media all{.world-map-meta{font-size:10px}.world-map-caption{font-size:8px}}
 .world-pin.atlas-pin{min-width:26px;max-width:26px;width:26px;height:26px;min-height:26px;padding:2px!important;border:1px solid #ffdf94!important;border-radius:50%;background:#10232cdb!important;box-shadow:0 0 0 2px #08181b,0 2px 8px #000c!important;overflow:hidden}
 .world-pin.atlas-pin span{font-size:15px;line-height:20px}
 .world-pin.atlas-pin small{display:none}
 .world-pin.atlas-pin.is-current{background:#2b6d59!important;box-shadow:0 0 0 2px #08181b,0 0 14px #77ffb3!important}
-@media(max-width:650px){.world-pin.atlas-pin{width:23px;min-width:23px;max-width:23px;height:23px;min-height:23px}.world-pin.atlas-pin span{font-size:13px}}
+@media all{.world-pin.atlas-pin{width:23px;min-width:23px;max-width:23px;height:23px;min-height:23px}.world-pin.atlas-pin span{font-size:13px}}
 .region-shortcuts{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.region-shortcuts button,.region-head button{border:1px solid #ac925e;border-radius:8px;background:#1c3334;color:#f2ddb1;padding:7px 10px;font-size:11px;cursor:pointer}
 .region-detail{border:1px solid #b69b65;border-radius:12px;overflow:hidden;background:#142b31;margin:10px 0}.region-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;background:#182f35}.region-head strong{font-size:17px;color:#f6dfb2}.region-scene{position:relative;aspect-ratio:1000/540;min-height:270px;overflow:hidden}.region-terrain{position:absolute;inset:0;width:100%;height:100%;filter:contrast(1.1)}.region-point{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;border:1px solid #e3c58b!important;background:#11292ee8!important;color:#ffe7b3!important;border-radius:9px!important;padding:5px 9px!important;box-shadow:0 3px 12px #000a;cursor:pointer}.region-point span{font-size:24px}.region-point b{font-size:11px}.region-point.active{outline:3px solid #ffda85;z-index:2}.region-compass{position:absolute;top:10px;right:15px;color:#fff2c8;font-weight:800}.region-description{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}.region-description>div{background:#203c40;border-radius:8px;padding:10px}.region-description strong{color:#f1d59c}.region-description p{font-size:12px;line-height:1.5;color:#d5dfdc;margin:6px 0}.region-note{display:block;padding:0 12px 12px;color:#aebbb9}
-@media(max-width:650px){.region-head strong{font-size:12px}.region-head button{font-size:10px;padding:5px}.region-scene{aspect-ratio:3/4;min-height:380px}.region-point{max-width:100px;white-space:normal;padding:4px!important}.region-point span{font-size:19px}.region-point b{font-size:9px}.region-description{grid-template-columns:1fr}}
+@media all{.region-head strong{font-size:12px}.region-head button{font-size:10px;padding:5px}.region-scene{aspect-ratio:3/4;min-height:380px}.region-point{max-width:100px;white-space:normal;padding:4px!important}.region-point span{font-size:19px}.region-point b{font-size:9px}.region-description{grid-template-columns:1fr}}
 
 .region-open .world-map-toolbar,.region-open .world-map-shell,.region-open .world-location-grid,.region-open .region-shortcuts{display:none!important}
 
@@ -1242,12 +1242,7 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 
 .landmark-activities{max-width:850px;margin:14px auto;text-align:left}.landmark-activities h4{color:#f5d9a4;font-size:17px;margin:12px 0}.landmark-skill{background:#132d32;border:1px solid #526e68;border-radius:9px;padding:12px;margin:9px 0}.landmark-skill>div:first-child{display:flex;justify-content:space-between;align-items:center;gap:8px}.landmark-skill strong{color:#e9d4a6}.landmark-skill button{border:1px solid #8c7955;background:#24433f;color:#f7e5bd;border-radius:7px;padding:7px 9px;cursor:pointer}.landmark-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px;margin-top:8px}.landmark-actions button{display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left}.landmark-actions small{color:#aebfb9}.landmark-status{font-size:12px;color:#c8dcb7;margin:6px}.world-atlas-overview[hidden]{display:none!important}
 
-.online-launch{position:fixed;bottom:18px;right:18px;z-index:90;border:1px solid #d2b477;border-radius:10px;background:#1b393c;color:#ffe6ae;padding:10px 15px;cursor:pointer;box-shadow:0 5px 20px #0008}.online-overlay{position:fixed;inset:0;z-index:300;background:#000c;display:flex;justify-content:center;align-items:center;padding:16px}.online-overlay[hidden],#onlineSetup[hidden],#onlineAuth[hidden],#onlineLogged[hidden]{display:none!important}.online-dialog{width:min(100%,510px);max-height:90vh;overflow:auto;background:#152d33;color:#e8eee7;border:1px solid #b49b6b;border-radius:14px;padding:22px;box-shadow:0 18px 65px #000c}.online-heading{display:flex;justify-content:space-between;align-items:center}.online-heading h2{margin:0;color:#f7daa0}.online-heading button,.online-dialog button{background:#284a47;color:#f6e1b3;border:1px solid #a58a58;border-radius:8px;padding:9px 12px;cursor:pointer}.online-intro,.online-help{color:#b8cbc7;font-size:13px;line-height:1.5}.online-dialog label{display:block;margin:12px 0;font-size:13px;color:#e5d7b5}.online-dialog input{display:block;width:100%;margin-top:5px;box-sizing:border-box;border-radius:7px;border:1px solid #647b78;background:#0e242b;color:white;padding:10px;font:inherit}.online-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.online-status{font-size:13px;min-height:1.2em;color:#f2d7a0;white-space:pre-wrap}
 
-.online-conflict{padding:12px;margin-top:12px;background:#382c20;border:1px solid #d4aa6e;border-radius:10px;color:#f7e4bd}.online-conflict[hidden]{display:none!important}.online-conflict p{font-size:12px;line-height:1.5}.online-conflict button{margin:4px;font-size:12px}.online-help{line-height:1.5}
-.cloud-choice-item{display:inline-flex;flex-direction:column;align-items:center;vertical-align:top;gap:5px;margin:5px 7px 7px 0}
-.cloud-choice-item button{width:100%}
-.cloud-save-age{display:block;color:#d9c69d;font-size:11px;font-weight:700;text-align:center}
 .pet-effect{font-size:11px;color:#a9dfb5;margin:7px 0}.pet-summon{font-size:11px;margin-top:5px;padding:6px 9px}.pet-status{font-size:11px;color:#e7d2a9;padding:4px 9px;border:1px solid #756143;border-radius:12px;white-space:nowrap}
 /* Loadout browser: green = worn, grey = stored, gold outline = being edited. */
 .loadout-tab,.loadout-quick-icon{background:#333a37!important;border-color:#606b67!important;color:#d3d9d4!important;filter:saturate(.65)}
@@ -1263,35 +1258,10 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 .gear-preview-notice{font-size:11px;color:#f0d69f;margin:0 0 9px;line-height:1.4}
 
 
-/* Overnia app home screen and mobile-friendly controls */
-#overniaHome{position:fixed;inset:0;z-index:240;overflow:auto;overscroll-behavior:contain;background:radial-gradient(circle at 50% -15%,#47644d 0%,#1e3029 31%,#13191c 72%);color:#f8ead0;padding:calc(22px + env(safe-area-inset-top)) 15px calc(26px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
-#overniaHome[hidden],#homeSettings[hidden]{display:none!important}
-.home-wrap{max-width:660px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.home-brand{text-align:center;padding:15px 5px 3px}.home-mark{width:88px;height:88px;object-fit:contain;display:block;margin:0 auto 8px;filter:drop-shadow(0 6px 18px #0007)}
-.home-brand h2{font-family:Georgia,serif;letter-spacing:.065em;font-weight:800;font-size:clamp(29px,7vw,47px);color:#f3d69a;margin:0;text-shadow:0 3px 12px #0008}
-.home-brand p{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#bad5b5;margin:8px 0 0}
-.home-card{background:linear-gradient(160deg,#293b31,#1b2826 82%);border:1px solid #8a8458;border-radius:16px;padding:16px;box-shadow:0 10px 30px #0004}
-.home-character{display:flex;justify-content:space-between;gap:12px;align-items:center}.home-character strong{font-size:17px;color:#f9e6bf}.home-character small{color:#b9cdbb;font-size:11px;display:block;margin-top:5px}
-.home-active{font-size:12px;color:#ddd7bc;line-height:1.5;margin:12px 0 0;padding-top:11px;border-top:1px solid #66806d55}
-#overniaHome button{touch-action:manipulation;-webkit-user-select:none;user-select:none;min-height:45px;border-radius:10px;font-weight:750}
-#homeContinue{width:100%;min-height:61px;font-size:18px;background:linear-gradient(180deg,#80b77e,#396d50)!important;border:1px solid #b7e1a7!important;color:#102419!important;box-shadow:0 5px 18px #13291d99}
-.home-section-label{margin:0 0 9px;font-weight:800;font-size:12px;color:#e4cf9c;letter-spacing:.1em;text-transform:uppercase}
-.home-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.home-actions button{background:#324638;border-color:#738c70;color:#f4e9cf;padding:11px 6px}
-.home-actions button small{display:block;margin-top:3px;font-size:10px;color:#b8cdb7;font-weight:500}
-.home-secondary{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}.home-secondary button{font-size:12px;padding:8px 13px;background:#293a37;border-color:#6a7665}
-.home-settings{display:grid;gap:12px}.home-settings p{font-size:12px;color:#c9d4be;line-height:1.55;margin:0}.home-settings label{font-size:12px;color:#e4d9ba;display:flex;align-items:center;gap:8px}.home-settings label input{width:18px;height:18px}
-#homeStatus{font-size:12px;text-align:center;color:#abdcb1;min-height:1.5em}
-.home-launch{position:fixed;right:12px;top:calc(10px + env(safe-area-inset-top));z-index:69;background:#2a4c3d!important;border:1px solid #a4c79d!important;border-radius:22px!important;padding:8px 12px!important;font-size:12px!important;color:#f8edcf!important;box-shadow:0 3px 10px #0006}
-@media(max-width:650px){body:not(.mobile-menu-home) #homeLaunch{display:block!important}body.mobile-menu-home #homeLaunch{display:none!important}.home-wrap{gap:12px}.home-card{padding:13px}.home-brand{padding-top:5px}body:not(.mobile-menu-home) .layout{padding-bottom:calc(66px + env(safe-area-inset-bottom))}#overniaHome{padding-top:calc(16px + env(safe-area-inset-top))}}
-@media(min-width:651px){#homeLaunch{display:block}#overniaHome{display:block}}
-
-
-/* Optional in-game update alert; does not interrupt gameplay or force reload. */
-#overniaUpdateNotice[hidden]{display:none!important}
 #overniaUpdateNotice{position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:210;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 24px);border:1px solid #a4c799;border-radius:12px;background:#263b30;color:#f5efda;padding:9px 10px 9px 14px;box-shadow:0 8px 24px #0009;font-size:12px;font-weight:750}
 #overniaUpdateRefresh{display:grid;place-items:center;width:42px;height:42px;min-height:42px;flex:none;font-size:25px;line-height:1;border:1px solid #92b88b;border-radius:10px;background:#385b43;color:#f4ffea;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 #overniaUpdateRefresh:disabled{opacity:.5}
-@media(max-width:650px){#overniaUpdateNotice{bottom:calc(70px + env(safe-area-inset-bottom));left:12px;right:12px;justify-content:space-between}}
+@media all{#overniaUpdateNotice{bottom:calc(70px + env(safe-area-inset-bottom));left:12px;right:12px;justify-content:space-between}}
 
 
 
@@ -1562,7 +1532,7 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 /* Overnia batch 3 artwork: transparent images fit all item and recipe containers */
 .ovni-batch3-img{width:1.8em;height:1.8em;max-width:100%;max-height:100%;object-fit:contain;vertical-align:middle;pointer-events:none;user-select:none;-webkit-user-drag:none;}
 .item-art .ovni-batch3-img{width:100%;height:100%;display:block;}
-@media(max-width:650px){#gearOverlay .weapon-picker-tabs{position:sticky;top:48px;z-index:2}}
+@media all{#gearOverlay .weapon-picker-tabs{position:sticky;top:48px;z-index:2}}
 .weapon-picker-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 10px}
 .weapon-picker-tabs button{min-width:0;padding:10px 4px;border:1px solid #58705e;border-radius:9px;background:#20362b;color:#d5d9c9;font-weight:700;font-size:13px;white-space:nowrap}
 .weapon-picker-tabs button.active{background:#466e53;color:#fff1c6;border-color:#b9b17a}
@@ -1607,7 +1577,7 @@ button:not(:disabled):active{transform:translateY(1px)}
  body:not(.focus-mode) .quick-nav{position:sticky;top:4px;z-index:19;padding:8px;background:#1a2d27f2;border:1px solid #506653;border-radius:9px;backdrop-filter:blur(10px)}
 }
 @media (max-width:920px){.quick-nav{gap:5px}.quick-nav button{min-height:36px}.quick-nav-divider{height:16px}}
-@media (max-width:650px){
+@media all{
  :root{font-size:14px}
  .panel{border-radius:11px}
  .heading h2{font-size:21px}
@@ -1634,7 +1604,7 @@ button:not(:disabled):active{transform:translateY(1px)}
 .fire-log-grid .fire-fuel-option.is-preferred{border:2px solid #83e2a5!important;background:linear-gradient(180deg,#2b5841,#23382e)!important;box-shadow:inset 0 0 0 1px #8bdfa522}
 .fire-log-grid .fire-fuel-option:disabled{opacity:.5}
 .fire-fuel-summary{flex:1 1 100%;font-size:12px;color:#d4ebd5;padding:8px 10px;border:1px solid #53785d;background:#22372a;border-radius:8px}
-@media(max-width:650px){
+@media all{
  .fire-layout{display:block}
  .fire-layout .fire-tile{margin-bottom:8px;padding:9px}
  .fire-log-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
@@ -1649,11 +1619,6 @@ button:not(:disabled):active{transform:translateY(1px)}
 .item-art:has(.ovni-rpg-img){overflow:hidden;padding:1px}
 .sell-mode-toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:9px 0}.sell-mode-toolbar button{padding:5px 8px;font-size:11px}.sell-tile-value{font-size:10px;color:#f5cf82;font-weight:800}.bank-tile.sell-tile{border-color:#a47b3e}.bank-tile.sell-tile:hover{background:#4b3924}
 
-/* Keep destructive account actions away from the normal cloud-save flow. */
-.online-account-options{margin-top:28px;border-top:1px solid #49605a;padding-top:12px;color:#bdcfc9;font-size:12px}
-.online-account-options summary{cursor:pointer;padding:10px 4px;min-height:42px}
-.online-account-inner{padding:5px 3px 12px}
-.online-account-inner #onlineSignOut{background:#533331;border-color:#a76b67;color:#ffe5dc}
 </style>
 
 <style>
@@ -1669,7 +1634,7 @@ button:not(:disabled):active{transform:translateY(1px)}
 </style>
 <style>
 #mobileHomeNav{display:none}
-@media(max-width:700px){
+@media all{
  #mobileHomeNav{display:block;padding:10px 12px}
  .mobile-home-links{display:none}
  body.mobile-menu-home .mobile-home-links{display:flex;flex-direction:column;gap:7px}
@@ -1691,50 +1656,15 @@ button:not(:disabled):active{transform:translateY(1px)}
 <style id="overnia-mobile-food-before-xp">
 /* Mobile-only: quick healing immediately below the enemy, before combat skill XP.
    Desktop keeps its original arrangement. */
-@media (max-width: 650px) {
+@media all {
   .over-arena { display: flex; flex-direction: column; }
   .over-arena > .over-arena-quick-eat { order: 1; }
   .over-arena > .combat-level-strip { order: 2; }
   .over-arena > .over-arena-footer { order: 3; }
 }
 </style>
-<style id="overnia-desktop-activity-rewards">
-/* Desktop only: keep activity and reward notifications side-by-side in the
-   existing top row. The navigation and game content stay in place. */
-@media (min-width: 1051px) {
-  #activityPanel {
-    width: 57%;
-    max-width: 100%;
-  }
-  #activityPanel .activity-feed {
-    top: 0;
-    right: auto;
-    left: calc(100% + 9px);
-    width: calc(75.4% - 9px);
-    max-width: none;
-  }
-  #activityPanel .activity-feed-list {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 5px;
-    min-width: 0;
-    overflow: hidden;
-  }
-  #activityPanel .activity-reward {
-    flex: 1 1 0;
-    min-width: 0;
-    min-height: 37px;
-    padding: 4px 6px;
-  }
-  #activityPanel .activity-reward .reward-icon,
-  #activityPanel .activity-reward .item-art { width: 17px; height: 17px; font-size: 12px; }
-  #activityPanel .activity-reward .reward-name { font-size: 10px; }
-  #activityPanel .activity-reward .reward-amount { font-size: 10px; }
-  #activityPanel .activity-reward-more { display: none; }
-}
-</style>
 <style id="overnia-three-panel-mobile-v57">
-@media(max-width:700px){
+@media all{
  /* Three-panel focused skill interface. Other game screens remain usable. */
  body:has(#mobileActionCard):not(.mobile-menu-home)>header{display:none!important}
  body:has(#mobileActionCard) #mobileHomeNav{padding:10px 10px 0!important}
@@ -1774,11 +1704,10 @@ button:not(:disabled):active{transform:translateY(1px)}
  .mobile-action-start{display:block;width:100%;padding:13px 8px!important;background:#416e4f!important;border:1px solid #94c28f!important;font-weight:800;font-size:14px;border-radius:9px}
  .mobile-action-start:disabled{background:#344038!important;color:#9fa99d!important;border-color:#5b6a5a!important}
 }
-@media(min-width:701px){.mobile-action-card{display:none!important}}
 </style>
 
 <style id="overnia-mobile-combat-v58">
-@media(max-width:700px){
+@media all{
  body:has(#mobileCombatCard)>header{display:none!important}
  body:has(#mobileCombatCard) #mobileHomeNav{padding:10px 10px 0!important}
  body:has(#mobileCombatCard) #mobileHomeNav .mobile-menu-back{margin:0!important;min-height:51px;border:1px solid #6f896b;border-radius:11px;background:#304b39;color:#f4f1d7;font-size:17px;padding:12px 15px}
@@ -1825,11 +1754,10 @@ button:not(:disabled):active{transform:translateY(1px)}
  .mobile-combat-fight{width:100%;padding:13px!important;background:#416e4f!important;border:1px solid #94c28f!important;font-weight:800;font-size:14px;border-radius:9px}
  .mobile-combat-skills{margin-top:11px;border-top:1px solid #4b654e;padding-top:9px}.mobile-combat-skills-title{font-size:11px;font-weight:800;color:#ddcdad;margin-bottom:7px}.mobile-combat-skill-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.mobile-combat-skill-list span{background:#1c3027;border-radius:6px;padding:6px 3px;text-align:center;font-size:10px;color:#d9e9d5}
 }
-@media(min-width:701px){#mobileCombatCard{display:none!important}}
 </style>
 
 <style id="overnia-mobile-shop-list-v59">
-@media(max-width:700px){
+@media all{
  body[data-current-view="shop"]>header{display:none!important}
  body[data-current-view="shop"] #mobileHomeNav{padding:10px 10px 0!important}
  body[data-current-view="shop"] #mobileHomeNav .mobile-menu-back{min-height:51px;width:100%;margin:0;border:1px solid #6f896b;border-radius:11px;background:#304b39;color:#f4f1d7;font-size:17px;padding:12px 15px}
@@ -1870,12 +1798,11 @@ button:not(:disabled):active{transform:translateY(1px)}
  .mobile-shop-purchase .gold{font-size:12px;font-weight:750}
  .mobile-shop-purchase button{font-size:12px;padding:7px 12px;background:#37664a;border-color:#87ae7f;white-space:nowrap}
 }
-@media(min-width:701px){.mobile-shop-groups{display:none!important}}
 </style>
 
 <style id="overnia-mobile-welcome-compact">
 /* Mobile-only offline summary. Rewards scroll inside the modal; Continue stays reachable. */
-@media (max-width:700px) {
+@media all {
  #afkOverlay {
   position:fixed; inset:0; z-index:100;
   padding: max(10px, env(safe-area-inset-top, 0px)) 10px max(22px, env(safe-area-inset-bottom, 0px));
@@ -1907,7 +1834,7 @@ button:not(:disabled):active{transform:translateY(1px)}
 }
 </style>
 <style id="overnia-mobile-action-directory-v60">
-@media(max-width:700px){
+@media all{
  .mobile-action-directory{margin-top:12px;border:1px solid #657c60;border-radius:10px;background:#182b23;overflow:hidden}
  .mobile-action-directory>summary{padding:12px;cursor:pointer;font-weight:800;color:#f1dbab;display:flex;justify-content:space-between;gap:10px;align-items:center;list-style:none}
  .mobile-action-directory>summary::-webkit-details-marker{display:none}
@@ -1924,10 +1851,9 @@ button:not(:disabled):active{transform:translateY(1px)}
  .mobile-dir-name{flex:1;min-width:0}.mobile-dir-name strong{display:block;color:#f5e9c8;font-size:12px;overflow-wrap:anywhere}.mobile-dir-name small{display:block;color:#b9cbb2;font-size:10px;margin-top:3px}
  .mobile-dir-status{flex:none;color:#d9c18c;font-size:15px}.mobile-directory-empty{font-size:12px;padding:12px;color:#ddcaa3}
 }
-@media(min-width:701px){.mobile-action-directory{display:none!important}}
 </style>
 <style id="overnia-mobile-browse-under-card-v61">
-@media(max-width:700px){
+@media all{
  /* Browse tab sits OUTSIDE the selected action card, directly below it. */
  body:has(#mobileActionCard) #main>.mobile-action-directory{display:block!important;order:1!important;margin:5px 0 0!important;background:#213729!important;border:1px solid #7f9a6b!important;border-radius:9px!important;overflow:hidden!important;visibility:visible!important}
  body:has(#mobileActionCard) #main>.mobile-action-directory>summary{display:flex!important;min-height:36px!important;padding:8px 11px!important;font-size:12px!important;color:#f5e1b5!important}
@@ -1949,7 +1875,7 @@ button:not(:disabled):active{transform:translateY(1px)}
 }
 </style>
 <style id="overnia-mobile-combat-equipment-fix">
-@media(max-width:700px){
+@media all{
  /* The combat card hides the normal sidebar. Equipment intentionally takes over the view. */
  body.mobile-equipment:has(#mobileCombatCard) .panel.main{display:none!important}
  body.mobile-equipment:has(#mobileCombatCard) .panel.right,
@@ -1978,7 +1904,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 <script type="application/json" id="overnia-icon-progress">{"schema":"overnia-icon-progress-v1","total":414,"completed":30,"next_position":31,"next_item":"Tuna","ordering":"Mining actions (in file order), followed by all other ITEM_META entries (in file order), no duplicates","rules":{"metal_palette":"Preserve ore-to-bar-to-item colors","arrow_shaft":"same brown wood","arrow_feathers":"always white","arrowhead":"only metal-colored part"},"items":[{"position":1,"name":"Clay","status":"completed","asset":"embedded 512x512 PNG","sha256":"5b21434fb90be8f4bb5dc871b96c693de714735f7caab85e0767c2ee868c83a7","art_note":"Adapted painted art"},{"position":2,"name":"Copper Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"b3ef46c0df21f0b532fa2fbd880fe346aab4e7224c0b48eeefeed09ea66f2bff","art_note":"Existing standalone ore painting"},{"position":3,"name":"Tin Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"b79a1d2353948dc213220f575bd9e7b8e823e1bf7717187edc6f8b89a59c2949","art_note":"Existing standalone ore painting"},{"position":4,"name":"Limestone","status":"completed","asset":"embedded 512x512 PNG","sha256":"e11cad1e504d21f4ed98295e7f380270f82f98c8362e3dc533cc13e9ee8b5d03","art_note":"Adapted painted art"},{"position":5,"name":"Iron Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"6f9fd55b99349136f624970947f57f0d9a4a90f0e65860a8ed23d5a51328f00c","art_note":"Existing standalone ore painting"},{"position":6,"name":"Silver Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"f9eaf99be7ac111fdadbc55d3208ec9c96b78e7349584769d2a71835697a5d57","art_note":"Existing standalone ore painting"},{"position":7,"name":"Coal","status":"completed","asset":"embedded 512x512 PNG","sha256":"32b4055c69c08f8af74d2a5fc075ebf52d90add4b457f250d5b66888b3c69b1c","art_note":"Existing standalone ore painting"},{"position":8,"name":"Gold Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"0dbc5c48de0f53a8bd28b8e8373b76cfbc2a8107a79b3d0f8272b674cbe4f59f","art_note":"Existing standalone ore painting"},{"position":9,"name":"Mithril Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"f0db7311621a5a9c2542faa6a8ec0c7ba31c13dbe7fc59818903bc1ca5aa0523","art_note":"Existing standalone ore painting"},{"position":10,"name":"Obsidian","status":"completed","asset":"embedded 512x512 PNG","sha256":"b88eed381f1a834af556fc00275d47fdabb52b8a190d3cf7742dc8424a80d53c","art_note":"Adapted painted art"},{"position":11,"name":"Gallium Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"23566feace30b6227d85105bbf9c5966fd2dfded70e2f738175a97876b309f94","art_note":"Previously created standalone ore painting"},{"position":12,"name":"Oxedo Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"4c3f53c280e366e0f8143a602d4b16e9bc646d1d10d13aa57f4946e23c34ea80","art_note":"Previously created standalone ore painting"},{"position":13,"name":"Ancient Crystal","status":"completed","asset":"embedded 512x512 PNG","sha256":"9753c20620d5b374f2310d6273dc7a18de8a860b6fe70a65fc5f9b76cdb677af","art_note":"New standalone illustrated artwork"},{"position":14,"name":"Dragonite Ore","status":"completed","asset":"embedded 512x512 PNG","sha256":"25a4ef7fe402fabbc4878b3af57b69cb99130996bda9dc25cbbeca870b2371be","art_note":"Previously created standalone ore painting"},{"position":15,"name":"Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"45f8eb6ed963eeadeecbf22db456ec12ec35bab537935de6b7f0c372074712f1","art_note":"New standalone illustrated artwork"},{"position":16,"name":"Oak Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"dd0de120bb8170ed55f1211f97915127fe79304be87c214674e178a5608b1cee","art_note":"New standalone illustrated artwork"},{"position":17,"name":"Willow Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"54df1a54ef7ba32562a5e1d3b1be118d43d6c3a476d912b422a70e03e169e1a3","art_note":"New standalone illustrated artwork"},{"position":18,"name":"Maple Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"5a3d221e7de4d4d06a3b1bb0573a0dd3be1dd294c62df3bca584b8ba63e3f4f3","art_note":"New standalone illustrated artwork"},{"position":19,"name":"Yew Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"1ec3777c104b9a31a7065ebf3acf865a7edacdf6233aa7414bd1a8885e236228","art_note":"New standalone illustrated artwork"},{"position":20,"name":"Magic Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"f6a8cc2e19e9563b7db841df00e330807e1da558e107a9b5a715f3e5b5d66eba","art_note":"New standalone illustrated artwork"},{"position":21,"name":"Redwood Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"f2fe81204414e3fcc9a40de18e7d3554b52229db4b684d4b7946f5f02a48f914","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":22,"name":"Elder Logs","status":"completed","asset":"embedded 512x512 PNG","sha256":"77a8ce11058c6b8d12e7d2a26323db958f954c5b817711e6ebebee9ddef7442a","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":23,"name":"Shrimp","status":"completed","asset":"embedded 512x512 PNG","sha256":"48739001fa9403535e88113f57fcaaea7eb577a219fee6a97c5359227be6248c","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":24,"name":"Sardine","status":"completed","asset":"embedded 512x512 PNG","sha256":"582708577978802800e9688286e8f6e346c0ad347d9796132fd5d1c2df398354","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":25,"name":"Crab","status":"completed","asset":"embedded 512x512 PNG","sha256":"e9983b05c797ebbdbc5237705230a8a03aa9e5a2bfcf05dc84b130ee19fda33d","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":26,"name":"Herring","status":"completed","asset":"embedded 512x512 PNG","sha256":"df027f8973165e94ec32d8d79922e02d2382a631dcdaf8c6acbef387fc1209b0","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":27,"name":"Trout","status":"completed","asset":"embedded 512x512 PNG","sha256":"2dfaa18e543f6e75048e190371f1890b97d5bfd1c8808751b29a27eed40a2972","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":28,"name":"Cod","status":"completed","asset":"embedded 512x512 PNG","sha256":"67caa3306ec7329444e1e752bcc47b019b99cb2743a70678d66bfdda4741d43b","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":29,"name":"Salmon","status":"completed","asset":"embedded 512x512 PNG","sha256":"dcca3bbec07a52793c33c33c5bac428ba6a9c3c034144fc37d3bbaa5bf204c36","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":30,"name":"Eel","status":"completed","asset":"embedded 512x512 PNG","sha256":"003b7317f63ad76c3b168d8a8cc794642aec0cadce02b4cdce4b15ee52ac300b","art_note":"Isolated from generated batch illustration; distinct item, not independently generated"},{"position":31,"name":"Tuna","status":"pending"},{"position":32,"name":"Lobster","status":"pending"},{"position":33,"name":"Swordfish","status":"pending"},{"position":34,"name":"Monkfish","status":"pending"},{"position":35,"name":"Shark","status":"pending"},{"position":36,"name":"Anglerfish","status":"pending"},{"position":37,"name":"Manta Ray","status":"pending"},{"position":38,"name":"Leviathan","status":"pending"},{"position":39,"name":"Bronze Bar","status":"pending"},{"position":40,"name":"Bronze Sword","status":"pending"},{"position":41,"name":"Bronze Shield","status":"pending"},{"position":42,"name":"Bronze Helm","status":"pending"},{"position":43,"name":"Bronze Chestplate","status":"pending"},{"position":44,"name":"Bronze Platelegs","status":"pending"},{"position":45,"name":"Bronze Axe","status":"pending"},{"position":46,"name":"Bronze Pickaxe","status":"pending"},{"position":47,"name":"Bronze Arrowheads","status":"pending"},{"position":48,"name":"Iron Bar","status":"pending"},{"position":49,"name":"Iron Sword","status":"pending"},{"position":50,"name":"Iron Shield","status":"pending"},{"position":51,"name":"Iron Helm","status":"pending"},{"position":52,"name":"Iron Chestplate","status":"pending"},{"position":53,"name":"Iron Platelegs","status":"pending"},{"position":54,"name":"Iron Axe","status":"pending"},{"position":55,"name":"Iron Pickaxe","status":"pending"},{"position":56,"name":"Iron Arrowheads","status":"pending"},{"position":57,"name":"Steel Bar","status":"pending"},{"position":58,"name":"Steel Sword","status":"pending"},{"position":59,"name":"Steel Shield","status":"pending"},{"position":60,"name":"Steel Helm","status":"pending"},{"position":61,"name":"Steel Chestplate","status":"pending"},{"position":62,"name":"Steel Platelegs","status":"pending"},{"position":63,"name":"Steel Axe","status":"pending"},{"position":64,"name":"Steel Pickaxe","status":"pending"},{"position":65,"name":"Steel Arrowheads","status":"pending"},{"position":66,"name":"Mithril Bar","status":"pending"},{"position":67,"name":"Mithril Sword","status":"pending"},{"position":68,"name":"Mithril Shield","status":"pending"},{"position":69,"name":"Mithril Helm","status":"pending"},{"position":70,"name":"Mithril Chestplate","status":"pending"},{"position":71,"name":"Mithril Platelegs","status":"pending"},{"position":72,"name":"Mithril Axe","status":"pending"},{"position":73,"name":"Mithril Pickaxe","status":"pending"},{"position":74,"name":"Mithril Arrowheads","status":"pending"},{"position":75,"name":"Gallium Bar","status":"pending"},{"position":76,"name":"Gallium Sword","status":"pending"},{"position":77,"name":"Gallium Shield","status":"pending"},{"position":78,"name":"Gallium Helm","status":"pending"},{"position":79,"name":"Gallium Plate","status":"pending"},{"position":80,"name":"Gallium Greaves","status":"pending"},{"position":81,"name":"Gallium Axe","status":"pending"},{"position":82,"name":"Gallium Pickaxe","status":"pending"},{"position":83,"name":"Gallium Arrowheads","status":"pending"},{"position":84,"name":"Oxedo Bar","status":"pending"},{"position":85,"name":"Oxedo Sword","status":"pending"},{"position":86,"name":"Oxedo Shield","status":"pending"},{"position":87,"name":"Oxedo Helm","status":"pending"},{"position":88,"name":"Oxedo Plate","status":"pending"},{"position":89,"name":"Oxedo Greaves","status":"pending"},{"position":90,"name":"Oxedo Axe","status":"pending"},{"position":91,"name":"Oxedo Pickaxe","status":"pending"},{"position":92,"name":"Oxedo Arrowheads","status":"pending"},{"position":93,"name":"Dragonite Bar","status":"pending"},{"position":94,"name":"Dragonite Sword","status":"pending"},{"position":95,"name":"Dragonite Shield","status":"pending"},{"position":96,"name":"Dragonite Helm","status":"pending"},{"position":97,"name":"Dragonite Chestplate","status":"pending"},{"position":98,"name":"Dragonite Platelegs","status":"pending"},{"position":99,"name":"Dragonite Axe","status":"pending"},{"position":100,"name":"Dragonite Pickaxe","status":"pending"},{"position":101,"name":"Dragonite Arrowheads","status":"pending"},{"position":102,"name":"Silver Bar","status":"pending"},{"position":103,"name":"Gold Bar","status":"pending"},{"position":104,"name":"Silver Wire","status":"pending"},{"position":105,"name":"Silver Ring Blank","status":"pending"},{"position":106,"name":"Gold Ring Blank","status":"pending"},{"position":107,"name":"Gold Amulet Blank","status":"pending"},{"position":108,"name":"Steel Nails","status":"pending"},{"position":109,"name":"Oxedo Nails","status":"pending"},{"position":110,"name":"Wooden Shield","status":"pending"},{"position":111,"name":"Oak Shield","status":"pending"},{"position":112,"name":"Linen","status":"pending"},{"position":113,"name":"Ball of Wool","status":"pending"},{"position":114,"name":"Leather","status":"pending"},{"position":115,"name":"Hard Leather","status":"pending"},{"position":116,"name":"Leather Gloves","status":"pending"},{"position":117,"name":"Leather Body","status":"pending"},{"position":118,"name":"Hard Leather Body","status":"pending"},{"position":119,"name":"Adventurer Cape","status":"pending"},{"position":120,"name":"Explorer Cape","status":"pending"},{"position":121,"name":"Oak Staff","status":"pending"},{"position":122,"name":"Magic Staff","status":"pending"},{"position":123,"name":"Woodland Charm","status":"pending"},{"position":124,"name":"Opal","status":"pending"},{"position":125,"name":"Jade","status":"pending"},{"position":126,"name":"Red Topaz","status":"pending"},{"position":127,"name":"Sapphire","status":"pending"},{"position":128,"name":"Emerald","status":"pending"},{"position":129,"name":"Ruby","status":"pending"},{"position":130,"name":"Diamond","status":"pending"},{"position":131,"name":"Dragonstone","status":"pending"},{"position":132,"name":"Onyx","status":"pending"},{"position":133,"name":"Zenyte","status":"pending"},{"position":134,"name":"Strength Amulet","status":"pending"},{"position":135,"name":"Defence Amulet","status":"pending"},{"position":136,"name":"Accuracy Amulet","status":"pending"},{"position":137,"name":"Power Amulet","status":"pending"},{"position":138,"name":"Wisdom Amulet","status":"pending"},{"position":139,"name":"Guardian Amulet","status":"pending"},{"position":140,"name":"Lucky Ring","status":"pending"},{"position":141,"name":"Scholar's Ring","status":"pending"},{"position":142,"name":"Warrior Ring","status":"pending"},{"position":143,"name":"Protector Ring","status":"pending"},{"position":144,"name":"Precision Ring","status":"pending"},{"position":145,"name":"Gatherer Ring","status":"pending"},{"position":146,"name":"Mastery Ring","status":"pending"},{"position":147,"name":"Forest Guardian Shield","status":"pending"},{"position":148,"name":"Voidborn Cape","status":"pending"},{"position":149,"name":"Dragon Scale Body","status":"pending"},{"position":150,"name":"Spirit Thread","status":"pending"},{"position":151,"name":"Bulwark Helm","status":"pending"},{"position":152,"name":"Bulwark Plate","status":"pending"},{"position":153,"name":"Bulwark Legs","status":"pending"},{"position":154,"name":"Ravager Helm","status":"pending"},{"position":155,"name":"Ravager Plate","status":"pending"},{"position":156,"name":"Ravager Legs","status":"pending"},{"position":157,"name":"Warden Hood","status":"pending"},{"position":158,"name":"Warden Coat","status":"pending"},{"position":159,"name":"Warden Guards","status":"pending"},{"position":160,"name":"Deadeye Hood","status":"pending"},{"position":161,"name":"Deadeye Jacket","status":"pending"},{"position":162,"name":"Deadeye Chaps","status":"pending"},{"position":163,"name":"Spellguard Hood","status":"pending"},{"position":164,"name":"Spellguard Robes","status":"pending"},{"position":165,"name":"Spellguard Legwraps","status":"pending"},{"position":166,"name":"Soulweaver Hood","status":"pending"},{"position":167,"name":"Soulweaver Robes","status":"pending"},{"position":168,"name":"Soulweaver Legwraps","status":"pending"},{"position":169,"name":"Ranger Hood","status":"pending"},{"position":170,"name":"Ranger Tunic","status":"pending"},{"position":171,"name":"Ranger Leggings","status":"pending"},{"position":172,"name":"Veteran Ranger Hood","status":"pending"},{"position":173,"name":"Veteran Ranger Tunic","status":"pending"},{"position":174,"name":"Veteran Ranger Leggings","status":"pending"},{"position":175,"name":"Apprentice Hood","status":"pending"},{"position":176,"name":"Apprentice Robes","status":"pending"},{"position":177,"name":"Apprentice Legwraps","status":"pending"},{"position":178,"name":"Arcane Hood","status":"pending"},{"position":179,"name":"Arcane Robes","status":"pending"},{"position":180,"name":"Arcane Legwraps","status":"pending"},{"position":181,"name":"Elder Mage Hood","status":"pending"},{"position":182,"name":"Elder Mage Robes","status":"pending"},{"position":183,"name":"Elder Mage Legwraps","status":"pending"},{"position":184,"name":"Arcane Focus","status":"pending"},{"position":185,"name":"Mystic Focus","status":"pending"},{"position":186,"name":"Apprentice Staff","status":"pending"},{"position":187,"name":"Adept Staff","status":"pending"},{"position":188,"name":"Mystic Staff","status":"pending"},{"position":189,"name":"Elder Staff","status":"pending"},{"position":190,"name":"Perfect Amulet (Unf)","status":"pending"},{"position":191,"name":"Perfect Ring (Unf)","status":"pending"},{"position":192,"name":"Cooked Shrimp","status":"pending"},{"position":193,"name":"Cooked Sardine","status":"pending"},{"position":194,"name":"Cooked Crab","status":"pending"},{"position":195,"name":"Cooked Herring","status":"pending"},{"position":196,"name":"Cooked Trout","status":"pending"},{"position":197,"name":"Cooked Cod","status":"pending"},{"position":198,"name":"Cooked Salmon","status":"pending"},{"position":199,"name":"Cooked Eel","status":"pending"},{"position":200,"name":"Cooked Tuna","status":"pending"},{"position":201,"name":"Cooked Lobster","status":"pending"},{"position":202,"name":"Cooked Swordfish","status":"pending"},{"position":203,"name":"Cooked Monkfish","status":"pending"},{"position":204,"name":"Cooked Shark","status":"pending"},{"position":205,"name":"Cooked Anglerfish","status":"pending"},{"position":206,"name":"Cooked Manta Ray","status":"pending"},{"position":207,"name":"Cooked Leviathan","status":"pending"},{"position":208,"name":"Cooked Chicken","status":"pending"},{"position":209,"name":"Cooked Beef","status":"pending"},{"position":210,"name":"Cooked Lamb","status":"pending"},{"position":211,"name":"Baked Potato","status":"pending"},{"position":212,"name":"Bread","status":"pending"},{"position":213,"name":"Carrot Soup","status":"pending"},{"position":214,"name":"Fish Stew","status":"pending"},{"position":215,"name":"Meat Pie","status":"pending"},{"position":216,"name":"Seafood Platter","status":"pending"},{"position":217,"name":"Royal Feast","status":"pending"},{"position":218,"name":"Herb","status":"pending"},{"position":219,"name":"Potato","status":"pending"},{"position":220,"name":"Wheat","status":"pending"},{"position":221,"name":"Berries","status":"pending"},{"position":222,"name":"Carrot","status":"pending"},{"position":223,"name":"Flax","status":"pending"},{"position":224,"name":"Mushroom","status":"pending"},{"position":225,"name":"Corn","status":"pending"},{"position":226,"name":"Highland Herb","status":"pending"},{"position":227,"name":"Mystic Herb","status":"pending"},{"position":228,"name":"Sunfruit","status":"pending"},{"position":229,"name":"Egg","status":"pending"},{"position":230,"name":"Raw Chicken","status":"pending"},{"position":231,"name":"Wool","status":"pending"},{"position":232,"name":"Milk","status":"pending"},{"position":233,"name":"Raw Beef","status":"pending"},{"position":234,"name":"Raw Lamb","status":"pending"},{"position":235,"name":"Feather","status":"pending"},{"position":236,"name":"Goat Horn","status":"pending"},{"position":237,"name":"Thick Hide","status":"pending"},{"position":238,"name":"Honey","status":"pending"},{"position":239,"name":"Moonflower","status":"pending"},{"position":240,"name":"Griffin Feather","status":"pending"},{"position":241,"name":"Dragon Hatchling","status":"pending"},{"position":242,"name":"Dragon Scale","status":"pending"},{"position":243,"name":"Riftbloom","status":"pending"},{"position":244,"name":"Aetherthorn","status":"pending"},{"position":245,"name":"Void Lotus","status":"pending"},{"position":246,"name":"Healing Potion","status":"pending"},{"position":247,"name":"Greater Healing Potion","status":"pending"},{"position":248,"name":"Superior Healing Potion","status":"pending"},{"position":249,"name":"Ultimate Healing Potion","status":"pending"},{"position":250,"name":"Strength Potion","status":"pending"},{"position":251,"name":"Accuracy Potion","status":"pending"},{"position":252,"name":"Defence Potion","status":"pending"},{"position":253,"name":"Battle Potion","status":"pending"},{"position":254,"name":"Master Battle Potion","status":"pending"},{"position":255,"name":"Wisdom Potion","status":"pending"},{"position":256,"name":"Greater Wisdom Potion","status":"pending"},{"position":257,"name":"Luck Potion","status":"pending"},{"position":258,"name":"Greater Luck Potion","status":"pending"},{"position":259,"name":"Gathering Potion","status":"pending"},{"position":260,"name":"Extreme Battle Potion","status":"pending"},{"position":261,"name":"Ranger Focus Potion","status":"pending"},{"position":262,"name":"Arcane Surge Potion","status":"pending"},{"position":263,"name":"Woodcutter Elixir","status":"pending"},{"position":264,"name":"Fisher Elixir","status":"pending"},{"position":265,"name":"Miner Elixir","status":"pending"},{"position":266,"name":"Farmer Elixir","status":"pending"},{"position":267,"name":"Fletcher Focus","status":"pending"},{"position":268,"name":"Smithing Focus","status":"pending"},{"position":269,"name":"Crafter Focus","status":"pending"},{"position":270,"name":"Alchemist Focus","status":"pending"},{"position":271,"name":"Enchanter Focus","status":"pending"},{"position":272,"name":"Spirit Sense Potion","status":"pending"},{"position":273,"name":"Bowstring","status":"pending"},{"position":274,"name":"Reinforced Bowstring","status":"pending"},{"position":275,"name":"Normal Arrow Shafts","status":"pending"},{"position":276,"name":"Normal Bow","status":"pending"},{"position":277,"name":"Oak Bow","status":"pending"},{"position":278,"name":"Willow Bow","status":"pending"},{"position":279,"name":"Maple Bow","status":"pending"},{"position":280,"name":"Yew Bow","status":"pending"},{"position":281,"name":"Magic Bow","status":"pending"},{"position":282,"name":"Redwood Bow","status":"pending"},{"position":283,"name":"Elder Bow","status":"pending"},{"position":284,"name":"Bronze Arrows","status":"pending"},{"position":285,"name":"Iron Arrows","status":"pending"},{"position":286,"name":"Steel Arrows","status":"pending"},{"position":287,"name":"Mithril Arrows","status":"pending"},{"position":288,"name":"Gallium Arrows","status":"pending"},{"position":289,"name":"Oxedo Arrows","status":"pending"},{"position":290,"name":"Dragonite Arrows","status":"pending"},{"position":291,"name":"Hunter Quiver","status":"pending"},{"position":292,"name":"Ancient Quiver","status":"pending"},{"position":293,"name":"Enchanter Wand","status":"pending"},{"position":294,"name":"Ranger Bow","status":"pending"},{"position":295,"name":"Trollbone Bow","status":"pending"},{"position":296,"name":"Dragonbone Bow","status":"pending"},{"position":297,"name":"Abyssal Quiver","status":"pending"},{"position":298,"name":"Twinstrike Crossbow","status":"pending"},{"position":299,"name":"Ember Staff","status":"pending"},{"position":300,"name":"Witchbound Staff","status":"pending"},{"position":301,"name":"Golemheart Staff","status":"pending"},{"position":302,"name":"Dragonfire Staff","status":"pending"},{"position":303,"name":"Voidcaller Staff","status":"pending"},{"position":304,"name":"Awakened Bronze Pickaxe","status":"pending"},{"position":305,"name":"Whispering Oak Axe","status":"pending"},{"position":306,"name":"Tidewalker Ring","status":"pending"},{"position":307,"name":"Harvest Charm","status":"pending"},{"position":308,"name":"Soulkeeper Ring","status":"pending"},{"position":309,"name":"Gilded Prospect Pickaxe","status":"pending"},{"position":310,"name":"Woodland Spirit Axe","status":"pending"},{"position":311,"name":"Sea Whisper Amulet","status":"pending"},{"position":312,"name":"Fletcher Ward","status":"pending"},{"position":313,"name":"Battlebound Amulet","status":"pending"},{"position":314,"name":"Artisan Soul Ring","status":"pending"},{"position":315,"name":"Living Grove Axe","status":"pending"},{"position":316,"name":"Deep Earth Pickaxe","status":"pending"},{"position":317,"name":"Alchemist Soul Charm","status":"pending"},{"position":318,"name":"Sunforged Battle Ring","status":"pending"},{"position":319,"name":"Soulweaver Cape","status":"pending"},{"position":320,"name":"Eternal Soul Crown","status":"pending"},{"position":321,"name":"Perfect Amulet","status":"pending"},{"position":322,"name":"Perfect Ring","status":"pending"},{"position":323,"name":"Rat Tail","status":"pending"},{"position":324,"name":"Coins","status":"pending"},{"position":325,"name":"Chewed Rope","status":"pending"},{"position":326,"name":"Broken Tooth","status":"pending"},{"position":327,"name":"Dirty Feather","status":"pending"},{"position":328,"name":"Carrot Seed","status":"pending"},{"position":329,"name":"Flax Seed","status":"pending"},{"position":330,"name":"Torn Cloth","status":"pending"},{"position":331,"name":"Bent Nail","status":"pending"},{"position":332,"name":"Cracked Jug","status":"pending"},{"position":333,"name":"Mushroom Spores","status":"pending"},{"position":334,"name":"Corn Seed","status":"pending"},{"position":335,"name":"Highland Seed","status":"pending"},{"position":336,"name":"Mystic Seed","status":"pending"},{"position":337,"name":"Goblin Ear","status":"pending"},{"position":338,"name":"Goblin Ember","status":"pending"},{"position":339,"name":"Bones","status":"pending"},{"position":340,"name":"Bone Dust","status":"pending"},{"position":341,"name":"Ancient Scrap","status":"pending"},{"position":342,"name":"Rusty Gear","status":"pending"},{"position":343,"name":"Old Medallion","status":"pending"},{"position":344,"name":"Dwarven Soul Pickaxe","status":"pending"},{"position":345,"name":"Broken Pick Head","status":"pending"},{"position":346,"name":"Dented Lantern","status":"pending"},{"position":347,"name":"Uncut Opal","status":"pending"},{"position":348,"name":"Uncut Jade","status":"pending"},{"position":349,"name":"Uncut Red Topaz","status":"pending"},{"position":350,"name":"Uncut Sapphire","status":"pending"},{"position":351,"name":"Uncut Emerald","status":"pending"},{"position":352,"name":"Uncut Ruby","status":"pending"},{"position":353,"name":"Ancient Token","status":"pending"},{"position":354,"name":"Ancient Scholar Charm","status":"pending"},{"position":355,"name":"Mossy Bark","status":"pending"},{"position":356,"name":"Sunfruit Seed","status":"pending"},{"position":357,"name":"Fortune Ring","status":"pending"},{"position":358,"name":"Witch Sigil","status":"pending"},{"position":359,"name":"Empty Vial","status":"pending"},{"position":360,"name":"Witch Ash","status":"pending"},{"position":361,"name":"Troll Fang","status":"pending"},{"position":362,"name":"Troll King Ring","status":"pending"},{"position":363,"name":"Troll Bowstring","status":"pending"},{"position":364,"name":"Troll Bone","status":"pending"},{"position":365,"name":"Golem Heart","status":"pending"},{"position":366,"name":"Golem Core","status":"pending"},{"position":367,"name":"Uncut Diamond","status":"pending"},{"position":368,"name":"Abyss Shard","status":"pending"},{"position":369,"name":"Abyssal Blade","status":"pending"},{"position":370,"name":"Void Residue","status":"pending"},{"position":371,"name":"Crystal Dust","status":"pending"},{"position":372,"name":"Uncut Dragonstone","status":"pending"},{"position":373,"name":"Uncut Onyx","status":"pending"},{"position":374,"name":"Dragonheart Amulet","status":"pending"},{"position":375,"name":"Dragon Arcane Core","status":"pending"},{"position":376,"name":"Dragon Bowstring","status":"pending"},{"position":377,"name":"Charred Scale","status":"pending"},{"position":378,"name":"Void Arcane Core","status":"pending"},{"position":379,"name":"Uncut Zenyte","status":"pending"},{"position":380,"name":"Deepmountain Greatsword","status":"pending"},{"position":381,"name":"Deepmountain Warbow","status":"pending"},{"position":382,"name":"Deepmountain Soulstaff","status":"pending"},{"position":383,"name":"Sovereign Visor","status":"pending"},{"position":384,"name":"Sovereign Carapace","status":"pending"},{"position":385,"name":"Sovereign Greaves","status":"pending"},{"position":386,"name":"Hillbreaker Helm","status":"pending"},{"position":387,"name":"Hillbreaker Vest","status":"pending"},{"position":388,"name":"Hillbreaker Greaves","status":"pending"},{"position":389,"name":"Broodstalker Hood","status":"pending"},{"position":390,"name":"Broodstalker Tunic","status":"pending"},{"position":391,"name":"Broodstalker Chaps","status":"pending"},{"position":392,"name":"Hollowmage Hood","status":"pending"},{"position":393,"name":"Hollowmage Robes","status":"pending"},{"position":394,"name":"Hollowmage Legwraps","status":"pending"},{"position":395,"name":"Ashen Warlord Helm","status":"pending"},{"position":396,"name":"Ashen Warlord Plate","status":"pending"},{"position":397,"name":"Ashen Warlord Legs","status":"pending"},{"position":398,"name":"Stormwing Hood","status":"pending"},{"position":399,"name":"Stormwing Mantle","status":"pending"},{"position":400,"name":"Stormwing Chaps","status":"pending"},{"position":401,"name":"Astral Crown","status":"pending"},{"position":402,"name":"Astral Vestments","status":"pending"},{"position":403,"name":"Astral Legwraps","status":"pending"},{"position":404,"name":"Hearthwick Signet","status":"pending"},{"position":405,"name":"Elderbough Mantle","status":"pending"},{"position":406,"name":"Ironhollow Talisman","status":"pending"},{"position":407,"name":"Starwatch Focus","status":"pending"},{"position":408,"name":"Faded Soul Gem","status":"pending"},{"position":409,"name":"Verdant Soul Gem","status":"pending"},{"position":410,"name":"Azure Soul Gem","status":"pending"},{"position":411,"name":"Violet Soul Gem","status":"pending"},{"position":412,"name":"Solar Soul Gem","status":"pending"},{"position":413,"name":"Prismatic Soul Gem","status":"pending"},{"position":414,"name":"Soul Shard","status":"pending"}]}</script><script type="application/json" id="overnia-universal-icon-pass">{"schema":"overnia-universal-icon-pass-v1","total":414,"covered":414,"method":"Scalable SVG illustrations generated at runtime by item category and metal tier; not individual 512px AI paintings","painted_originals_completed":30,"quality_note":"All 414 covered; shared category shapes and some generic fallbacks remain; individual illustrations not complete"}</script>
 <style>.ovni-universal-svg{display:block;width:100%;height:100%;overflow:visible}.item-art .ovni-universal-svg{max-width:100%;max-height:100%;object-fit:contain}</style>
 <style id="overnia-mobile-equipment-navigation-repair">
-@media(max-width:700px){
+@media all{
  body.mobile-equipment .layout,body.focus-mode.mobile-equipment .layout{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;min-height:0!important}
  body.mobile-equipment .panel.main,body.mobile-equipment:has(#mobileActionCard) .panel.main,body.mobile-equipment:has(#mobileCombatCard) .panel.main{display:none!important}
  body.mobile-equipment .panel.right,body.mobile-equipment:has(#mobileActionCard) .panel.right,body.mobile-equipment:has(#mobileCombatCard) .panel.right,body.focus-mode.mobile-equipment .panel.right{display:block!important;position:relative!important;inset:auto!important;transform:none!important;visibility:visible!important;pointer-events:auto!important;grid-column:1!important;grid-row:1!important;width:100%!important;height:100%!important;max-height:none!important;overflow-y:auto!important;z-index:4!important}
@@ -1988,7 +1914,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 
 <style id="overnia-mobile-compact-gear-picker-v2">
 /* Compact mobile equipment chooser; desktop keeps the detailed equipment manager. */
-@media (max-width:700px), (pointer:coarse) and (max-width:900px) {
+@media all {
  #gearOverlay.gear-dialog-overlay {align-items:flex-end!important;justify-content:center!important;padding:0!important;background:#040a12a6!important;backdrop-filter:blur(2px)}
  #gearOverlay .gear-dialog {box-sizing:border-box!important;width:100%!important;max-width:100%!important;max-height:min(72dvh,660px)!important;min-height:0!important;margin:0!important;border-radius:17px 17px 0 0!important;border-left:0!important;border-right:0!important;border-bottom:0!important;padding:12px 12px max(12px,env(safe-area-inset-bottom,0px))!important;overflow-y:auto!important;overscroll-behavior:contain!important;background:#15283b!important;box-shadow:0 -8px 30px #0009!important}
  #gearOverlay .gear-dialog-heading {position:sticky;top:-12px;z-index:2;padding:4px 0 9px;background:#15283b;border-bottom:1px solid #36536b}
@@ -2013,7 +1939,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 }
 </style>
 <style id="overnia-mobile-gear-comparison-v1">
-@media(max-width:700px), (pointer:coarse) and (max-width:900px){
+@media all{
  #gearOverlay .gear-pick-item .gear-pick-details{flex-wrap:wrap!important;column-gap:7px!important;row-gap:3px!important}
  #gearOverlay .gear-pick-item .gear-pick-details strong{flex:1 1 calc(100% - 105px)!important}
  #gearOverlay .gear-pick-item .gear-pick-details button{order:1!important}
@@ -2029,7 +1955,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 </style>
 
 <style id="overnia-food-magic-mobile-fix">
-@media(max-width:700px){
+@media all{
  body.mobile-combat-settings-open:has(#mobileCombatCard) #main{display:flex!important;flex-direction:column!important}
  /* Combat card first, Food & Auto Eat second, then setup controls. */
  body.mobile-combat-settings-open:has(#mobileCombatCard) #mobileCombatCard{order:-3!important}
@@ -2047,7 +1973,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 #overniaRareDropNotice{position:fixed;top:calc(env(safe-area-inset-top,0px) + 76px);left:50%;transform:translateX(-50%);z-index:2147483000;max-width:min(420px,calc(100vw - 24px));width:max-content;min-width:220px;padding:13px 18px;background:linear-gradient(145deg,#40321f,#172c28);border:2px solid #e7bb68;border-radius:12px;box-shadow:0 9px 35px #000b;color:#ffe4a4;font-size:15px;font-weight:800;text-align:center;pointer-events:none;animation:overniaRareAppear .2s ease-out}
 #overniaRareDropNotice[hidden]{display:none!important}
 @keyframes overniaRareAppear{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
-@media(max-width:700px){body[data-current-view="combat"] .combat-region-picker{display:block!important;order:-2!important;margin:0!important;padding:9px!important}body[data-current-view="combat"] #mobileCombatCard{order:-3!important}body[data-current-view="combat"] .combat-region-chips{display:none!important}body[data-current-view="combat"] .combat-region-mobile{display:flex!important}body[data-current-view="combat"] .combat-region-top{font-size:12px}body[data-current-view="combat"] .combat-region-mobile select{max-width:100%;width:100%}}
+@media all{body[data-current-view="combat"] .combat-region-picker{display:block!important;order:-2!important;margin:0!important;padding:9px!important}body[data-current-view="combat"] #mobileCombatCard{order:-3!important}body[data-current-view="combat"] .combat-region-chips{display:none!important}body[data-current-view="combat"] .combat-region-mobile{display:flex!important}body[data-current-view="combat"] .combat-region-top{font-size:12px}body[data-current-view="combat"] .combat-region-mobile select{max-width:100%;width:100%}}
 </style>
 
 <style id="overnia-icon-size-fix">
@@ -2074,36 +2000,78 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 /* Keep bank grid compact on mobile and desktop. */
 .bank-grid.compact .item-art{width:29px!important;height:29px!important;min-width:29px!important;min-height:29px!important;max-width:29px!important;max-height:29px!important;flex-basis:29px!important}
 </style>
+<style>
+/* The game uses one touch-first workspace at every screen width. */
+body{width:min(100%,600px);margin:0 auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+body.mobile-menu-home{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)!important}
+body>header,.panel.left,#quickNav,#focusToolbar,#focusDock,#focusScrim,
+body:not(.mobile-equipment) .panel.right{display:none!important}
+body>.layout{display:block;grid-template-columns:minmax(0,1fr);width:100%;max-width:none;padding:7px 10px 16px}
+body>.layout .panel.main{min-width:0;min-height:0}
+body.mobile-equipment .panel.right>.tabs{display:none!important}
+body.mobile-equipment #mobileEquipmentBack{width:100%;min-height:44px;text-align:left;margin:0 0 10px}
+body.mobile-equipment[data-equipment-origin="menu"] #mobileEquipmentBack{display:none!important}
+#mobileHomeNav,body.mobile-menu-home #mobileHomeNav{width:100%;max-width:none;margin:0;padding:10px 10px 0}
+.mobile-brand{display:flex;align-items:center;gap:9px;margin:0 2px 9px}
+.mobile-brand h1{font-family:Georgia,serif;color:#f3d69a;font-size:20px;line-height:1.1;margin:0}
+.mobile-primary-nav,.mobile-skill-grid,.mobile-adventure-links{display:grid;gap:6px}
+.mobile-primary-nav,.mobile-adventure-links{grid-template-columns:repeat(4,minmax(0,1fr))}
+.mobile-skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#mobileHomeNav .mobile-primary-nav button,#mobileHomeNav .mobile-adventure-links button{
+ flex-direction:column;justify-content:center;gap:4px;text-align:center;font-size:11px;line-height:1.2;
+ padding:6px 2px;min-width:0;min-height:50px;background:#293e31;border-color:#647d60
+}
+#mobileHomeNav button[aria-current="page"]{background:#465b3b;border-color:#d0b172;color:#fff2c9}
+#mobileHomeNav .mobile-primary-nav button span,#mobileHomeNav .mobile-adventure-links button span{font-size:16px}
+#mobileHomeNav .mobile-home-links{margin:12px 0 16px}
+.mobile-skills-heading{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.mobile-skills-heading h2{margin:0;font-size:16px}
+#mobileHomeNav .mobile-skills-heading button{width:auto;justify-content:center;gap:5px;padding:6px 8px;margin-bottom:4px;font-size:12px}
+html:has(#bankItemSheet[open]){overflow:hidden}
+#mobileHomeNav .mobile-skill-grid button{gap:3px;padding:8px;min-width:0;font-size:13px}
+#mobileHomeNav .mobile-skill-grid button small{white-space:nowrap}
+#mobileHomeNav .mobile-skill-grid button:first-child{grid-column:1/-1}
+body[data-current-view="bank"] #activityPanel{position:relative;top:auto;margin:0 0 10px}
+body[data-current-view="bank"] #activityFeed{display:none}
+.mobile-bank-title{margin:0 0 7px;font-size:20px}
+#mainBankRoot{min-width:0}
+#mainBankRoot .bank-balances{justify-content:flex-start;gap:5px}
+#mainBankRoot .bank-balances button{margin-left:auto}
+#mainBankRoot button{touch-action:manipulation}
+#mainBankRoot .bank-balances button,#mainBankRoot .sell-mode-toolbar button,
+#mainBankRoot .bank-folder,#mainBankRoot .bank-tab-manager button,#mainBankRoot .pager button{min-height:44px}
+#mainBankRoot .bank-folders{margin-top:0;max-width:100%}
+#mainBankRoot input,#bankItemSheet select{font-size:16px;min-height:44px;width:100%;min-width:0}
+#mainBankRoot .bank-grid{grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:5px}
+#mainBankRoot .bank-tile{min-height:70px;padding:5px 2px}
+#mainBankRoot .bank-tile .item-name{overflow-wrap:anywhere}
+#bankItemSheet{
+ position:fixed;inset:auto 0 0;margin:0 auto;width:min(100%,600px);max-width:none;
+ max-height:80dvh;overflow:auto;overscroll-behavior:contain;
+ padding:12px 12px calc(12px + env(safe-area-inset-bottom));
+ color:#f5e9cb;background:#1c3027;border:1px solid #87966c;border-radius:16px 16px 0 0
+}
+#bankItemSheet::backdrop{background:#101712aa}
+.bank-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.bank-sheet-top h3{margin:0;font-size:15px}
+#bankItemSheet button{min-height:44px}
+.bank-sheet-top button{min-width:44px}
+#bankItemSheet .selected-item{margin:0}
+#bankItemSheet .controls{display:flex;flex-wrap:wrap;gap:6px}
+#bankItemSheet .controls button{flex:1 0 auto}
+</style>
 </head>
-<body class="mobile-menu-home"><section id="overniaHome" role="dialog" aria-modal="true" aria-labelledby="homeTitle">
- <div class="home-wrap">
-  <div class="home-brand"><img class="home-mark" src="./icon-192.png" alt="Overnia crest"><h2 id="homeTitle">OVERNIA</h2><p>Idle RPG · A Living World</p></div>
-  <div class="home-card"><div class="home-character"><div><strong id="homeCharacter">Your Adventure</strong><small id="homeStats">Loading character…</small></div><span aria-hidden="true" style="font-size:30px">⚔️</span></div><p class="home-active" id="homeActivity">Loading current activity…</p></div>
-  <button id="homeContinue" type="button">▶ Continue Playing</button>
-  <div class="home-card"><p class="home-section-label">💾 Save & Account</p><div class="home-actions">
-   <button type="button" data-home-action="save">💾 Save Now<small>Save on this device</small></button>
-   <button type="button" data-home-action="cloud">☁️ Cloud Save<small>Save your Main character</small></button>
-   <button type="button" data-home-action="export">⬇️ Export Save<small>Download backup</small></button>
-   <button type="button" data-home-action="import">⬆️ Import Save<small>Restore from file</small></button>
-   <button type="button" data-home-action="account">🌐 Account<small>Sign in / cloud sync</small></button>
-   <button type="button" data-home-action="settings">⚙️ Settings<small>App preferences</small></button>
-  </div></div>
-  <div id="homeSettings" class="home-card home-settings" hidden><p class="home-section-label">⚙️ App Settings</p><label><input type="checkbox" id="homeFocusMode"> Focus mode (compact workspace)</label><p>To install Overnia: open it in Safari or Chrome and choose Add to Home Screen. Your local save may be separate between the browser and installed app, so use your online account or export a backup before switching.</p><button type="button" data-home-action="settings-close">Close Settings</button></div>
-  <div class="home-secondary"><button type="button" data-home-action="skills">📊 Skills</button><button type="button" data-home-action="combat">⚔️ Combat</button><button type="button" data-home-action="world">🗺️ World</button><button type="button" data-home-action="menu">☰ All menus</button></div>
-  <p id="homeStatus" role="status" aria-live="polite"></p>
- </div>
-</section><button type="button" id="homeLaunch" class="home-launch" aria-label="Open main menu">⌂ Home</button>
-<div id="onlineOverlay" class="online-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onlineTitle"><div class="online-dialog"><div class="online-heading"><h2 id="onlineTitle">🌐 Overnia Online</h2><button type="button" id="onlineClose" aria-label="Close">✕</button></div><p class="online-intro">Play freely as a guest, or sign in to sync your Main character. Guest saves remain on this device.</p><div id="onlineSetup"><label>Supabase Project URL<input id="onlineUrl" type="url" placeholder="https://your-project.supabase.co" autocomplete="off"></label><label>Supabase publishable / anon key<input id="onlineKey" type="text" placeholder="sb_publishable_... or anon key" autocomplete="off"></label><button id="onlineConnect" type="button">Connect project</button><p class="online-help">Only use the public publishable/anon key. NEVER paste a service_role or secret key here.</p></div><div id="onlineAuth" hidden><label>Email<input id="onlineEmail" type="email" autocomplete="email" placeholder="you@example.com"></label><label>Password<input id="onlinePassword" type="password" autocomplete="current-password" minlength="6" placeholder="Your password"></label><div class="online-actions"><button type="button" id="onlineSignUp">Create account</button><button type="button" id="onlineSignIn">Sign in</button></div></div><div id="onlineLogged" hidden><p id="onlineIdentity"></p><p id="onlineSyncState" class="online-help">Checking cloud save…</p><p class="online-help">Main auto-sync runs while signed in. Dev is always local. If local and cloud saves differ, choose which one to keep. The server does not yet validate XP or loot.</p><div class="online-actions"><button type="button" id="onlineDownload">⬇️ Restore cloud manually</button></div><details class="online-account-options"><summary>Account settings</summary><div class="online-account-inner"><p class="online-help">Sign out only when you want to switch accounts or stop cloud syncing.</p><button type="button" id="onlineSignOut">Sign out of account</button></div></details></div><p id="onlineStatus" class="online-status" role="status"></p><div id="onlineConflict" class="online-conflict" hidden></div></div></div>
-<header><button type="button" id="onlineOpen" class="online-launch">🌐 Account</button><div><h1>🌄 Overnia Idle RPG <span class="version">v5.6 · Polish & Stability</span></h1><div class="stats" id="summary"></div></div><div class="top-controls"><div class="profile-switch" role="group" aria-label="Character profile"><button type="button" id="mainProfileBtn" class="active" aria-pressed="true">🛡️ Main</button><button type="button" id="devProfileBtn" aria-pressed="false">🧪 Dev</button></div><button id="focusModeBtn" type="button" aria-pressed="false" title="Switch between fixed workspace and classic scrolling layout">🎯 Focus Mode</button><button id="devToolsBtn" type="button" hidden>🛠 Dev Tools</button><button id="saveBtn">💾 Save</button><button id="cloudSaveBtn" type="button" hidden title="Save Main to cloud">☁️ Cloudsave</button><button id="exportBtn">⬇ Export</button><button id="importBtn">⬆ Import</button><button id="resetBtn">↺ Reset</button><input type="file" id="fileInput" accept=".json,application/json" hidden></div><span id="petStatus" class="pet-status" aria-live="polite" style="display:block;width:max-content;max-width:95%;margin:6px 14px">🐾 No pet summoned</span></header>
+<body class="mobile-menu-home">
+<header><div><h1>🌄 Overnia Idle RPG <span class="version">v5.6 · Polish & Stability</span></h1><div class="stats" id="summary"></div></div><div class="top-controls"><div class="profile-switch" role="group" aria-label="Character profile"><button type="button" id="mainProfileBtn" class="active" aria-pressed="true">🛡️ Main</button><button type="button" id="devProfileBtn" aria-pressed="false">🧪 Dev</button></div><button id="focusModeBtn" type="button" aria-pressed="false" title="Switch between fixed workspace and classic scrolling layout">🎯 Focus Mode</button><button id="devToolsBtn" type="button" hidden>🛠 Dev Tools</button></div><span id="petStatus" class="pet-status" aria-live="polite" style="display:block;width:max-content;max-width:95%;margin:6px 14px">🐾 No pet summoned</span></header>
 <nav id="mobileHomeNav" aria-label="Game menu"></nav>
 <div class="layout">
 <aside class="panel left"><div class="nav" id="nav"></div><div class="mobile-nav"><label class="form-label" for="mobileSelect">Navigate</label><select id="mobileSelect"></select></div></aside>
-<main class="panel main"><section id="activityPanel" aria-label="Current activity"><div class="activity-head"><span class="activity-kicker">⚡ Current Activity</span><span id="activityName" class="activity-name">Idle · Choose an action</span><span id="progressText" class="activity-percent">0%</span><button id="stopBtn">Stop</button></div><div class="bar activity-track"><div class="fill" id="progressFill"></div></div><div id="activityFeed" class="activity-feed" aria-label="Recent activity rewards" aria-live="off" hidden><div id="activityFeedList" class="activity-feed-list"></div></div></section><nav id="quickNav" class="quick-nav" aria-label="Quick navigation"><button type="button" data-home-open>⌂ Home</button>
+<main class="panel main"><section id="activityPanel" aria-label="Current activity"><div class="activity-head"><span class="activity-kicker">⚡ Current Activity</span><span id="activityName" class="activity-name">Idle · Choose an action</span><span id="progressText" class="activity-percent">0%</span><button id="stopBtn">Stop</button></div><div class="bar activity-track"><div class="fill" id="progressFill"></div></div><div id="activityFeed" class="activity-feed" aria-label="Recent activity rewards" aria-live="off" hidden><div id="activityFeedList" class="activity-feed-list"></div></div></section><nav id="quickNav" class="quick-nav" aria-label="Quick navigation">
 <button type="button" data-nav="world">🗺️ World</button><button type="button" data-nav="skills">📊 Skills</button><button type="button" data-nav="combat">⚔️ Combat</button><button type="button" data-nav="raid">⛰️ Raid</button><button type="button" data-nav="bank">🏦 Bank</button><button type="button" data-nav="journal">📜 Journal <span id="quickReady"></span></button>
  <span class="quick-nav-divider" aria-hidden="true"></span><div id="favoriteQuickNav" class="quick-favorites" aria-label="Pinned pages"></div><button type="button" id="pinCurrentView" data-pin-current title="Pin the current page to quick navigation" aria-pressed="false">☆ Pin page</button>
 </nav><div id="focusToolbar" class="focus-toolbar" hidden><label for="focusViewSelect">🧭 Menu</label><select id="focusViewSelect" aria-label="Choose game menu"></select><button type="button" id="focusOpenGear" title="Open equipment panel">⚔️ Gear</button></div><div id="main"></div></main>
 <aside class="panel right" id="focusSidebar" aria-label="Bank, Equipment and Potions"><div class="focus-drawer-heading"><strong id="focusDrawerTitle">🏦 Your Bank</strong><button id="focusCloseBtn" type="button" aria-label="Close side panel">✕</button></div><button id="mobileEquipmentBack" type="button" hidden>‹ Back to Combat</button><div class="tabs"><button id="bankTab" class="selected">🏦 Bank</button><button id="gearTab">⚔️ Equipment</button><button id="potionTab">🧪 Potions</button></div><div id="sidebar"></div><details id="activityLogDetails" class="activity-log-details" open><summary>📜 Activity log</summary><div class="log" id="log" aria-live="polite"></div></details></aside>
-</div><div id="focusScrim" class="focus-scrim" hidden></div><nav id="focusDock" class="focus-dock" aria-label="Focus Mode shortcuts" hidden><button type="button" data-home-open>⌂<span>Home</span></button><button type="button" data-focus-nav="skills">📊<span>Skills</span></button><button type="button" data-focus-nav="combat">⚔️<span>Combat</span></button><button type="button" data-focus-sidebar="bank">🏦<span>Bank</span></button><button type="button" data-focus-sidebar="gear">🛡️<span>Gear</span></button><button type="button" data-focus-sidebar="potions">🧪<span>Potions</span></button></nav><div class="toast" id="toast" role="status"></div>
+</div><div id="focusScrim" class="focus-scrim" hidden></div><nav id="focusDock" class="focus-dock" aria-label="Focus Mode shortcuts" hidden><button type="button" data-focus-nav="skills">📊<span>Skills</span></button><button type="button" data-focus-nav="combat">⚔️<span>Combat</span></button><button type="button" data-focus-sidebar="bank">🏦<span>Bank</span></button><button type="button" data-focus-sidebar="gear">🛡️<span>Gear</span></button><button type="button" data-focus-sidebar="potions">🧪<span>Potions</span></button></nav><div class="toast" id="toast" role="status"></div>
 <div class="gear-dialog-overlay" id="gearOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="gearDialogTitle"><div class="gear-dialog"><div class="gear-dialog-heading"><div><div class="eyebrow">Equipment manager</div><h2 id="gearDialogTitle">Choose equipment</h2></div><button type="button" class="gear-dialog-close" data-gear-close aria-label="Close equipment picker">×</button></div><div id="gearDialogContent"></div></div></div>
 <div class="monster-inspect-overlay" id="monsterInspectOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="monsterInspectTitle"><div class="monster-inspect-dialog"><div class="between"><h2 id="monsterInspectTitle">Monster details</h2><button type="button" data-inspect-close aria-label="Close monster details">×</button></div><div id="monsterInspectContent"></div></div></div>
 <div class="dev-overlay" id="devOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="devTitle">
@@ -2146,7 +2114,7 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 const GAME_CONFIG = {
   actionMs: 1000,            // Base action duration in milliseconds
   bankSlots: 1000,           // 1000 UNIQUE item stacks, not 1000 individual items
-  bankPageSize: 48,
+  bankPageSize: 30,
   sidebarPageSize: 24,
   treasureChance: 0.10,      // Base chance for a random gem per monster kill
   soulGemGatherChance: 0.10, // Independent roll: gathering wood, fish, ore, or farming
@@ -2198,10 +2166,10 @@ const TREASURE_CHANCE = GAME_CONFIG.treasureChance;
 const A=(name,output,level,xp,cost={},category='General',options={})=>({name,output,level,xp,cost,category,...options});
 const SKILLS = {
  woodcutting:{icon:'🪓',description:'Gather wood for cooking fires, shields, bows, and workshop recipes.',actions:[
-   A('Normal Tree','Logs',1,10),A('Oak Tree','Oak Logs',10,25),
-   A('Willow Tree','Willow Logs',25,45),A('Maple Tree','Maple Logs',40,65),
-   A('Yew Tree','Yew Logs',55,105),A('Magic Tree','Magic Logs',75,250),
-   A('Redwood Tree','Redwood Logs',90,350),A('Elder Tree','Elder Logs',95,470)]},
+   A('Normal Tree','Logs',1,15),A('Oak Tree','Oak Logs',10,38),
+   A('Willow Tree','Willow Logs',25,68),A('Maple Tree','Maple Logs',40,98),
+   A('Yew Tree','Yew Logs',55,158),A('Magic Tree','Magic Logs',75,350),
+   A('Redwood Tree','Redwood Logs',90,450),A('Elder Tree','Elder Logs',95,570)]},
  fishing:{icon:'🎣',description:'Catch fish and seafood for Cooking, combat food, and shop income.',actions:[
    A('Shrimp Spot','Shrimp',1,10),A('Sardine Shore','Sardine',5,15),
    A('Crab Pots','Crab',8,18),A('Herring Shoal','Herring',10,20),
@@ -4246,7 +4214,7 @@ function renderActivityFeed(now=performance.now()){
   if(a[1].kind!==b[1].kind)return a[1].kind==='xp'?-1:1;
   return b[1].updatedAt-a[1].updatedAt || b[1].createdAt-a[1].createdAt;
  });
- const maxRows=innerWidth<=650?ACTIVITY_FEED_CONFIG.maxRowsMobile:ACTIVITY_FEED_CONFIG.maxRowsDesktop;
+ const maxRows=ACTIVITY_FEED_CONFIG.maxRowsMobile;
  const rows=all.slice(0,maxRows),hiddenCount=all.length-rows.length;
  list.innerHTML=rows.map(([key,reward])=>{
   const xp=reward.kind==='xp',remaining=ACTIVITY_FEED_CONFIG.lifetimeMs-(now-reward.updatedAt);
@@ -5564,21 +5532,48 @@ function navLevelText(v){
  v==='journal'&&journalReadyCount()?'🎁 '+journalReadyCount():'';
 }
 function renderMobileHomeNav(){
- const box=el('mobileHomeNav');if(!box)return;
+ const box=el('mobileHomeNav');
  const skills=Object.keys(SKILLS).sort((a,b)=>Number(!!SKILLS[b].combat)-Number(!!SKILLS[a].combat)||label(a).localeCompare(label(b)));
- box.innerHTML=`<button type="button" class="mobile-menu-back" data-mobile-home>☰ All skills & menus</button><div class="mobile-home-links"><button type="button" data-home-open>⌂ Main Menu · Save & Account</button>${skills.map(skill=>`<button type="button" data-mobile-view="${SKILLS[skill].combat?'combat':skill}"><span>${SKILLS[skill].icon} ${esc(label(skill))}</span><small data-nav-lvl="${skill}">Lv ${levelFromXp(state.xp[skill]||0)}</small></button>`).join('')}${[['bank','🏦 Bank'],['shop','🛒 Shop'],['journal','📜 Journal'],['equipment','🛡️ Equipment']].map(([view,name])=>`<button type="button" data-mobile-view="${view}"><span>${name}</span><span aria-hidden="true">›</span></button>`).join('')}</div>`;
+ const categories=[
+  ['skills','📊','All Skills'],['bank','🏦','Bank'],['journal','📜','Journal'],['equipment','🛡️','Equipment']
+ ];
+ const equipmentOpen=document.body.classList.contains('mobile-equipment');
+ const active=equipmentOpen?(ui.sidebarTab==='potions'?'bank':'equipment'):
+  document.body.classList.contains('mobile-menu-home')?'skills':ui.view;
+ const links=(entries)=>entries.map(([view,icon,name])=>`<button type="button" data-mobile-view="${view}" ${active===view?'aria-current="page"':''}><span aria-hidden="true">${icon}</span>${name}</button>`).join('');
+ box.innerHTML=`<div class="mobile-brand"><img src="./icon-192.png" width="32" height="32" alt=""><h1>Overnia Idle RPG</h1></div>
+  <div class="mobile-primary-nav">${links(categories)}</div>
+  <div class="mobile-home-links">
+   <div class="mobile-skills-heading"><h2>Skills</h2><button type="button" data-mobile-view="overview">Total level <strong id="mobileTotalLevel">${fmt(totalSkillLevel())}</strong> ›</button></div>
+   <div class="mobile-skill-grid">${skills.map(skill=>`<button type="button" data-mobile-view="${SKILLS[skill].combat?'combat':skill}"><span>${SKILLS[skill].icon} ${esc(label(skill))}</span><small data-nav-lvl="${skill}">Lv ${levelFromXp(state.xp[skill]||0)}</small></button>`).join('')}</div>
+   <div class="mobile-adventure-links">${links([['world','🗺️','World'],['shop','🛒','Shop'],['raid','⛰️','Raids'],['collection','🐾','Collection Log']])}</div>
+  </div>`;
+}
+function showMobileInventory(tab,origin){
+ const body=document.body;
+ body.classList.remove('mobile-menu-home','mobile-combat-settings-open');
+ ui.sidebarTab=tab;
+ body.dataset.equipmentOrigin=origin;
+ body.classList.add('mobile-equipment');
+ el('mobileEquipmentBack').textContent=origin==='bank'?'‹ Back to Bank':'‹ Back to '+viewLabel(origin);
+ closeFocusDrawer();hideItemTooltip();renderSidebar();renderMobileHomeNav();
+ el('focusSidebar').scrollTop=0;
+ window.scrollTo(0,0);
+}
+function showMobileSkills(){
+ if(el('bankItemSheet')?.open)el('bankItemSheet').close();
+ hideItemTooltip();closeFocusDrawer();
+ document.body.classList.remove('mobile-equipment','mobile-combat-settings-open');
+ document.body.classList.add('mobile-menu-home');
+ renderMobileHomeNav();
+ window.scrollTo(0,0);
 }
 document.addEventListener('click',event=>{
- const button=event.target.closest('[data-mobile-home],[data-mobile-view]');if(!button)return;
- if(button.hasAttribute('data-mobile-home')){
-  closeFocusDrawer();document.body.classList.remove('mobile-equipment');document.body.classList.add('mobile-menu-home');renderMobileHomeNav();window.scrollTo(0,0);return;
- }
- document.body.classList.remove('mobile-menu-home','mobile-equipment','mobile-combat-settings-open');
- if(button.dataset.mobileView==='equipment'){
-  closeFocusDrawer();ui.sidebarTab='gear';renderSidebar();document.body.dataset.equipmentOrigin='menu';document.body.classList.add('mobile-equipment');
-  const back=el('mobileEquipmentBack');if(back)back.textContent='‹ Back to All skills';
- }else navigate(button.dataset.mobileView);
- window.scrollTo(0,0);
+ const button=event.target.closest('[data-mobile-view]');if(!button)return;
+ const view=button.dataset.mobileView;
+ if(view==='skills'){showMobileSkills();return;}
+ if(view==='equipment'){showMobileInventory('gear','menu');return;}
+ navigate(view==='overview'?'skills':view);
 });
 function renderNav(){
  renderMobileHomeNav();
@@ -5615,12 +5610,14 @@ function updateQuickNav(){
  const ready=el('quickReady');if(ready)ready.textContent=journalReadyCount()?'· '+journalReadyCount():'';
 }
 function refreshNavLevels(){
+ const total=el('mobileTotalLevel');if(total)total.textContent=fmt(totalSkillLevel());
  for(const node of document.querySelectorAll('[data-nav-lvl]'))node.textContent=navLevelText(node.dataset.navLvl);
  updateQuickNav();
 }
 function navigate(view){
  if(!NAV_VIEWS.includes(view))return;
- document.body.classList.remove('mobile-menu-home','mobile-equipment');
+ document.body.classList.remove('mobile-menu-home','mobile-equipment','mobile-combat-settings-open');
+ if(view==='bank'){overniaSellMode=false;overniaSellQty=1;ui.bank.main.selected=null;}
  hideItemTooltip();closeFocusDrawer();
  // Each new visit focuses the running activity, or the highest unlocked recipe.
  if(SKILLS[view]&&!SKILLS[view].combat)delete ui.skillSelection[view];
@@ -5866,7 +5863,7 @@ function renderSkillMain(skill){
  el('main').innerHTML=html;
  filterRecipeCards();
 }
-const skillPageSize=()=>innerWidth<=650?4:6;
+const skillPageSize=()=>4;
 function compactPagerMarkup(kind,page,pages,count,from,to){
  if(count===0)return `<div class="pager-summary">Nothing matches. Try another category or search.</div>`;
  return `<div class="pager-summary">${from}–${to} of ${count}</div>
@@ -6377,7 +6374,7 @@ function bankDeleteTab(scope){
  save();renderBankUIs();toast('Tab deleted; all items are safe');
 }
 function bankMoveItem(item,id){
- if(count(item)<1||isPotion(item)||!bankAllTabs().some(t=>t.id===id))return;
+ if(count(item)<1||isPotion(item)||(id!=='auto'&&!bankAllTabs().some(t=>t.id===id)))return;
  if(id==='all'||id==='auto'||id===bankDefaultTab(item))delete state.bankAssignments[item];
  else state.bankAssignments[item]=id;
  save();renderBankUIs();
@@ -6392,21 +6389,21 @@ function renderBankTabs(scope){
  const settings=ui.bank[scope];if(!bankAllTabs().some(t=>t.id===settings.tab))settings.tab='all';
  const row=el(scope+'BankFolders');if(!row)return;
  const left=row.scrollLeft;
- row.innerHTML=bankAllTabs().map(t=>`<button type="button" class="bank-folder ${settings.tab===t.id?'is-active':''}" data-bank-tab="${esc(scope)}" data-tab-id="${esc(t.id)}" title="${esc(t.name)} · drop items here to move them">${t.icon} ${esc(t.name)} <span class="folder-count">${bankTabCount(t.id)}</span></button>`).join('')+
+ row.innerHTML=bankAllTabs().map(t=>`<button type="button" class="bank-folder ${settings.tab===t.id?'is-active':''}" data-bank-tab="${esc(scope)}" data-tab-id="${esc(t.id)}" aria-pressed="${settings.tab===t.id}">${t.icon} ${esc(t.name)} <span class="folder-count">${bankTabCount(t.id)}</span></button>`).join('')+
   `<button type="button" class="bank-folder bank-add-folder" data-bank-new title="Create a custom tab">＋ New tab</button>`;
  row.scrollLeft=left;
  const custom=state.bankTabs.find(t=>t.id===settings.tab);
  const manager=el(scope+'BankManager');if(manager)manager.innerHTML=custom?
   `<span>📁 ${esc(custom.name)} · custom tab</span><button data-bank-rename="${scope}">✏️ Rename</button><button data-bank-delete="${scope}">🗑️ Delete</button>`:
-  `<span>Auto-sorted folders · drag items onto tabs, or select Move to tab below.</span>`;
+  `<span>Auto-sorted tabs</span>`;
 }
 let overniaSellMode=false;
 let overniaSellQty=1;
 function renderBankShell(scope){
- const filters=ui.bank[scope];return `<div class="between"><h3 style="margin:0">🏦 ${scope==='side'?'Bank':'Your Bank'}</h3><span class="bank-count" id="${scope}BankCoins">🪙 ${fmt(count('Coins'))} GP · Account</span><span class="bank-count" id="${scope}BankCapacity">${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks</span><button type="button" class="bank-create-top" data-bank-new title="Create bank folder">＋ Tab</button></div>
+ const filters=ui.bank[scope];return `<div class="between bank-balances"><span class="bank-count" id="${scope}BankCoins">🪙 ${fmt(count('Coins'))} GP</span><span class="bank-count" id="${scope}BankCapacity">${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks</span>${scope==='main'?'<button type="button" data-bank-potions>🧪 Potions</button>':''}</div>
  <div class="sell-mode-toolbar"><button type="button" data-toggle-sell-mode class="${overniaSellMode?'selected':''}">${overniaSellMode?'✓ Selling items':'🪙 Sell Items'}</button>${overniaSellMode?`<span class="small">Quantity</span>${[1,10,100,1000,'all'].map(q=>`<button type="button" data-sell-mode-qty="${q}" class="${overniaSellQty===q?'selected':''}">${q==='all'?'All':fmt(q)}</button>`).join('')}`:''}</div><div class="bank-folders" id="${scope}BankFolders" aria-label="Bank folders"></div><div class="bank-tab-manager" id="${scope}BankManager"></div>
- <div class="bank-tools" style="margin-top:8px"><input type="search" id="${scope}BankSearch" data-bank-search="${scope}" placeholder="Search this tab..." value="${esc(filters.search)}"></div>
- <div class="small subdued" id="${scope}BankCount" style="margin-top:8px"></div><div id="${scope}BankGrid" class="bank-grid ${scope==='side'?'compact':''}"></div><div class="pager" id="${scope}BankPager"></div><div id="${scope}BankDetail"></div>`;
+ <div class="bank-tools" style="margin-top:8px"><input type="search" aria-label="Search this bank tab" id="${scope}BankSearch" data-bank-search="${scope}" placeholder="Search this tab..." value="${esc(filters.search)}"></div>
+ <div class="small subdued" id="${scope}BankCount" style="margin-top:8px"></div><div id="${scope}BankGrid" class="bank-grid ${scope==='side'?'compact':''}"></div><div class="pager" id="${scope}BankPager"></div>${scope==='main'?'<dialog id="bankItemSheet" aria-labelledby="bankItemTitle"><div class="bank-sheet-top"><h3 id="bankItemTitle">Item details</h3><button type="button" data-bank-close aria-label="Close item details" autofocus>✕</button></div><div id="mainBankDetail"></div></dialog>':'<div id="sideBankDetail"></div>'}`;
 }
 function renderBankGrid(scope){
  const settings=ui.bank[scope],items=bankItems(scope),per=scope==='side'?GAME_CONFIG.sidebarPageSize:GAME_CONFIG.bankPageSize;
@@ -6414,10 +6411,10 @@ function renderBankGrid(scope){
  const grid=el(scope+'BankGrid');if(!grid)return;
  renderBankTabs(scope);
  const slice=items.slice(settings.page*per,(settings.page+1)*per);
- grid.innerHTML=slice.length?slice.map(([item,amount])=>`<button type="button" draggable="${!overniaSellMode}" class="bank-tile ${overniaSellMode?'sell-tile':''} ${settings.selected===item?'active':''}" data-bank-select="${scope}" data-item="${esc(item)}" data-item-preview="${esc(item)}" aria-label="${esc(item)}, ${fmt(amount)} owned. Select to inspect; drag onto a tab to move">${itemArt(item)}<span class="item-name">${esc(item)}</span><span class="stack">×${fmt(amount)}</span>${overniaSellMode?`<span class="sell-tile-value">${isTradeable(item)?`${fmt(sellPrice(item)*Math.min(amount,overniaSellQty==='all'?amount:overniaSellQty))} GP`:'🔒 Not sellable'}</span>`:''}</button>`).join(''):'<p class="subdued small">Nothing here yet. Items appear automatically, or move items here from another tab.</p>';
+ grid.innerHTML=slice.length?slice.map(([item,amount])=>`<button type="button" draggable="${scope==='side'&&!overniaSellMode}" class="bank-tile ${overniaSellMode?'sell-tile':''} ${settings.selected===item?'active':''}" data-bank-select="${scope}" data-item="${esc(item)}" aria-label="${esc(item)}, ${fmt(amount)} owned">${itemArt(item)}<span class="item-name">${esc(item)}</span><span class="stack">×${fmt(amount)}</span>${overniaSellMode?`<span class="sell-tile-value">${isTradeable(item)?`${fmt(sellPrice(item)*Math.min(amount,overniaSellQty==='all'?amount:overniaSellQty))} GP`:'🔒 Not sellable'}</span>`:''}</button>`).join(''):'<p class="subdued small">Nothing here yet. Items appear automatically, or move items here from another tab.</p>';
  const pager=el(scope+'BankPager');if(pager)pager.innerHTML=`<button data-bank-page="${scope}" data-delta="-1" ${settings.page<=0?'disabled':''}>←</button><span>Page ${settings.page+1} / ${maxPage+1}</span><button data-bank-page="${scope}" data-delta="1" ${settings.page>=maxPage?'disabled':''}>→</button>`;
  const counter=el(scope+'BankCount');if(counter)counter.textContent=`${items.length} unique stacks in this view · ${fmt(Object.entries(state.bank).reduce((a,[item,qty])=>a+(item==='Coins'?0:Number(qty)||0),0))} total bank items`;
- const bankCoins=el(scope+'BankCoins');if(bankCoins)bankCoins.textContent=`🪙 ${fmt(count('Coins'))} GP · Account`;
+ const bankCoins=el(scope+'BankCoins');if(bankCoins)bankCoins.textContent=`🪙 ${fmt(count('Coins'))} GP`;
  const capacity=el(scope+'BankCapacity');if(capacity)capacity.textContent=`${bankUsed()} / ${GAME_CONFIG.bankSlots} stacks`;
  renderBankDetail(scope);
 }
@@ -6537,10 +6534,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')hideItemTooltip()});
 function renderBankDetail(scope){
  const box=el(scope+'BankDetail');if(!box)return;
  const item=ui.bank[scope].selected;
- if(!item||count(item)<1){box.innerHTML='<p class="subdued small">Select an item to equip, eat, use or sell it.</p>';return}
+ if(!item||count(item)<1){
+  if(scope==='main')el('bankItemSheet').close();
+  box.textContent='';box.bankDetailMarkup='';
+  return;
+ }
  const equipment=EQUIPMENT[item],potion=POTIONS[item],food=FOOD[item],fuel=FIRE_FUEL[item];
  const detail=item===RAID_CONFIG.chest||item===RIFT_CONFIG.chest?'Raid reward chest. Open to receive raid loot, Coins and Soul Shards. Cannot be traded.' : NONTRADEABLE_ITEMS.has(item)?'Soulbound. Cannot be bought, sold or traded. Used to power Enchanting recipes.':equipment?gearDescription(equipment):potion?potion.description:food?`Restores ${food} HP`:fuel?`Burns for ${timeFmt(fuel)} in your Cooking fire`:`Stackable ${itemCategory(item).toLowerCase()} item`;
- box.innerHTML=`<div class="selected-item">${itemArt(item,true)}<h4>${esc(item)} ×${fmt(count(item))}</h4><p>${esc(detail)}</p><p class="gold">${isTradeable(item)?`Sell value: ${fmt(sellPrice(item))} Coins each`:"🔒 SOULBOUND · Untradeable"}</p><div class="controls">
+ const content=`<div class="selected-item">${itemArt(item,true)}<h4>${esc(item)} ×${fmt(count(item))}</h4><p>${esc(detail)}</p><p class="gold">${isTradeable(item)?`Sell value: ${fmt(sellPrice(item))} Coins each`:"🔒 SOULBOUND · Untradeable"}</p><div class="controls">
  ${[RAID_CONFIG.chest,RIFT_CONFIG.chest].includes(item)?`<button data-open-raid-chest="${esc(item)}" data-chest-mode="one">🎁 Open 1</button><button data-open-raid-chest="${esc(item)}" data-chest-mode="all">🎁 Open All</button>`:''}
  ${equipment?`<button data-equip="${esc(item)}">Equip</button>`:''}
  ${food?`<button data-eat="${esc(item)}" ${state.hp>=maxHp()?'disabled':''}>Eat +${food} HP</button>`:''}
@@ -6548,9 +6549,25 @@ function renderBankDetail(scope){
  ${fuel?`<button data-burn="${esc(item)}">🔥 Add to fire</button>`:''}
  ${item!=='Coins'&&isTradeable(item)?`<button data-sell="${esc(item)}" data-qty="1">Sell 1</button><button data-sell="${esc(item)}" data-qty="10">Sell 10</button><button data-sell="${esc(item)}" data-qty="all">Sell all</button>`:''}
  </div><div class="bank-move-area"><label for="${scope}MoveTo">📁 Move all ${esc(item)} to tab</label><select id="${scope}MoveTo" data-bank-move="${scope}" data-item="${esc(item)}"><option value="">Choose destination…</option><option value="auto">↺ Automatic category (${esc(BANK_DEFAULT_TABS.find(t=>t.id===bankDefaultTab(item))?.name||'Materials')})</option>${bankAllTabs().filter(t=>t.id!=='all').map(t=>`<option value="${esc(t.id)}" ${bankTabForItem(item)===t.id?'disabled':''}>${t.icon} ${esc(t.name)}</option>`).join('')}</select></div><p class="bank-helper">Drag items onto tabs to organize them.</p></div>`;
+ if(box.bankDetailMarkup!==content){
+  box.innerHTML=content;
+  box.bankDetailMarkup=content;
+ }
 }
 function renderBankMain(){
- el('main').innerHTML=`<div class="heading"><div><div class="eyebrow">Inventory</div><h2>🏦 Bank</h2><p class="section-description">${fmt(GAME_CONFIG.bankSlots)} item stacks. Organize items with tabs.</p></div></div><div id="mainBankRoot">${renderBankShell('main')}</div>`;
+ el('main').innerHTML=`<h2 class="mobile-bank-title">🏦 Bank</h2><div id="mainBankRoot">${renderBankShell('main')}</div>`;
+ const sheet=el('bankItemSheet');
+ sheet.addEventListener('click',event=>{
+  if(event.target!==sheet)return;
+  const rect=sheet.getBoundingClientRect();
+  if(event.clientY<rect.top||event.clientX<rect.left||event.clientX>rect.right)sheet.close();
+ });
+ sheet.addEventListener('close',()=>{
+  if(!sheet.isConnected||sheet.open)return;
+  const item=ui.bank.main.selected;
+  const tile=[...el('mainBankGrid').children].find(button=>button.dataset.item===item);
+  (tile||el('mainBankSearch')).focus({preventScroll:true});
+ });
  renderBankGrid('main');
 }
 const GEAR_SLOT_UI={
@@ -6688,7 +6705,7 @@ function renderShopItems(){
 
  if(el('shopCoins'))el('shopCoins').textContent='🪙 '+fmt(count('Coins'));
  const offers=SHOP_ITEMS.filter(x=>ui.shopCategory==='All'||x.category===ui.shopCategory);
- const size=innerWidth<=650?8:12,pages=Math.max(1,Math.ceil(offers.length/size));
+ const size=8,pages=Math.max(1,Math.ceil(offers.length/size));
  ui.shopPage=clamp(ui.shopPage,0,pages-1);
  const from=offers.length?ui.shopPage*size+1:0,to=Math.min(offers.length,(ui.shopPage+1)*size);
  const pager=el('shopPager');if(pager)pager.innerHTML=compactPagerMarkup('shop',ui.shopPage,pages,offers.length,from,to);
@@ -6724,7 +6741,7 @@ function renderJournalMain(){
    const rank=q=>q.test(state)?0:1;
    return rank(a)-rank(b);
   });
- const journalSize=innerWidth<=650?4:6,journalPages=Math.max(1,Math.ceil(visible.length/journalSize));
+ const journalSize=4,journalPages=Math.max(1,Math.ceil(visible.length/journalSize));
  ui.journalPage=clamp(ui.journalPage,0,journalPages-1);
  const journalFrom=visible.length?ui.journalPage*journalSize+1:0,journalTo=Math.min(visible.length,(ui.journalPage+1)*journalSize);
  const shown=visible.slice(ui.journalPage*journalSize,(ui.journalPage+1)*journalSize);
@@ -6900,7 +6917,7 @@ document.addEventListener('keydown',event=>{
  if(event.defaultPrevented||event.ctrlKey||event.metaKey||event.altKey||event.repeat)return;
  const target=event.target;
  if(target?.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/i.test(target?.tagName||''))return;
- if(['gearOverlay','monsterInspectOverlay','devOverlay','onlineOverlay','afkOverlay','chestLootOverlay'].some(id=>{const node=el(id);return node&&!node.hidden;}))return;
+ if(['gearOverlay','monsterInspectOverlay','devOverlay','afkOverlay','chestLootOverlay'].some(id=>{const node=el(id);return node&&!node.hidden;}))return;
  const shortcuts={'1':'world','2':'skills','3':'combat','4':'raid','5':'bank'};
  if(shortcuts[event.key]){event.preventDefault();navigate(shortcuts[event.key]);}
  else if(event.key==='/'&&innerWidth>650){event.preventDefault();el('navSearch')?.focus();}
@@ -6920,9 +6937,7 @@ function handleClick(e){
   return;
  }
  if(b.hasAttribute('data-mobile-combat-equipment')){
-  closeFocusDrawer();document.body.classList.remove('mobile-combat-settings-open');
-  ui.sidebarTab='gear';renderSidebar();document.body.dataset.equipmentOrigin='combat';document.body.classList.add('mobile-equipment');const back=el('mobileEquipmentBack');if(back)back.textContent='‹ Back to Combat';
-  window.scrollTo(0,0);return;
+  showMobileInventory('gear','combat');return;
  }
  if(b.hasAttribute('data-mobile-combat-settings')){
   const open=document.body.classList.toggle('mobile-combat-settings-open');
@@ -7052,7 +7067,7 @@ function handleClick(e){
  if(b.hasAttribute('data-action'))return startAction(ui.view,Number(b.dataset.action));
  if(b.hasAttribute('data-inspect-monster'))return inspectMonster(Number(b.dataset.inspectMonster));
  if(b.hasAttribute('data-inspect-raid'))return inspectMonster(Number(b.dataset.inspectRaid),true);
- if(b.hasAttribute('data-loadout-view')){ui.loadoutTab=Number(b.dataset.loadoutView);openFocusSidebar('gear');return;}
+ if(b.hasAttribute('data-loadout-view')){ui.loadoutTab=Number(b.dataset.loadoutView);showMobileInventory('gear',ui.view);return;}
  if(b.hasAttribute('data-loadout-tab')){ui.loadoutTab=Number(b.dataset.loadoutTab);renderGearSidebar();return;}
  if(b.hasAttribute('data-toolbelt-unequip')){unequip(b.dataset.toolbeltUnequip);return;}
  if(b.hasAttribute('data-loadout-clear-preview')){editLoadoutSlot(b.dataset.loadoutClearPreview,null);return;}
@@ -7061,6 +7076,7 @@ function handleClick(e){
  if(b.hasAttribute('data-monster'))return startCombat(Number(b.dataset.monster));
  if(b.hasAttribute('data-select-raid'))return selectRaid(b.dataset.selectRaid);
  if(b.hasAttribute('data-raid-start'))return startRaidWave();
+ if(b.closest('#bankItemSheet')&&b.matches('[data-open-raid-chest],[data-equip],[data-burn]'))el('bankItemSheet').close();
  if(b.hasAttribute('data-open-raid-chest'))return openRaidChest(b.dataset.openRaidChest,b.dataset.chestMode||'one');
  if(b.hasAttribute('data-raid-claim-pending'))return claimPendingRaidChests();
 
@@ -7088,7 +7104,12 @@ function handleClick(e){
  if(b.hasAttribute('data-unequip'))return unequip(b.dataset.unequip);
  if(b.hasAttribute('data-eat')){if(!eat(b.dataset.eat))note('Cannot eat now.');refreshDynamic();save();return}
  if(b.hasAttribute('data-use-potion'))return usePotion(b.dataset.usePotion);
- if(b.hasAttribute('data-sell'))return sell(b.dataset.sell,b.dataset.qty);
+ if(b.hasAttribute('data-sell')){
+  const item=b.dataset.sell,qty=b.dataset.qty,owned=count(item);
+  const sellsWholeStack=qty==='all'||(Number(qty)>1&&Number(qty)>=owned);
+  if(sellsWholeStack&&!confirm(`Sell all ${fmt(owned)} ${item} for ${fmt(sellPrice(item)*owned)} GP?`))return;
+  sell(item,qty);return;
+ }
  if(b.hasAttribute('data-claim-ready')){
   // Snapshot only quests currently unlocked: future tiers must be opened deliberately.
   const ids=QUESTS.filter(q=>!state.claimed.includes(q.id)&&journalTierUnlocked(q,state)&&q.test(state)).map(q=>q.id);
@@ -7103,10 +7124,14 @@ function handleClick(e){
  if(b.hasAttribute('data-bank-new'))return bankCreateTab();
  if(b.hasAttribute('data-bank-rename'))return bankRenameTab(b.dataset.bankRename);
  if(b.hasAttribute('data-bank-delete'))return bankDeleteTab(b.dataset.bankDelete);
+ if(b.hasAttribute('data-bank-close')){el('bankItemSheet').close();return;}
+ if(b.hasAttribute('data-bank-potions')){showMobileInventory('potions','bank');return;}
  if(b.hasAttribute('data-bank-select')){
-  if(overniaSellMode){hideItemTooltip();if(!isTradeable(b.dataset.item)){note('🔒 This item cannot be sold.');return;}const owned=count(b.dataset.item);const amount=overniaSellQty==='all'?owned:Math.min(owned,overniaSellQty);if(amount>=owned && owned>1 && !confirm(`Sell ALL ${fmt(owned)} ${b.dataset.item} for ${fmt(sellPrice(b.dataset.item)*owned)} GP?`))return;sell(b.dataset.item,overniaSellQty);return;}
+  if(overniaSellMode){hideItemTooltip();if(!isTradeable(b.dataset.item)){note('🔒 This item cannot be sold.');return;}const owned=count(b.dataset.item);const amount=overniaSellQty==='all'?owned:Math.min(owned,overniaSellQty);if((overniaSellQty==='all'||(overniaSellQty>1&&amount>=owned)) && !confirm(`Sell ALL ${fmt(owned)} ${b.dataset.item} for ${fmt(sellPrice(b.dataset.item)*owned)} GP?`))return;sell(b.dataset.item,overniaSellQty);return;}
   const scope=b.dataset.bankSelect;ui.bank[scope].selected=b.dataset.item;
-  renderBankGrid(scope);return;
+  renderBankGrid(scope);
+  if(scope==='main')el('bankItemSheet').showModal();
+  return;
  }
  if(b.hasAttribute('data-bank-page')){
   const scope=b.dataset.bankPage;ui.bank[scope].page+=Number(b.dataset.delta);renderBankGrid(scope);return;
@@ -7156,6 +7181,7 @@ function handleInput(e){
  }
  if(t.hasAttribute('data-bank-move')&&t.value){
   bankMoveItem(t.dataset.item,t.value);
+  if(t.closest('#bankItemSheet'))el('bankItemSheet').close();
  }
  if(t.id==='shopQty'){ui.shopQty=Number(t.value);renderShopItems()}
  if(t.id==='combatTarget'&&MONSTERS[Number(t.value)]){ui.combatTargetIndex=Number(t.value);return;}
@@ -7222,11 +7248,12 @@ el('main').addEventListener('change',handleInput);
 el('sidebar').addEventListener('change',handleInput);
 el('mobileSelect').onchange=ev=>navigate(ev.target.value);
 el('stopBtn').onclick=()=>stop();
-el('bankTab').onclick=()=>openFocusSidebar('bank');
+el('bankTab').onclick=()=>navigate('bank');
 el('mobileEquipmentBack').onclick=()=>{
  document.body.classList.remove('mobile-equipment');
- if(document.body.dataset.equipmentOrigin==='menu'){document.body.classList.add('mobile-menu-home');renderMobileHomeNav();}
- else if(ui.view!=='combat')navigate('combat');
+ const origin=document.body.dataset.equipmentOrigin;
+ if(origin==='menu')showMobileSkills();
+ else navigate(origin);
  window.scrollTo(0,0);
 };
 el('gearTab').onclick=()=>openFocusSidebar('gear');
@@ -7243,26 +7270,6 @@ el('focusDock').addEventListener('click',e=>{
 });
 addEventListener('resize',()=>{if(innerWidth>1050&&focusDrawerOpen)closeFocusDrawer();});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&focusDrawerOpen)closeFocusDrawer();});
-el('saveBtn').onclick=()=>{save();note('💾 Game saved.')};
-el('exportBtn').onclick=()=>{
- save();const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
- const url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;
- anchor.download=inDev()?'idle-rpg-DEV-save.json':'idle-rpg-MAIN-save.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),3000);
-};
-el('importBtn').onclick=()=>el('fileInput').click();
-el('fileInput').onchange=async e=>{
- const file=e.target.files?.[0];if(!file)return;
- try{
-  const data=JSON.parse(await file.text());if(!data.xp||!data.bank||typeof data.xp!=='object'||typeof data.bank!=='object')throw Error('Invalid save file');
-  if(!confirm(`Replace the ${inDev()?'DEV':'MAIN'} character with this imported save?`))return;
-  localStorage.setItem(profileSaveKey(),JSON.stringify(data));state=newGame();clearActivityFeed();restore();render();note('💾 Save imported into '+(inDev()?'Dev':'Main')+'.');
- }catch(err){alert('Could not import save: '+err.message)}e.target.value='';
-};
-el('resetBtn').onclick=()=>{
- if(confirm(`Reset ${inDev()?'DEV':'MAIN'} progress, bank, equipment and quests? This cannot be undone without a backup.`) && (inDev()||confirm('FINAL WARNING: This will erase your real MAIN character. Continue?'))){
-  state=newGame();clearActivityFeed();save();render();note('New adventure started!');
- }
-};
 function validSavedActivity(active){
  if(!active||typeof active!=='object')return false;
  if(active.type==='combat'||active.type==='raid')return true;
@@ -7358,7 +7365,7 @@ async function catchUpOffline(){
 el('chestLootContinue').onclick=()=>{el('chestLootOverlay').hidden=true;};
 el('afkContinue').onclick=()=>{el('afkOverlay').hidden=true;el('afkContinue').hidden=false;};
 function tick(t){
- if(offlineRunning){lastTick=t;requestAnimationFrame(tick);return}
+ if(offlineRunning||document.hidden){lastTick=t;requestAnimationFrame(tick);return}
  const wallGap=Date.now()-(state.lastProcessedAt||Date.now());
  if(wallGap>=OFFLINE_CONFIG.minAwaySeconds*1000&&state.active){catchUpOffline();lastTick=t;requestAnimationFrame(tick);return}
  let dt=clamp(t-lastTick,0,250);lastTick=t;
@@ -7512,258 +7519,19 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!el('devOverlay').h
 buildDevOptions();
 
 
-// Overnia Online v4.0: auth and explicitly initiated Main-only cloud backup.
-// This is not an authoritative game server. Do not use client-supplied XP for competitive rankings.
-const ONLINE_CONFIG_KEY='overnia-online-public-config-v1';
-const OVERNIA_SUPABASE_URL='https://oiagvdulslqufnnommzr.supabase.co';
-const OVERNIA_SUPABASE_PUBLIC_KEY='sb_publishable_zcRuWea2LtMIwPu8Pt5OFw_wcqNLlwZ';
-let onlineClient=null,onlineUser=null,onlineBusy=false;
-let cloudReadyUser=null,cloudUploadBusy=false,cloudLastSync=0,cloudPending=false,cloudGeneration=0;
-const CLOUD_OWNER_KEY='overnia-main-cloud-owner-v1';
-const CLOUD_SYNC_INTERVAL=60000;
-const cloudSyncLabel=msg=>{const target=el('onlineSyncState');if(target)target.textContent=msg};
-const cloudLocal=()=>{try{const raw=localStorage.getItem(SAVE_KEY);return raw?JSON.parse(raw):null}catch{return null}};
-const cloudTime=v=>Number(v?.lastSaved)||0;
-function cloudSaveAgeLabels(local,remote){
- const localTime=cloudTime(local),remoteTime=cloudTime(remote?.save_data);
- if(!localTime||!remoteTime||localTime===remoteTime)return ['Save time unavailable','Save time unavailable'];
- return localTime>remoteTime?['Most recent save','Old save']:['Old save','Most recent save'];
-}
-const cloudOwner=()=>localStorage.getItem(CLOUD_OWNER_KEY);
-const cloudMarkOwner=id=>localStorage.setItem(CLOUD_OWNER_KEY,id);
-const cloudHideChoice=()=>{el('onlineConflict').hidden=true;el('onlineConflict').replaceChildren()};
-function cloudOfferChoice(message,options,saveLabels=null){
- const area=el('onlineConflict');area.replaceChildren();const p=document.createElement('p');p.textContent=message;area.append(p);
- for(const [label,fn] of options){
-  const wrapper=document.createElement('div');wrapper.className='cloud-choice-item';
-  const button=document.createElement('button');button.type='button';button.textContent=label;
-  button.onclick=()=>onlineAction(async()=>{await fn();if(el('onlineConflict')===area && area.contains(button)){cloudHideChoice();el('onlineOverlay').hidden=true;}});wrapper.append(button);
-  const age=saveLabels?.[label];
-  if(age){const caption=document.createElement('small');caption.className='cloud-save-age';caption.textContent=age;wrapper.append(caption)}
-  area.append(wrapper);
- }
- area.hidden=false;el('onlineOverlay').hidden=false;
-}
-async function cloudFetch(){
- const {data,error}=await onlineClient.from('character_saves').select('save_data,updated_at').eq('user_id',onlineUser.id).maybeSingle();
- if(error)throw error;return data;
-}
-async function cloudWrite(payload,expectedUpdated=null){
- const id=onlineUser.id;
- // Optimistic check prevents a stale tab/device from silently overwriting newer cloud progress.
- if(expectedUpdated){
-  const {data,error}=await onlineClient.from('character_saves').update({save_data:payload,updated_at:new Date().toISOString()}).eq('user_id',id).eq('updated_at',expectedUpdated).select('updated_at').maybeSingle();
-  if(error)throw error;if(!data)return false;cloudRemoteUpdated=data.updated_at;return true;
- }
- const {data,error}=await onlineClient.from('character_saves').upsert({user_id:id,save_data:payload,updated_at:new Date().toISOString()},{onConflict:'user_id'}).select('updated_at').single();
- if(error)throw error;cloudRemoteUpdated=data.updated_at;return true;
-}
-let cloudRemoteUpdated=null;
-async function cloudApplyRemote(record){
- if(!record?.save_data?.xp||!record?.save_data?.bank)throw Error('Cloud save is invalid.');
- localStorage.setItem(SAVE_KEY,JSON.stringify(record.save_data));
- cloudMarkOwner(onlineUser.id);cloudRemoteUpdated=record.updated_at;
- if(!inDev()){state=newGame();restore();render();}
- cloudReadyUser=onlineUser.id;cloudLastSync=Date.now();cloudSyncLabel('✓ Cloud save restored · auto-sync active');
-}
-async function cloudChooseLocal(record){
- if(!onlineUser)return;
- const payload=cloudLocal();if(!payload?.xp||!payload?.bank)throw Error('Local Main save missing.');
- const success=await cloudWrite(payload,record?.updated_at||null);
- if(!success){cloudReadyUser=null;cloudSyncLabel('Cloud changed on another device. Review again.');await cloudPrepare();return}
- cloudMarkOwner(onlineUser.id);cloudReadyUser=onlineUser.id;cloudLastSync=Date.now();cloudSyncLabel('✓ Local Main uploaded · auto-sync active');
-}
-async function cloudPrepare(){
- if(!onlineUser||!onlineClient)return;
- const userId=onlineUser.id,generation=++cloudGeneration;
- cloudReadyUser=null;cloudSyncLabel('Checking cloud save…');
- try{
-  const remote=await cloudFetch();if(generation!==cloudGeneration||onlineUser?.id!==userId)return;
-  const local=cloudLocal(),owner=cloudOwner();
-  if(!remote){
-   if(local?.xp&&local?.bank){
-    cloudOfferChoice('No cloud character exists for this account yet. Upload your local Main character to enable cloud syncing, or decide later?',[[ 'Upload local Main',()=>cloudChooseLocal(null) ],['Decide later',async()=>{cloudSyncLabel('Signed in · cloud sync paused until a save is selected')}]]);
-   }else{cloudReadyUser=userId;cloudRemoteUpdated=null;cloudSyncLabel('✓ Account ready · auto-sync active');}
-   return;
-  }
-  cloudRemoteUpdated=remote.updated_at;
-  if(!local?.xp||!local?.bank){await cloudApplyRemote(remote);return}
-  // Always ask on first account association or when local progress differs. Never silently overwrite either copy.
-  if(owner!==userId||JSON.stringify(local)!==JSON.stringify(remote.save_data)){
-   cloudOfferChoice('Your local Main and cloud Main may have different progress. Choose which character to use. This choice replaces the other copy. Export a backup first if unsure.',[
-    ['Use cloud character',()=>cloudApplyRemote(remote)],['Use local character',()=>cloudChooseLocal(remote)],['Decide later',async()=>{cloudSyncLabel('Signed in · cloud sync paused until a save is selected')}]
-   ],(()=>{const [localAge,cloudAge]=cloudSaveAgeLabels(local,remote);return {'Use cloud character':cloudAge,'Use local character':localAge}})());
-  }else{cloudMarkOwner(userId);cloudReadyUser=userId;cloudLastSync=Date.now();cloudSyncLabel('✓ Cloud and local match · auto-sync active')}
- }catch(err){cloudSyncLabel('Cloud unavailable · local guest play continues');onlineStatus('Cloud check: '+(err?.message||err))}
-}
-async function cloudAutoSync(){
- if(!onlineUser||cloudReadyUser!==onlineUser.id||cloudUploadBusy||!onlineClient)return;
- if(Date.now()-cloudLastSync<CLOUD_SYNC_INTERVAL)return;
- cloudUploadBusy=true;const userId=onlineUser.id,generation=cloudGeneration;
- try{
-  if(!inDev())save();const payload=cloudLocal();if(!payload?.xp||!payload?.bank)return;
-  // A separate device may have saved after our last known revision.
-  const remote=await cloudFetch();if(generation!==cloudGeneration||onlineUser?.id!==userId)return;
-  if(remote?.updated_at!==cloudRemoteUpdated){cloudReadyUser=null;cloudSyncLabel('⚠ Cloud changed on another device. Choose which save to keep.');await cloudPrepare();return}
-  const ok=await cloudWrite(payload,remote?.updated_at||null);
-  if(!ok){cloudReadyUser=null;await cloudPrepare();return}
-  cloudLastSync=Date.now();cloudSyncLabel('✓ Main synced '+new Date().toLocaleTimeString()+' · Dev stays local');return true;
- }catch(err){cloudSyncLabel('⚠ Sync failed. Local Main is safe; retrying later.');console.warn('Cloud sync failed',err)}finally{cloudUploadBusy=false}
-}
-setInterval(()=>{cloudAutoSync().catch(console.warn)},15000);
-
-const onlineStatus=msg=>{el('onlineStatus').textContent=msg};
-const onlineSetView=()=>{
- el('onlineSetup').hidden=!!onlineClient;
- el('onlineAuth').hidden=!onlineClient||!!onlineUser;
- el('onlineLogged').hidden=!onlineUser;
- el('cloudSaveBtn').hidden=!onlineUser;
- el('onlineIdentity').textContent=onlineUser?'Signed in as '+onlineUser.email:'';
-};
-async function onlineConnect(url,key){
- const parsed=new URL(url);
- if(parsed.protocol!=='https:'||!parsed.hostname.endsWith('.supabase.co'))throw Error('Enter your Supabase HTTPS project URL.');
- if(!key||key.length<20||key.toLowerCase().includes('service_role')||key.startsWith('sb_secret_'))throw Error('Use only the public publishable / anon key.');
- if(!window.supabase?.createClient)throw Error('Supabase library could not load. Check your internet connection.');
- onlineClient=window.supabase.createClient(parsed.origin,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- const {data,error}=await onlineClient.auth.getUser();if(error&&error.name!=='AuthSessionMissingError')console.warn(error);
- onlineUser=data?.user||null;
- onlineClient.auth.onAuthStateChange((_event,session)=>{
-  const next=session?.user||null,changed=next?.id!==onlineUser?.id;
-  onlineUser=next;onlineSetView();
-  if(changed){cloudGeneration++;cloudReadyUser=null;cloudRemoteUpdated=null;cloudHideChoice();if(next)setTimeout(()=>cloudPrepare(),0);else cloudSyncLabel('Guest mode · local saves only')}
- });
- if(onlineUser)setTimeout(()=>cloudPrepare(),0);else cloudSyncLabel('Guest mode · local saves only');
- localStorage.setItem(ONLINE_CONFIG_KEY,JSON.stringify({url:parsed.origin,key}));
- onlineSetView();onlineStatus('Connected. '+(onlineUser?'Welcome back!':'Sign in or create your account.'));
-}
-async function onlineAction(fn){
- if(onlineBusy)return;onlineBusy=true;
- try{await fn()}catch(err){onlineStatus('Error: '+(err?.message||String(err)))}finally{onlineBusy=false}
-}
-function onlineMainSave(){
- const raw=localStorage.getItem(SAVE_KEY);
- if(!raw)throw Error('No local Main save found. Play a little first.');
- const data=JSON.parse(raw);
- if(!data?.xp||!data?.bank)throw Error('Local Main save is invalid.');
- return data;
-}
-async function cloudSaveNow(){
- if(!onlineUser)return;
- if(cloudUploadBusy){onlineStatus('Cloud save already in progress.');return}
- if(cloudReadyUser!==onlineUser.id){
-  onlineStatus('Choose your Main save before cloud saving.');
-  await cloudPrepare();return;
- }
- // Uses the same remote revision check as auto-sync. Never silently overwrite
- // a cloud save changed on another device.
- cloudLastSync=0;
- const completed=await cloudAutoSync();
- if(completed===true){
-  onlineStatus('✓ Cloudsave completed');
-  toast('Cloudsave completed');
-  const homeStatus=document.getElementById('homeStatus');
-  if(homeStatus)homeStatus.textContent='✓ Cloudsave completed';
- }else{
-  onlineStatus('Cloud save needs attention. Check the account sync status.');
-  const homeStatus=document.getElementById('homeStatus');
-  if(homeStatus)homeStatus.textContent='Cloud save needs attention. Check the account sync status.';
- }
-}
-async function onlineDownload(){
- if(!onlineUser)throw Error('Sign in first.');
- const {data,error}=await onlineClient.from('character_saves').select('save_data,updated_at').eq('user_id',onlineUser.id).maybeSingle();
- if(error)throw error;
- if(!data?.save_data?.xp||!data?.save_data?.bank)throw Error('No valid cloud save found. Upload Main first.');
- if(!confirm('Replace LOCAL Main with your CLOUD save from '+new Date(data.updated_at).toLocaleString()+'? This cannot be undone unless you exported a backup.'))return;
- // Main-only write; Dev save remains untouched. Restore via existing migration logic.
- localStorage.setItem(SAVE_KEY,JSON.stringify(data.save_data));
- if(!inDev()){state=newGame();restore();render();}
- cloudMarkOwner(onlineUser.id);cloudRemoteUpdated=data.updated_at;cloudReadyUser=onlineUser.id;cloudLastSync=Date.now();cloudHideChoice();cloudSyncLabel('✓ Cloud restored · auto-sync active');onlineStatus('✓ Cloud Main restored locally. Dev profile was not changed.');
-}
-function setupOnlineUI(){
- el('onlineOpen').onclick=()=>{el('onlineOverlay').hidden=false;onlineSetView()};
- el('onlineClose').onclick=()=>el('onlineOverlay').hidden=true;
- el('onlineOverlay').addEventListener('click',e=>{if(e.target===el('onlineOverlay'))el('onlineOverlay').hidden=true});
- el('onlineConnect').onclick=()=>onlineAction(()=>onlineConnect(el('onlineUrl').value.trim(),el('onlineKey').value.trim()));
- el('onlineSignUp').onclick=()=>onlineAction(async()=>{
-  const email=el('onlineEmail').value.trim(),password=el('onlinePassword').value;
-  const {data,error}=await onlineClient.auth.signUp({email,password});if(error)throw error;
-  onlineStatus(data.session?'✓ Account created and signed in.':'Account created. Check your email to confirm your address, then sign in.');
- });
- el('onlineSignIn').onclick=()=>onlineAction(async()=>{
-  const {error}=await onlineClient.auth.signInWithPassword({email:el('onlineEmail').value.trim(),password:el('onlinePassword').value});if(error)throw error;
-  onlineStatus('✓ Signed in.');
- });
- el('onlineSignOut').onclick=()=>{if(!window.confirm('Sign out of Overnia Online? Cloud syncing will stop until you sign in again. Your local saves will remain.'))return;onlineAction(async()=>{const {error}=await onlineClient.auth.signOut();if(error)throw error;cloudReadyUser=null;cloudGeneration++;cloudSyncLabel('Guest mode · local saves only');onlineStatus('Signed out. Local saves remain available.')})};
- el('cloudSaveBtn').onclick=()=>onlineAction(cloudSaveNow);
- el('onlineDownload').onclick=()=>onlineAction(onlineDownload);
- try{el('onlineUrl').value=OVERNIA_SUPABASE_URL;el('onlineKey').value=OVERNIA_SUPABASE_PUBLIC_KEY;onlineAction(()=>onlineConnect(OVERNIA_SUPABASE_URL,OVERNIA_SUPABASE_PUBLIC_KEY))}catch(e){console.warn(e)}
- onlineSetView();
-}
-window.addEventListener('load',setupOnlineUI,{once:true});
-
 // Persist the precise time of the last simulated game tick when leaving.
 window.addEventListener('pagehide',save);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();});
 async function boot(){
- try{currentProfile='main';localStorage.setItem(PROFILE_PREF_KEY,'main');focusModeEnabled=localStorage.getItem(FOCUS_UI_KEY)!=='off';}catch{currentProfile='main';focusModeEnabled=true}
- restore();processHireling(Date.now());render();applyFocusMode();if(state.active)await catchUpOffline();lastTick=performance.now();requestAnimationFrame(tick)
+ focusModeEnabled=false;
+ restore();ui.view='skills';processHireling(Date.now());render();applyFocusMode();if(state.active)await catchUpOffline();lastTick=performance.now();requestAnimationFrame(tick)
 }
 boot();
 // Expose test helpers for regression checks.
 window.IdleRPGDebug={enemyReferenceMaxHit,enemyDamageIdentity,combatXpMultiplier,OVERNIA_PLACES,OVERNIA_WORLD_QUESTS,OVERNIA_HIRELINGS,OVERNIA_REGION_LORE,OVERNIA_RECRUITMENT_QUESTS,hireOverniaHelper,worldQuestReady,worldQuestProgress,travelToOvernia,acceptWorldQuest,claimWorldQuest,processHireling,equippedCombatStyle,combatXpTargets,toggleCombatXpSkill,normalizeCombatTraining,combatPreview,itemTooltipHtml,showItemTooltip,hideItemTooltip,GEAR_SETS,MONSTERS,BOSS_ARMOUR,activeSetBonuses,inspectMonster,closeMonsterInspect,gearMods,applyMonsterLoot,activeOverniaHires,getState:()=>state,levelFromXp,xpForLevel,combatLevel,bankUsed,fireRemaining,treasureChance,add,lightFire,buy,sell,equip,complete,stop,navigate,rollSoulGem,soulGemChance,rollMonsterGroup,isTradeable,raidState,startRaidWave,finishRaidWave,openRaidChest,belrothEntryRequirement,combatType,currentEnemy,RAID_WAVES,RAID_CONFIG,renderRaidMain};
 
 </script>
-<script id="overnia-home-controller">
-(() => {
- const $=id=>document.getElementById(id);
- const home=$('overniaHome');
- function setStatus(message){$('homeStatus').textContent=message||'';}
- function currentActivity(){
-  const a=state?.active;
-  if(!a)return 'Your adventure is ready. Choose a skill or explore Overnia.';
-  if(a.type==='skill')return '⚡ Currently training '+(SKILLS[a.skill]?.actions?.[a.index]?.name||a.skill)+' · '+Math.floor(state.progress||0)+'%';
-  if(a.type==='raid')return '⛰️ Raid in progress';
-  if(a.type==='combat')return '⚔️ Fighting '+(MONSTERS[state.monsterIndex]?.name||'a monster');
-  return 'Continue your adventure';
- }
- function showHome(){
-  try{save()}catch(e){console.warn('Home save:',e)}
-  $('homeCharacter').textContent=inDev()?'🧪 Dev Character':'🛡️ Main Character';
-  $('homeStats').textContent='Total level '+totalSkillLevel()+' · Combat level '+combatLevel()+' · '+fmt(count('Coins'))+' GP';
-  $('homeActivity').textContent=currentActivity();
-  $('homeFocusMode').checked=!!focusModeEnabled;
-  $('homeSettings').hidden=true;
-  setStatus('');home.hidden=false;document.body.classList.add('home-screen-open');
- }
- function closeHome(){home.hidden=true;document.body.classList.remove('home-screen-open')}
- function gameView(view){closeHome();document.body.classList.remove('mobile-menu-home','mobile-equipment');navigate(view)}
- function resume(){const a=state?.active;gameView(a?.type==='skill'?a.skill:a?.type==='combat'?'combat':a?.type==='raid'?'raid':'skills')}
- $('homeLaunch').addEventListener('click',showHome);
- $('homeContinue').addEventListener('click',resume);
- document.addEventListener('click',e=>{if(e.target.closest('[data-home-open]')){e.preventDefault();showHome()}});
- $('homeFocusMode').addEventListener('change',e=>{if(!!focusModeEnabled!==e.target.checked)toggleFocusMode();setStatus('Settings updated.')});
- home.addEventListener('click',e=>{
-  const b=e.target.closest('[data-home-action]');if(!b)return;
-  const act=b.dataset.homeAction;
-  switch(act){
-   case 'save':$('saveBtn').click();setStatus('✓ Local character saved.');break;
-   case 'cloud':if($('cloudSaveBtn').hidden){$('onlineOpen').click();setStatus('Sign in to use cloud saves.');}else{$('cloudSaveBtn').click();setStatus('Saving to cloud…');}break;
-   case 'export':$('exportBtn').click();setStatus('Backup download requested.');break;
-   case 'import':$('importBtn').click();setStatus('Choose a saved .json backup to import.');break;
-   case 'account':$('onlineOpen').click();break;
-   case 'settings':$('homeSettings').hidden=false;$('homeSettings').scrollIntoView({block:'nearest',behavior:'smooth'});break;
-   case 'settings-close':$('homeSettings').hidden=true;break;
-   case 'menu':closeHome();document.body.classList.remove('mobile-equipment');document.body.classList.add('mobile-menu-home');renderMobileHomeNav();if(innerWidth>650)navigate('skills');window.scrollTo(0,0);break;
-   case 'skills':case 'combat':case 'world':gameView(act);break;
-  }
- });
- // Welcome screen appears on every fresh app launch. Game state has already been restored by boot().
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',showHome,{once:true});else showHome();
-})();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script><script id="overnia-pwa-registration">
+<script id="overnia-pwa-registration">
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(err =>
@@ -7772,7 +7540,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   });
 }
 </script>
-<aside id="overniaUpdateNotice" hidden aria-live="polite"><span>A new version available</span><button id="overniaUpdateRefresh" type="button" aria-label="Save and refresh to new version" title="Save and refresh">↻</button></aside>
+<aside id="overniaUpdateNotice" hidden aria-live="polite"><span>A new version available</span><button id="overniaUpdateRefresh" type="button" aria-label="Refresh to new version" title="Refresh">↻</button></aside>
 <script id="overnia-update-checker">
 (() => {
   'use strict';

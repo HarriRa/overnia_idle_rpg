@@ -1,5 +1,5 @@
 /* Overnia PWA: network-first HTML, offline fallback; never cache update-check requests. */
-const CACHE = 'overnia-app-v4-version-json-20261107';
+const CACHE = 'overnia-app-v5-mobile-20261117';
 const APP_FILES = ['./','./index.html','./manifest.webmanifest','./version.json','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP_FILES)).then(()=>self.skipWaiting()));
