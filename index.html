@@ -2093,6 +2093,14 @@ body[data-current-view="bank"] #activityFeed{display:none}
 .region-visit .region-visit-back{float:none;display:block;margin-bottom:6px}
 .region-head{flex-wrap:wrap}
 </style>
+<style>
+.world-quest .world-quest-link{
+ display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:44px;
+ padding:7px 9px;text-align:left;font-size:12px;font-weight:750;
+ background:#27463b;border-color:#739475;color:#f2e5c3
+}
+.world-quest-link>small{flex:none;max-width:42%;font-size:11px;text-align:right;color:#c9dab5}
+</style>
 </head>
 <body class="mobile-menu-home">
 <header><div><h1>🌄 Overnia Idle RPG <span class="version">v5.6 · Polish & Stability</span></h1><div class="stats" id="summary"></div></div><div class="top-controls"><div class="profile-switch" role="group" aria-label="Character profile"><button type="button" id="mainProfileBtn" class="active" aria-pressed="true">🛡️ Main</button><button type="button" id="devProfileBtn" aria-pressed="false">🧪 Dev</button></div><button id="focusModeBtn" type="button" aria-pressed="false" title="Switch between fixed workspace and classic scrolling layout">🎯 Focus Mode</button><button id="devToolsBtn" type="button" hidden>🛠 Dev Tools</button></div><span id="petStatus" class="pet-status" aria-live="polite" style="display:block;width:max-content;max-width:95%;margin:6px 14px">🐾 No pet summoned</span></header>
@@ -5228,7 +5236,7 @@ function refreshSkillsOverview(){
 }
 // ── Overnia: prototype travel, contracts, and an original branching adventure ──
 function overniaAt(){return OVERNIA_PLACE_BY_ID[state.world?.location]||OVERNIA_PLACE_BY_ID.hearthwick}
-function travelToOvernia(id){
+function travelToOvernia(id,{monsterIndex}={}){
  const place=OVERNIA_PLACE_BY_ID[id];if(!place||!state.world||state.world.location===id)return;
  // Travel ends combat/raid, but never interrupts gathering or crafting.
  if(['combat','raid'].includes(state.active?.type)){
@@ -5243,7 +5251,7 @@ function travelToOvernia(id){
  if(!state.world.visited.includes(id))state.world.visited.push(id);
  note(`🧭 Arrived in ${place.name}.`);save();
  // The combat region picker is also a travel control; remain in Combat there.
- navigate(ui.view==='combat'?'combat':'world');
+ navigate(ui.view==='combat'||Number.isInteger(monsterIndex)?'combat':'world',{monsterIndex});
 }
 function worldQuestObjectives(quest){
  return Array.isArray(quest.objectives)?quest.objectives:[quest.objective].filter(Boolean);
@@ -5266,6 +5274,47 @@ function worldQuestObjective(obj){
  if(obj.type==='skill')return `Complete ${obj.amount} ${label(obj.name)} actions`;
  if(obj.type==='deliver')return `Bring ${obj.amount} ${obj.name}`;
  return 'Unknown objective';
+}
+function worldQuestDestination(obj){
+ if(obj.type==='kills'){
+  const monsterIndex=MONSTERS.findIndex(m=>m.name===obj.name);
+  if(monsterIndex<0)return null;
+  const area=MONSTERS[monsterIndex].area;
+  return {view:'combat',monsterIndex,area};
+ }
+ if(obj.type==='skill'&&SKILLS[obj.name]&&!SKILLS[obj.name].combat)return {view:obj.name};
+ if(obj.type==='deliver'){
+  const offer=SHOP_ITEMS.find(item=>item.name===obj.name);
+  for(const [skill,def] of Object.entries(SKILLS)){
+   if(def.combat)continue;
+   const skillAction=def.actions.findIndex(action=>action.output===obj.name);
+   if(skillAction>=0&&(!offer||levelFromXp(state.xp[skill]||0)>=def.actions[skillAction].level)){
+    return {view:skill,skillAction};
+   }
+  }
+  if(offer)return {view:'shop',offer};
+ }
+ return null;
+}
+function followWorldQuestObjective(questId,index){
+ const quest=OVERNIA_WORLD_QUESTS.find(entry=>entry.id===questId);
+ if(!quest||!state.world.started[questId]||state.world.completed.includes(questId))return;
+ const objective=worldQuestObjectives(quest)[index];
+ if(!objective)return;
+ const destination=worldQuestDestination(objective);
+ if(!destination)return;
+ const {view,area,monsterIndex,skillAction,offer}=destination;
+ if(view==='combat'&&area!==state.world.location)return travelToOvernia(area,{monsterIndex});
+ if(offer){
+  ui.shopCategory=offer.category;
+  ui.mobileShopOpen=offer.category;
+  ui.shopPage=0;
+ }
+ navigate(view,{monsterIndex,skillAction});
+ if(offer){
+  const item=el('mobileShopGroups')?.querySelector(`[data-buy="${CSS.escape(offer.name)}"]`);
+  item?.closest('.mobile-shop-item')?.scrollIntoView({block:'nearest'});
+ }
 }
 function worldQuestReady(quest){
  return !!state.world.started[quest.id]&&worldQuestObjectives(quest).every((obj,i)=>worldQuestProgress(quest,i)>=obj.amount);
@@ -5355,7 +5404,16 @@ function overniaMiniQuest(quest){
  const reqText=locked?`Finish ${esc(OVERNIA_WORLD_QUESTS.find(q=>q.id===quest.requires)?.title||'the earlier quest')} first`:combatLocked?`Requires Combat ${quest.minCombat}`:'';
  const status=done?'✓ Complete':locked?'Story locked':ready?'Ready to claim':accepted?'In progress':combatLocked?'Combat '+quest.minCombat:'New quest';
  const body=`<div class="world-quest-body"><p class="world-giver">${esc(quest.giver)}</p><p>${esc(quest.story)}</p>
-  ${objectives.map((obj,i)=>{const progress=Math.min(obj.amount,worldQuestProgress(quest,i));return `<div class="world-quest-step"><div class="world-objective">${esc(worldQuestObjective(obj))}</div>${accepted&&!done?`<div class="world-quest-meter"><span data-world-quest-fill="${esc(quest.id)}" data-step="${i}" style="width:${progress/obj.amount*100}%"></span></div><small class="subdued" data-world-quest-count="${esc(quest.id)}" data-step="${i}">${fmt(progress)} / ${fmt(obj.amount)}</small>`:''}</div>`}).join('')}
+  ${objectives.map((obj,i)=>{
+   const progress=Math.min(obj.amount,worldQuestProgress(quest,i));
+   const destination=accepted&&!done?worldQuestDestination(obj):null;
+   const objective=esc(worldQuestObjective(obj));
+   const label=destination?.area&&destination.area!==state.world.location
+    ?'Travel to '+OVERNIA_PLACE_BY_ID[destination.area].short
+    :destination?viewLabel(destination.view):'';
+   return `<div class="world-quest-step">${destination
+    ?`<button type="button" class="world-quest-link" data-world-quest-objective="${esc(quest.id)}" data-step="${i}"><span>${objective}</span><small>${esc(label)} <span aria-hidden="true">›</span></small></button>`
+    :`<div class="world-objective">${objective}</div>`}${accepted&&!done?`<div class="world-quest-meter"><span data-world-quest-fill="${esc(quest.id)}" data-step="${i}" style="width:${progress/obj.amount*100}%"></span></div><small class="subdued" data-world-quest-count="${esc(quest.id)}" data-step="${i}">${fmt(progress)} / ${fmt(obj.amount)}</small>`:''}</div>`}).join('')}
   <div class="world-rewards">🪙 ${fmt(quest.coins||0)} GP ${Object.entries(quest.items||{}).map(([item,n])=>` · ${itemArt(item)} ${esc(item)} ×${n}`).join('')} ${Object.entries(quest.xp||{}).map(([skill,n])=>` · ${fmt(n)} ${label(skill)} XP`).join('')}</div>
   ${quest.unlocksHire?`<div class="world-quest-unlock">${done?'✅ Unlocked':'🔓 Unlock reward'}: ${esc(OVERNIA_HIRE_BY_ID[quest.unlocksHire].name)} · ${esc(OVERNIA_HIRE_BY_ID[quest.unlocksHire].item)} contracts</div>`:''}
   ${!done?`<button ${accepted?`data-world-claim="${esc(quest.id)}" ${ready?'':'disabled'}`:`data-world-accept="${esc(quest.id)}" ${locked||combatLocked?'disabled':''}`}>${accepted?'Claim rewards':'Accept quest'}</button>`:''}
@@ -5658,14 +5716,17 @@ function refreshNavLevels(){
  for(const node of document.querySelectorAll('[data-nav-lvl]'))node.textContent=navLevelText(node.dataset.navLvl);
  updateQuickNav();
 }
-function navigate(view){
+function navigate(view,{monsterIndex,skillAction}={}){
  if(!NAV_VIEWS.includes(view))return;
  document.body.classList.remove('mobile-menu-home','mobile-equipment','mobile-combat-settings-open');
  if(view==='bank'){overniaSellMode=false;overniaSellQty=1;ui.bank.main.selected=null;}
  hideItemTooltip();closeFocusDrawer();
  // Each new visit focuses the running activity, or the highest unlocked recipe.
- if(SKILLS[view]&&!SKILLS[view].combat)delete ui.skillSelection[view];
- if(view==='combat')ui.combatTargetIndex=state.active?.type==='combat'?state.monsterIndex:null;
+ if(SKILLS[view]&&!SKILLS[view].combat){
+  if(Number.isInteger(skillAction))ui.skillSelection[view]=skillAction;
+  else delete ui.skillSelection[view];
+ }
+ if(view==='combat')ui.combatTargetIndex=monsterIndex??(state.active?.type==='combat'?state.monsterIndex:null);
  ui.view=view;renderNav();renderMain();refreshDynamic();
  // Always begin a new page at its top; previous scroll position was confusing in Classic View.
  if(focusModeEnabled){const panel=document.querySelector('.panel.main');if(panel)panel.scrollTop=0;}
@@ -5678,13 +5739,13 @@ function selectedSkillAction(skill,candidates){
  const all=SKILLS[skill].actions;
  const active=state.active?.type==='skill'&&state.active.skill===skill?Number(state.active.index):null;
  const own=Number.isInteger(ui.skillSelection[skill])?ui.skillSelection[skill]:null;
- // Mobile carousel must never inherit a filtered desktop category. The active action
- // always takes priority on entering a skill, even when outside the current tab.
+ // An explicit recipe selection takes priority. Ordinary navigation clears it
+ // so the active action still opens by default, even outside the current tab.
+ if(own!==null&&own>=0&&own<all.length)return own;
  if(active!==null&&Number.isInteger(active)&&active>=0&&active<all.length){
   ui.skillSelection[skill]=active;
   return active;
  }
- if(own!==null&&own>=0&&own<all.length)return own;
  const level=levelFromXp(state.xp[skill]||0);
  const ranked=all.map((a,i)=>({a,i})).filter(({a})=>a.level<=level)
   .sort((x,y)=>y.a.level-x.a.level||x.i-y.i);
@@ -7103,6 +7164,7 @@ function handleClick(e){
   moveOverniaMap(next,anchor);
   save();return;
  }
+ if(b.hasAttribute('data-world-quest-objective'))return followWorldQuestObjective(b.dataset.worldQuestObjective,Number(b.dataset.step));
  if(b.hasAttribute('data-world-accept'))return acceptWorldQuest(b.dataset.worldAccept);
  if(b.hasAttribute('data-world-claim'))return claimWorldQuest(b.dataset.worldClaim);
  if(b.hasAttribute('data-world-quest-focus')){ui.worldSection='stories';for(const node of document.querySelectorAll('[data-world-section]'))node.hidden=node.dataset.worldSection!=='stories';for(const node of document.querySelectorAll('[data-world-section-tab]')){const selected=node.dataset.worldSectionTab==='stories';node.classList.toggle('is-active',selected);node.setAttribute('aria-pressed',String(selected));}const details=el('worldRecruitmentQuests');if(details)details.open=true;const card=el('main')?.querySelector(`[data-world-quest-card="${CSS.escape(b.dataset.worldQuestFocus)}"]`);if(card){if(card.tagName==='DETAILS')card.open=true;card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('world-quest-highlight');setTimeout(()=>card.classList.remove('world-quest-highlight'),1600);}return;}
