@@ -1259,6 +1259,7 @@ body.focus-mode #toast{z-index:150;pointer-events:none}
 
 
 #overniaUpdateNotice{position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:210;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 24px);border:1px solid #a4c799;border-radius:12px;background:#263b30;color:#f5efda;padding:9px 10px 9px 14px;box-shadow:0 8px 24px #0009;font-size:12px;font-weight:750}
+#overniaUpdateNotice[hidden]{display:none!important}
 #overniaUpdateRefresh{display:grid;place-items:center;width:42px;height:42px;min-height:42px;flex:none;font-size:25px;line-height:1;border:1px solid #92b88b;border-radius:10px;background:#385b43;color:#f4ffea;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 #overniaUpdateRefresh:disabled{opacity:.5}
 @media all{#overniaUpdateNotice{bottom:calc(70px + env(safe-area-inset-bottom));left:12px;right:12px;justify-content:space-between}}
@@ -7569,7 +7570,12 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
       const response = await fetch(url.href, {cache:'no-store', credentials:'same-origin'});
       if (!response.ok) return;
       const info = await response.json();
-      if (!info || typeof info.version !== 'string' || !newer(info.version, BUILD)) return;
+      if (!info || typeof info.version !== 'string' || !/^\d+(?:\.\d+)*$/.test(info.version)) return;
+      if (!newer(info.version, BUILD)) {
+        pendingVersion = '';
+        notice.hidden = true;
+        return;
+      }
       pendingVersion = info.version;
       notice.hidden = false;
     } catch (err) { console.debug('Overnia version check skipped:', err); }
