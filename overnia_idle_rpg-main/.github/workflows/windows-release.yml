@@ -1,0 +1,41 @@
+name: Build and publish Overnia Windows app
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'electron-main.cjs'
+      - 'package.json'
+      - 'manifest.webmanifest'
+      - 'icon-*.png'
+      - 'apple-touch-icon.png'
+      - '.github/workflows/windows-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: overnia-windows-release
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Set release version
+        shell: pwsh
+        run: |
+          npm pkg set version="0.2.${{ github.run_number }}"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build and publish installer to GitHub Releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win nsis --publish always

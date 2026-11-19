@@ -1,0 +1,51 @@
+{
+  "name": "overnia-idle-rpg",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Overnia offline-first Windows desktop application",
+  "main": "electron-main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.overnia.idlerpg",
+    "productName": "Overnia Idle RPG",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron-main.cjs",
+      "index.html",
+      "assets/**/*",
+      "*.png",
+      "manifest.webmanifest",
+      "sw.js",
+      "version.json",
+      "ASSET_CREDITS.txt"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "HarriRa",
+        "repo": "overnia_idle_rpg",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "author": "Overnia",
+  "dependencies": {
+    "electron-updater": "^6.6.2"
+  }
+}
