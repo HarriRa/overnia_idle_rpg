@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.17.1">
+<meta name="overnia-build-version" content="2026.11.19.2">
 <title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
@@ -2003,8 +2003,9 @@ input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:tex
 </style>
 <style>
 /* The game uses one touch-first workspace at every screen width. */
-body{width:min(100%,600px);margin:0 auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-body.mobile-menu-home{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)!important}
+html{--adventure-nav-height:calc(63px + env(safe-area-inset-bottom));scroll-padding-bottom:var(--adventure-nav-height)}
+body{width:min(100%,600px);margin:0 auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) var(--adventure-nav-height) env(safe-area-inset-left)}
+body.mobile-menu-home{padding:env(safe-area-inset-top) env(safe-area-inset-right) var(--adventure-nav-height) env(safe-area-inset-left)!important}
 body>header,.panel.left,#quickNav,#focusToolbar,#focusDock,#focusScrim,
 body:not(.mobile-equipment) .panel.right{display:none!important}
 body>.layout{display:block;grid-template-columns:minmax(0,1fr);width:100%;max-width:none;padding:7px 10px 16px}
@@ -2015,15 +2016,23 @@ body.mobile-equipment[data-equipment-origin="menu"] #mobileEquipmentBack{display
 #mobileHomeNav,body.mobile-menu-home #mobileHomeNav{width:100%;max-width:none;margin:0;padding:10px 10px 0}
 .mobile-brand{display:flex;align-items:center;gap:9px;margin:0 2px 9px}
 .mobile-brand h1{font-family:Georgia,serif;color:#f3d69a;font-size:20px;line-height:1.1;margin:0}
-.mobile-primary-nav,.mobile-skill-grid,.mobile-adventure-links{display:grid;gap:6px}
-.mobile-primary-nav,.mobile-adventure-links{grid-template-columns:repeat(4,minmax(0,1fr))}
+.mobile-primary-nav,.mobile-skill-grid,#mobileAdventureNav{display:grid;gap:6px}
+.mobile-primary-nav,#mobileAdventureNav{grid-template-columns:repeat(4,minmax(0,1fr))}
 .mobile-skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-#mobileHomeNav .mobile-primary-nav button,#mobileHomeNav .mobile-adventure-links button{
+#mobileHomeNav .mobile-primary-nav button,#mobileAdventureNav button{
  flex-direction:column;justify-content:center;gap:4px;text-align:center;font-size:11px;line-height:1.2;
  padding:6px 2px;min-width:0;min-height:50px;background:#293e31;border-color:#647d60
 }
-#mobileHomeNav button[aria-current="page"]{background:#465b3b;border-color:#d0b172;color:#fff2c9}
-#mobileHomeNav .mobile-primary-nav button span,#mobileHomeNav .mobile-adventure-links button span{font-size:16px}
+#mobileHomeNav button[aria-current="page"],#mobileAdventureNav button[aria-current="page"]{background:#465b3b;border-color:#d0b172;color:#fff2c9}
+#mobileHomeNav .mobile-primary-nav button span,#mobileAdventureNav button span{font-size:16px}
+#mobileAdventureNav{
+ position:fixed;inset:auto 0 0;width:min(100%,600px);margin-inline:auto;z-index:60;
+ padding:6px max(10px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));
+ border-top:1px solid #647d60;background:#1c3027
+}
+#mobileAdventureNav button{display:flex;align-items:center;height:50px}
+#mobileAdventureNav button:focus-visible{outline:2px solid #f3d69a;outline-offset:-3px}
+#toast,body.focus-mode #toast{bottom:calc(var(--adventure-nav-height) + 8px)}
 #mobileHomeNav .mobile-home-links{margin:12px 0 16px}
 .mobile-skills-heading{display:flex;align-items:center;justify-content:space-between;gap:6px}
 .mobile-skills-heading h2{margin:0;font-size:16px}
@@ -2127,6 +2136,12 @@ body[data-current-view="bank"] #activityFeed{display:none}
 </nav><div id="focusToolbar" class="focus-toolbar" hidden><label for="focusViewSelect">🧭 Menu</label><select id="focusViewSelect" aria-label="Choose game menu"></select><button type="button" id="focusOpenGear" title="Open equipment panel">⚔️ Gear</button></div><div id="main"></div></main>
 <aside class="panel right" id="focusSidebar" aria-label="Bank, Equipment and Potions"><div class="focus-drawer-heading"><strong id="focusDrawerTitle">🏦 Your Bank</strong><button id="focusCloseBtn" type="button" aria-label="Close side panel">✕</button></div><button id="mobileEquipmentBack" type="button" hidden>‹ Back to Combat</button><div class="tabs"><button id="bankTab" class="selected">🏦 Bank</button><button id="gearTab">⚔️ Equipment</button><button id="potionTab">🧪 Potions</button></div><div id="sidebar"></div><details id="activityLogDetails" class="activity-log-details" open><summary>📜 Activity log</summary><div class="log" id="log" aria-live="polite"></div></details></aside>
 </div><div id="focusScrim" class="focus-scrim" hidden></div><nav id="focusDock" class="focus-dock" aria-label="Focus Mode shortcuts" hidden><button type="button" data-focus-nav="skills">📊<span>Skills</span></button><button type="button" data-focus-nav="combat">⚔️<span>Combat</span></button><button type="button" data-focus-sidebar="bank">🏦<span>Bank</span></button><button type="button" data-focus-sidebar="gear">🛡️<span>Gear</span></button><button type="button" data-focus-sidebar="potions">🧪<span>Potions</span></button></nav><div class="toast" id="toast" role="status"></div>
+<nav id="mobileAdventureNav" aria-label="Adventure">
+ <button type="button" data-mobile-view="world"><span aria-hidden="true">🗺️</span>World</button>
+ <button type="button" data-mobile-view="shop"><span aria-hidden="true">🛒</span>Shop</button>
+ <button type="button" data-mobile-view="raid"><span aria-hidden="true">⛰️</span>Raids</button>
+ <button type="button" data-mobile-view="collection"><span aria-hidden="true">🐾</span>Collection Log</button>
+</nav>
 <div class="gear-dialog-overlay" id="gearOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="gearDialogTitle"><div class="gear-dialog"><div class="gear-dialog-heading"><div><div class="eyebrow">Equipment manager</div><h2 id="gearDialogTitle">Choose equipment</h2></div><button type="button" class="gear-dialog-close" data-gear-close aria-label="Close equipment picker">×</button></div><div id="gearDialogContent"></div></div></div>
 <div class="monster-inspect-overlay" id="monsterInspectOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="monsterInspectTitle"><div class="monster-inspect-dialog"><div class="between"><h2 id="monsterInspectTitle">Monster details</h2><button type="button" data-inspect-close aria-label="Close monster details">×</button></div><div id="monsterInspectContent"></div></div></div>
 <div class="dev-overlay" id="devOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="devTitle">
@@ -5714,8 +5729,11 @@ function renderMobileHomeNav(){
   <div class="mobile-home-links">
    <div class="mobile-skills-heading"><h2>Skills</h2><button type="button" data-mobile-view="overview">Total level <strong id="mobileTotalLevel">${fmt(totalSkillLevel())}</strong> ›</button></div>
    <div class="mobile-skill-grid">${skills.map(skill=>`<button type="button" data-mobile-view="${SKILLS[skill].combat?'combat':skill}"><span>${SKILLS[skill].icon} ${esc(label(skill))}</span><small data-nav-lvl="${skill}">Lv ${levelFromXp(state.xp[skill]||0)}</small></button>`).join('')}</div>
-   <div class="mobile-adventure-links">${links([['world','🗺️','World'],['shop','🛒','Shop'],['raid','⛰️','Raids'],['collection','🐾','Collection Log']])}</div>
   </div>`;
+ for(const button of el('mobileAdventureNav').querySelectorAll('button')){
+  if(button.dataset.mobileView===active)button.setAttribute('aria-current','page');
+  else button.removeAttribute('aria-current');
+ }
 }
 function showMobileInventory(tab,origin){
  const body=document.body;
@@ -7491,6 +7509,18 @@ function validSavedActivity(active){
  if(active.type==='combat'||active.type==='raid')return true;
  return active.type==='skill'&&!!SKILLS[active.skill]?.actions?.[active.index];
 }
+function selectResumeView(){
+ const active=state.active;
+ ui.view=active?.type==='skill'?active.skill:(active?.type||'skills');
+ if(active?.type==='skill')ui.skillSelection[active.skill]=Number(active.index);
+ if(active?.type==='combat'){
+  ui.combatTargetIndex=Number(state.monsterIndex);
+  ui.combatPanel='fight';
+ }
+ document.body.classList.toggle('mobile-menu-home',!active);
+ document.body.classList.remove('mobile-equipment','mobile-combat-settings-open');
+ if(el('bankItemSheet')?.open)el('bankItemSheet').close();
+}
 function offlineSnapshot(){
  return {bank:{...state.bank,...state.potions},xp:{...state.xp},kills:{...state.stats.kills},combat:combatLevel(),
          level:Object.fromEntries(Object.keys(state.xp).map(k=>[k,levelFromXp(state.xp[k]||0)]))};
@@ -7575,6 +7605,7 @@ async function catchUpOffline(){
  }
  note(`🌙 Offline: ${fmt(completed)} actions while away (${afkDuration(rewardedMs/1000)} rewarded).`);
  save();render();
+ window.scrollTo({top:0,behavior:'instant'});
  showOfflineReport(before,gap/1000,rewardedMs/1000,actionName,completed);
  el('afkContinue').hidden=false;
 }
@@ -7583,7 +7614,10 @@ el('afkContinue').onclick=()=>{el('afkOverlay').hidden=true;el('afkContinue').hi
 function tick(t){
  if(offlineRunning||document.hidden){lastTick=t;requestAnimationFrame(tick);return}
  const wallGap=Date.now()-(state.lastProcessedAt||Date.now());
- if(wallGap>=OFFLINE_CONFIG.minAwaySeconds*1000&&state.active){catchUpOffline();lastTick=t;requestAnimationFrame(tick);return}
+ if(wallGap>=OFFLINE_CONFIG.minAwaySeconds*1000&&state.active){
+  selectResumeView();
+  catchUpOffline();lastTick=t;requestAnimationFrame(tick);return;
+ }
  let dt=clamp(t-lastTick,0,250);lastTick=t;
  updateActivityFeed(t);
  if(state.active){
@@ -7629,7 +7663,8 @@ async function switchProfile(next){
  el('afkOverlay').hidden=true;el('devOverlay').hidden=true;
  el('gearOverlay').hidden=true;el('monsterInspectOverlay').hidden=true;
  state=newGame();restore();processHireling(Date.now()); // profile-specific resources, including offline worker
- ui.view='skills';ui.skillSelection={};ui.skillSearch={};ui.bank.main.selected=null;ui.bank.side.selected=null;
+ ui.skillSelection={};ui.skillSearch={};ui.bank.main.selected=null;ui.bank.side.selected=null;
+ selectResumeView();
  lastTick=performance.now();lastUiPulse=lastTick;lastSavedFrame=lastTick;
  render();
  if(state.active)await catchUpOffline();
@@ -7740,7 +7775,12 @@ window.addEventListener('pagehide',save);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();});
 async function boot(){
  focusModeEnabled=false;
- restore();ui.view='skills';processHireling(Date.now());render();applyFocusMode();if(state.active)await catchUpOffline();lastTick=performance.now();requestAnimationFrame(tick)
+ history.scrollRestoration='manual';
+ restore();
+ selectResumeView();
+ processHireling(Date.now());render();applyFocusMode();
+ if(state.active)await catchUpOffline();
+ lastTick=performance.now();requestAnimationFrame(tick);
 }
 boot();
 // Expose test helpers for regression checks.
