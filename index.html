@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.19.2">
+<meta name="overnia-build-version" content="2026.11.27.1">
 <title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
@@ -2973,7 +2973,6 @@ const weaknessLabel=style=>({melee:'🗡️ Melee',ranged:'🏹 Ranged',magic:'�
 // All raids share the same combat/XP/autoeat rules as normal monsters.
 const RAID_CONFIG={
  name:'Deep Mountain Expedition', unlockCombatLevel:95,
- belrothCombatLevel:105, belrothDefenceLevel:70, belrothHitpointsLevel:70, belrothArmourDefence:40,
  chest:'Belroth Expedition Chest',
  // The chest always drops, but unique weapons and jewellery cores are rare.
  // Each entry: item, relative drop weight, quantity (weights total 100).
@@ -3118,17 +3117,8 @@ function raidState(){
  return raid;
 }
 function currentEnemy(){return state.active?.type==='raid'?selectedRaidWaves()[raidState().wave]:MONSTERS[state.monsterIndex]}
-function belrothEntryRequirement(equipment=state.equipment){
- const problems=[];
- if(combatLevel()<RAID_CONFIG.belrothCombatLevel)problems.push('Combat Level '+RAID_CONFIG.belrothCombatLevel);
- if(levelFromXp(state.xp.defence||0)<RAID_CONFIG.belrothDefenceLevel)problems.push('Defence '+RAID_CONFIG.belrothDefenceLevel);
- if(levelFromXp(state.xp.hitpoints||0)<RAID_CONFIG.belrothHitpointsLevel)problems.push('Hitpoints '+RAID_CONFIG.belrothHitpointsLevel);
- if(gearMods(equipment).defence<RAID_CONFIG.belrothArmourDefence)problems.push(RAID_CONFIG.belrothArmourDefence+'+ armour defence');
- const weapon=equipment.weapon;
- const style=equippedCombatStyle(equipment);
- const adequate={melee:['Dragonite Sword','Abyssal Blade','Deepmountain Greatsword'],ranged:['Dragonbone Bow','Deepmountain Warbow','Twinstrike Crossbow'],magic:['Dragonfire Staff','Voidcaller Staff','Deepmountain Soulstaff']}[style];
- if(!adequate.includes(weapon))problems.push('near-endgame '+style+' weapon');
- return problems;
+function belrothEntryRequirement(){
+ return [];
 }
 // Rift Citadel is the post-Deep-Mountain challenge: its sovereign requires
 // endgame progression and equipment earned before the Rift itself.
@@ -3140,7 +3130,6 @@ function startRaidWave(){
  const raid=raidState(),wave=selectedRaidWaves()[raid.wave],config=selectedRaidConfig();
  if(combatLevel()<config.unlockCombatLevel){toast('Reach Combat '+config.unlockCombatLevel+' to enter');return}
  autoEquipForEnemy(wave);
- if(wave.boss&&selectedRaidKey()==='mountain'){const needs=belrothEntryRequirement();if(needs.length){note('🔒 Belroth requires '+needs.join(', '));toast('Belroth requires stronger gear and levels');return}}
  if(wave.boss&&selectedRaidKey()==='rift'){const needs=riftSovereignRequirements();if(needs.length){note('🔒 Nyxara requires '+needs.join(', '));toast('Complete Deep Mountain once before Nyxara');return}}
  const problem=combatSupplyError();if(problem){note('⏹ '+problem);toast(problem);return}
  clearActivityFeed();ui.combatLastHit=null;state.active={type:'raid'};state.monsterHp=wave.hp;state.progress=0;
@@ -6108,7 +6097,7 @@ function raidPanelHtml(){
  <div class="raid-details">${fmt(wave.hp)} HP · Defence ${wave.def} · Max hit ${wave.maxHit} · <b>Weakness: ${weaknessLabel(wave.weakness)}</b></div></div>
  <div class="monster-actions"><button data-inspect-raid="${raid.wave}">🔎 Inspect</button><button data-raid-start ${canStart?'':'disabled'}>${playing?'Fighting…':isBoss?(rift?'⚔️ Face Nyxara':'⚔️ Face Belroth'):'Enter wave '+(raid.wave+1)}</button></div></div>
  ${!unlocked?`<div class="raid-warning">🔒 Requires Combat Level ${config.unlockCombatLevel} to enter.</div>`:isBoss&&bossMissing.length?`<div class="raid-warning">🔒 Final boss requires ${esc(bossMissing.join(', '))}. Gear is not restricted, but previous best-in-slot equipment and plenty of food are strongly recommended.</div>`:supplies?`<div class="raid-warning">${esc(supplies)}</div>`:''}
- <div class="raid-tip">🗡️ Melee · 🏹 Ranged · 🪄 Magic — use the correct style, change weapons in Equipment, and restock food between waves. Belroth requires strong gear. Nyxara requires a Deep Mountain clear, but has NO equipment requirement. Nyxara hits up to 1,600 raw damage before armour. Auto Eat remains enabled, but its threshold can leave you vulnerable to a lethal hit; manual eating and careful timing are essential.</div>
+ <div class="raid-tip">🗡️ Melee · 🏹 Ranged · 🪄 Magic — use the correct style, change weapons in Equipment, and restock food between waves. Belroth has no additional level or equipment requirements; strong gear is recommended. Nyxara requires a Deep Mountain clear, but has NO equipment requirement. Nyxara hits up to 1,600 raw damage before armour. Auto Eat remains enabled, but its threshold can leave you vulnerable to a lethal hit; manual eating and careful timing are essential.</div>
  <details class="raid-guide"><summary>🗺️ All ${waves.length} raid waves and weaknesses</summary><div class="raid-guide-list">${waves.map((m,i)=>`<div class="${i===raid.wave?'active':''}"><span>${i+1}. ${esc(m.name)}</span><b>${weaknessLabel(m.weakness)}</b><button data-inspect-raid="${i}" type="button">Inspect</button></div>`).join('')}</div></details>
  <div class="raid-loot"><strong>🎁 ${config.chest}</strong><p>${rift?'Nyxara awards a cache with a chance at the Sovereign hybrid set (10% per piece), rare herbs and Prismatic Soul Gems. Full set boosts melee, ranged and magic.':'The final boss awards a chest with Coins, Soul Shards, rare weapons and jewellery cores.'}</p>
  <div class="raid-chest-row"><span>🎁 Chests owned: <b>${fmt(count(config.chest))}</b></span>
