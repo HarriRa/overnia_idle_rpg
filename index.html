@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Overnia icons 30/414; next 31: Tuna; manifest #overnia-icon-progress -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827">
-<meta name="overnia-build-version" content="2026.11.27.1">
+<meta name="overnia-build-version" content="2026.11.27.2">
 <title>Overnia Idle RPG – A Living World</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
@@ -4351,6 +4351,8 @@ function combatLevel(){
 // Potions use a dedicated pouch, freeing bank slots and preserving existing recipes.
 const isPotion=item=>Object.hasOwn(POTIONS,item);
 const count=item=>item==='Coins'?Math.max(0,Number(state.coins)||0):Math.max(0,Number((isPotion(item)?state.potions:state.bank)[item])||0);
+const soulSalvageXp=(level=levelFromXp(state.xp.enchanting||0))=>Math.round(100+550*(Math.max(1,Math.min(99,level))-1)/98);
+const skillActionXp=action=>action.soulSalvage?soulSalvageXp():action.xp;
 const nextSoulSalvageItem=()=>SOUL_SALVAGE_ITEMS.find(item=>count(item)>0)||null;
 const canStartSkillAction=action=>action.soulSalvage?!!nextSoulSalvageItem():canPay(action.cost);
 const skillActionRequirements=action=>action.soulSalvage?(nextSoulSalvageItem()?{[nextSoulSalvageItem()]:1}:{'Any junk item':1}):action.cost;
@@ -4738,7 +4740,7 @@ function completeSkill(){
   if(!junk||!buyOrCraft({[junk]:1},reward,quantity)){
    note('🏦 Bank full: cannot store salvaging reward.');stop(true);return;
   }
-  const xp=gainXp('enchanting',100);
+  const xp=gainXp('enchanting',soulSalvageXp());
   state.stats.bySkill.enchanting=(state.stats.bySkill.enchanting||0)+1;
   state.stats.produced[reward]=(state.stats.produced[reward]||0)+quantity;
   if(gem){
@@ -5839,7 +5841,7 @@ function recipeCard(action,index,skill){
  return `<article class="recipe-card ${locked?'is-locked':''} ${selected?'is-focused':''}" data-recipe="${index}">
   <button type="button" class="recipe-select" data-recipe-pick="${index}" aria-pressed="${selected?'true':'false'}" title="View ${esc(action.name)} details">
    <span class="recipe-illustration">${itemArt(action.output)}</span>
-   <span class="recipe-select-copy"><strong class="recipe-title">${esc(action.name)}</strong><small class="recipe-detail">Lv ${action.level} · +${fmt(action.xp)} XP · ×${action.quantity||1}${action.chanceBonus?' · '+Math.round(action.chanceBonus.chance*1000)/10+'% '+esc(action.chanceBonus.item):''}</small></span>
+   <span class="recipe-select-copy"><strong class="recipe-title">${esc(action.name)}</strong><small class="recipe-detail">Lv ${action.level} · +${fmt(skillActionXp(action))} XP · ×${action.quantity||1}${action.chanceBonus?' · '+Math.round(action.chanceBonus.chance*1000)/10+'% '+esc(action.chanceBonus.item):''}</small></span>
    <span class="recipe-state">${already?'●':locked?'🔒':'›'}</span>
   </button>
   <div class="recipe-quick-details">
@@ -5856,7 +5858,7 @@ function renderMobileActionDirectory(skill){
  const groups=[...new Set(actions.map(a=>a.category||'Activities'))];
  return `<details class="mobile-action-directory" id="mobileActionDirectory"><summary>☷ Browse All Items <span>${actions.length} ▾</span></summary>
   <label class="mobile-action-search">🔎 <input type="search" data-mobile-action-search placeholder="Find item or recipe…" autocomplete="off" aria-label="Search all activities"></label>
-  <div class="mobile-directory-scroll">${groups.map(cat=>`<section class="mobile-directory-group" data-mobile-dir-group><h4>${esc(cat)}</h4>${actions.map((a,i)=>({a,i})).filter(x=>(x.a.category||'Activities')===cat).sort((x,y)=>x.a.level-y.a.level||x.a.name.localeCompare(y.a.name)).map(({a,i})=>`<button type="button" class="mobile-directory-item ${i===ui.skillSelection[skill]?'is-current':''}" data-mobile-action-pick="${i}" data-mobile-dir-search="${esc([a.name,a.output,a.category,...Object.keys(a.cost||{})].join(' ').toLowerCase())}">${itemArt(a.output)}<span class="mobile-dir-name"><strong>${esc(a.name)}</strong><small>Lv ${a.level} · +${fmt(a.xp)} XP${a.cost&&Object.keys(a.cost).length?' · Materials':''}</small></span><span class="mobile-dir-status">${i===ui.skillSelection[skill]?'●':a.level>level?'🔒':'›'}</span></button>`).join('')}</section>`).join('')}</div>
+  <div class="mobile-directory-scroll">${groups.map(cat=>`<section class="mobile-directory-group" data-mobile-dir-group><h4>${esc(cat)}</h4>${actions.map((a,i)=>({a,i})).filter(x=>(x.a.category||'Activities')===cat).sort((x,y)=>x.a.level-y.a.level||x.a.name.localeCompare(y.a.name)).map(({a,i})=>`<button type="button" class="mobile-directory-item ${i===ui.skillSelection[skill]?'is-current':''}" data-mobile-action-pick="${i}" data-mobile-dir-search="${esc([a.name,a.output,a.category,...Object.keys(a.cost||{})].join(' ').toLowerCase())}">${itemArt(a.output)}<span class="mobile-dir-name"><strong>${esc(a.name)}</strong><small>Lv ${a.level} · +${fmt(skillActionXp(a))} XP${a.cost&&Object.keys(a.cost).length?' · Materials':''}</small></span><span class="mobile-dir-status">${i===ui.skillSelection[skill]?'●':a.level>level?'🔒':'›'}</span></button>`).join('')}</section>`).join('')}</div>
   <p class="mobile-directory-empty" hidden>No matching activities.</p>
  </details>`;
 }
@@ -5903,7 +5905,7 @@ function renderMobileAction(skill){
   <div class="mobile-action-top"><span>${SKILLS[skill].icon} ${esc(label(skill))}</span><span>Lv ${lvl} · ${fmt(state.xp[skill]||0)} XP</span></div>
   <div class="mobile-action-switch"><button type="button" data-mobile-step="-1" aria-label="Previous activity" ${i===0?'disabled':''}>‹</button><div class="mobile-action-title"><strong>${esc(a.name)}</strong><small>${i+1} / ${actions.length} · Requires Lv ${a.level}${locked?' 🔒':''}</small></div><button type="button" data-mobile-step="1" aria-label="Next activity" ${i===actions.length-1?'disabled':''}>›</button></div>
   <div class="mobile-action-hero">${itemArt(a.output,true)}<div class="mobile-action-owned"><strong>${fmt(count(a.output))}</strong><small>${esc(a.output)} owned</small></div></div>
-  <div class="mobile-action-facts"><span><small>Required level</small><b>${a.level}</b></span><span><small>XP / action</small><b>+${fmt(a.xp)}</b></span><span><small>Received / action</small><b>×${a.quantity||1}</b></span></div>
+  <div class="mobile-action-facts"><span><small>Required level</small><b>${a.level}</b></span><span><small>XP / action</small><b data-action-xp>+${fmt(skillActionXp(a))}</b></span><span><small>Received / action</small><b>×${a.quantity||1}</b></span></div>
   ${materials?`<div class="mobile-action-materials"><strong>Required materials</strong>${materials}</div>`:''}
   ${bonus.length?`<div class="mobile-action-bonus">Bonus: ${bonus.map(item=>`${esc(item)} ×${fmt(count(item))} owned`).join(' · ')}</div>`:''}
   ${a.requiresFire?'<div class="mobile-action-fire">🔥 Requires a fire</div>':''}
@@ -5920,6 +5922,7 @@ function refreshMobileAction(skill){
  const lvl=levelFromXp(state.xp[skill]||0),xp=state.xp[skill]||0;
  const locked=lvl<a.level,missing=!canPay(a.cost),fireNeeded=a.requiresFire&&!cookingHeatAvailable()&&!nextAutoFuel();
  const active=state.active?.type==='skill'&&state.active.skill===skill&&state.active.index===index;
+ const xpValue=node.querySelector('[data-action-xp]');if(xpValue)xpValue.textContent='+'+fmt(skillActionXp(a));
  const top=node.querySelector('.mobile-action-top span:last-child');
  if(top)top.textContent=`Lv ${lvl} · ${fmt(xp)} XP`;
  const own=node.querySelector('.mobile-action-owned strong');
@@ -5958,7 +5961,7 @@ function renderSkillFocus(skill){
  return `<section class="skill-focus" id="skillFocus" aria-label="Selected activity">
   <div class="focus-head"><span>SELECTED</span><span class="focus-category">${esc(a.category)}</span></div>
   <div class="focus-item">${itemArt(a.output,true)}<div><h3>${esc(a.name)}</h3><p>Level ${a.level} ${locked?'· Locked':'· Unlocked'}</p></div></div>
-  <div class="focus-specs"><span><small>Experience</small><b>+${fmt(a.xp)} XP</b></span><span><small>Per action</small><b>×${a.quantity||1}</b></span><span><small>Duration</small><b id="focusDuration">${(actionDurationMs()/1000).toFixed(2)}s</b></span></div>
+  <div class="focus-specs"><span><small>Experience</small><b data-action-xp>+${fmt(skillActionXp(a))} XP</b></span><span><small>Per action</small><b>×${a.quantity||1}</b></span><span><small>Duration</small><b id="focusDuration">${(actionDurationMs()/1000).toFixed(2)}s</b></span></div>
   <button type="button" class="focus-expand-toggle" data-focus-toggle aria-expanded="${ui.focusExpanded?'true':'false'}">${ui.focusExpanded?'▴ Hide materials and bank details':'▾ Show materials and bank details'}</button>
   <div class="focus-expandable ${ui.focusExpanded?'expanded':''}">
    <div class="focus-section-title">IN BANK</div>
@@ -5979,6 +5982,7 @@ function refreshSkillFocus(skill){
   const item=node.dataset.focusCost,need=a.cost[item];node.textContent=fmt(count(item))+' / '+fmt(need);
   node.parentElement.classList.toggle('missing',count(item)<need);
  }
+ const xpValue=box.querySelector('[data-action-xp]');if(xpValue)xpValue.textContent='+'+fmt(skillActionXp(a))+' XP';
  const duration=box.querySelector('#focusDuration');if(duration)duration.textContent=(actionDurationMs()/1000).toFixed(2)+'s';
  const btn=box.querySelector('.focus-start');if(btn){btn.disabled=locked||missing||fireNeeded;btn.textContent=locked?'🔒 Level '+a.level+' required':fireNeeded?'🔥 Fire required':missing?'Missing materials':active?'✓ Currently training':'▶ Start activity';}
 }
